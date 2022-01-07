@@ -8,5 +8,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="linkiar">#05052D</color>
+
+    <!--buttoms linkiar-->
     <color name="linkiar_pressed">#2c62b3</color>
+    <color name="linkiar_background">#deebff</color>
+
+    <!--linkiar search-->
+    <color name="linkiar_search_background">#fafbfc</color>
+    <color name="linkiar_search_border">#adafb3</color>
 </resources>

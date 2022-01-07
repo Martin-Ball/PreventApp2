@@ -27,13 +27,6 @@ public class NewOrderFragment extends Fragment {
         binding = FragmentNewOrderBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNewOrder;
-        newOrderViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
         return root;
     }
 

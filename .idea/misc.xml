@@ -7,12 +7,13 @@
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/drawable/ic_menu_camera.xml" value="0.3828125" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.3828125" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/drawable/list.xml" value="0.3828125" />
+        <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/drawable/shape.xml" value="0.3828125" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/drawable/side_nav_bar.xml" value="0.3828125" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/app_bar_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/content_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/fragment_list.xml" value="0.36666666666666664" />
-        <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/fragment_new_order.xml" value="0.20520833333333333" />
+        <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/fragment_new_order.xml" value="0.33" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/fragment_order_to_send.xml" value="0.36666666666666664" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/fragment_orders_sent.xml" value="0.36666666666666664" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/nav_header_main.xml" value="0.36666666666666664" />

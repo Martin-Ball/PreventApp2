@@ -1,4 +1,4 @@
-package com.martin.preventapp.ui.home;
+package com.martin.preventapp.ui.orders_sent;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,24 +12,24 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.martin.preventapp.R;
-import com.martin.preventapp.databinding.FragmentHomeBinding;
+import com.martin.preventapp.databinding.FragmentOrdersSentBinding;
+import com.martin.preventapp.databinding.FragmentOrdersSentBinding;
 
-public class HomeFragment extends Fragment {
+public class OrdersSentFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
-    private FragmentHomeBinding binding;
+    private OrdersSentViewModel ordersSentViewModel;
+    private FragmentOrdersSentBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        ordersSentViewModel =
+                new ViewModelProvider(this).get(OrdersSentViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentOrdersSentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = binding.textSlideshow;
+        ordersSentViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

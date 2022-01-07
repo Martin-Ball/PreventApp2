@@ -7,7 +7,8 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_new_order">Nuevo pedido</string>
+    <string name="menu_order_to_send">Pedidos a enviar</string>
+    <string name="menu_orders_sent">Pedidos enviados</string>
+    <string name="menu_list">Lista de precios</string>
 </resources>

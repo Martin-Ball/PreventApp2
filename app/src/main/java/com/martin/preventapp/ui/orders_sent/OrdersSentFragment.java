@@ -28,7 +28,7 @@ public class OrdersSentFragment extends Fragment {
         binding = FragmentOrdersSentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textSlideshow;
+        final TextView textView = binding.textOrdersSent;
         ordersSentViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {

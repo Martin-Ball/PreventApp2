@@ -10,7 +10,7 @@ public class OrdersSentViewModel extends ViewModel {
 
     public OrdersSentViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        mText.setValue("This is Orders Sent fragment");
     }
 
     public LiveData<String> getText() {

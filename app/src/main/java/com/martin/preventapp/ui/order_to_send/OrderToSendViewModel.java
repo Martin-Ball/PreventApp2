@@ -10,7 +10,7 @@ public class OrderToSendViewModel extends ViewModel {
 
     public OrderToSendViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        mText.setValue("This is Order to send fragment");
     }
 
     public LiveData<String> getText() {

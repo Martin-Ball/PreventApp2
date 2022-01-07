@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.martin.preventapp.databinding.FragmentListBinding;
-import com.martin.preventapp.databinding.FragmentListBinding;
 
 public class ListFragment extends Fragment {
 

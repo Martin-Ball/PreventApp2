@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.martin.preventapp.databinding.FragmentOrderToSendBinding;
-import com.martin.preventapp.databinding.FragmentOrderToSendBinding;
 
 public class OrderToSend extends Fragment {
 
@@ -28,7 +27,7 @@ public class OrderToSend extends Fragment {
         binding = FragmentOrderToSendBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textGallery;
+        final TextView textView = binding.textOrderToSend;
         orderToSendViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {

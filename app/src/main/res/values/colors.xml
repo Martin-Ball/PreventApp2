@@ -7,4 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="linkiar">#05052D</color>
+    <color name="linkiar_pressed">#2c62b3</color>
 </resources>

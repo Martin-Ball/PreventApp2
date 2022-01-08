@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentNewOrderBinding;
+import com.martin.preventapp.firebase.Clients;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import org.w3c.dom.Text;
@@ -44,28 +45,9 @@ public class NewOrderFragment extends Fragment {
         SearchableSpinner spinner = root.findViewById(R.id.spinner_searchable_new_order);
         TextView text = root.findViewById(R.id.textView3);
 
-        ArrayList<String> numberList = new ArrayList<>();
+        Clients clients = new Clients();
 
-        numberList.add("+ Agregar un cliente");
-        numberList.add("One");
-        numberList.add("Three");
-        numberList.add("Four");
-        numberList.add("Five");
-        numberList.add("Six");
-        numberList.add("Seven");
-        numberList.add("Eight");
-        numberList.add("Nine");
-        numberList.add("Ten");
-        numberList.add("Three");
-        numberList.add("Four");
-        numberList.add("Five");
-        numberList.add("Six");
-        numberList.add("Seven");
-        numberList.add("Eight");
-        numberList.add("Nine");
-        numberList.add("Ten");
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(root.getContext(), android.R.layout.simple_list_item_1,numberList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(root.getContext(), android.R.layout.simple_list_item_1,clients.clientlist());
         spinner.setAdapter(adapter);
         spinner.setTitle("Seleccione un cliente");
         spinner.setPositiveButton("CANCELAR");

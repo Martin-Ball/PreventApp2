@@ -45,25 +45,31 @@ public class NewOrderFragment extends Fragment {
         SearchableSpinner spinner = root.findViewById(R.id.spinner_searchable_new_order);
         TextView text = root.findViewById(R.id.textView3);
 
-        Clients client = new Clients();
+        ArrayList<String> numberList = new ArrayList<>();
 
-        String PATH_START = "start";
-        String PATH_MESSAGE = "message";
+        numberList.add("+ Agregar un cliente");
+        numberList.add("One");
+        numberList.add("Three");
+        numberList.add("Four");
+        numberList.add("Five");
+        numberList.add("Six");
+        numberList.add("Seven");
+        numberList.add("Eight");
+        numberList.add("Nine");
+        numberList.add("Ten");
+        numberList.add("Three");
+        numberList.add("Four");
+        numberList.add("Five");
+        numberList.add("Six");
+        numberList.add("Seven");
+        numberList.add("Eight");
+        numberList.add("Nine");
+        numberList.add("Ten");
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference reference = database.getReference(PATH_START).child(PATH_MESSAGE);
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                text.setText(snapshot.getValue(String.class));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                text.setText("Error al consultar en firebase");
-            }
-        });
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(root.getContext(), android.R.layout.simple_list_item_1,numberList);
+        spinner.setAdapter(adapter);
+        spinner.setTitle("Seleccione un cliente");
+        spinner.setPositiveButton("CANCELAR");
 
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

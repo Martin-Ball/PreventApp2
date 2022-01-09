@@ -2,15 +2,8 @@ package com.martin.preventapp.ui;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.text.Editable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import com.martin.preventapp.R;
 import com.martin.preventapp.firebase.Clients;
 
 import java.util.Locale;
@@ -30,7 +23,7 @@ public class AddNewClient {
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 Clients newclient = new Clients();
-                String EditText = edittext.getText().toString().toUpperCase(Locale.ROOT);
+                String EditText = edittext.getText().toString().toUpperCase(Locale.ROOT); //UpperCase to convert in "Mayusculas"
                 newclient.addNewClient(EditText);
             }
         });
@@ -41,7 +34,5 @@ public class AddNewClient {
         });
 
         alert.show();
-
-
     }
 }

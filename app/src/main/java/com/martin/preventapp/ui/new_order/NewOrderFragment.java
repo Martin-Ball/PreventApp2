@@ -52,42 +52,21 @@ public class NewOrderFragment extends Fragment {
         spinner.setTitle("Seleccione un cliente");
         spinner.setPositiveButton("CANCELAR");
 
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                text.append(value);
-                text.append("\n \n el mensaje cambio");
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                text.append("Error al escribir");
-            }
-        });
-
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Clients");
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0)
                 {
-                    myRef.setValue("Agregar cliente");
-                    text.setText(myRef.toString());
+                    text.setText("+ Agregar cliente");
+
+
                 }
                 else
                 {
                     String sNumber = adapterView.getItemAtPosition(i).toString();
                     text.setText(sNumber);
-                    myRef.setValue("Entre a la app preventapp");
 
                 }
 

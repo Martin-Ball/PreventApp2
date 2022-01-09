@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Agregar un nuevo cliente"
+        android:textAlignment="center"
+        android:textColor="@color/linkiar_pressed"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/editTextNameClient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="Escriba el nombre del cliente"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/linkiar_search_border"
+        android:textColorHighlight="#2c62b3"
+        android:textColorLink="#2c62b3"
+        android:textSize="14dp" />
+
+
+</LinearLayout>

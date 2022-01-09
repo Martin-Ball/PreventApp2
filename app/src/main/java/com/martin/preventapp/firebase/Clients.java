@@ -39,4 +39,13 @@ public class Clients {
 
         return numberList;
     }
+
+    public void addNewClient (String name)
+    {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Clients");
+
+        String push=mDatabase.push().getKey();
+        mDatabase.child(push).setValue(name);
+
+    }
 }

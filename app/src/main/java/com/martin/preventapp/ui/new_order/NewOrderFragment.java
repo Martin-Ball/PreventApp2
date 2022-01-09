@@ -1,11 +1,14 @@
 package com.martin.preventapp.ui.new_order;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -23,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentNewOrderBinding;
 import com.martin.preventapp.firebase.Clients;
+import com.martin.preventapp.ui.AddNewClient;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import org.w3c.dom.Text;
@@ -54,20 +58,19 @@ public class NewOrderFragment extends Fragment {
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Clients");
 
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0)
                 {
-                    text.setText("+ Agregar cliente");
-
-
+                    AddNewClient newClient = new AddNewClient();
+                    newClient.newClient(root);
                 }
                 else
                 {
                     String sNumber = adapterView.getItemAtPosition(i).toString();
                     text.setText(sNumber);
-
                 }
 
             }

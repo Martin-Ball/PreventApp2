@@ -11,7 +11,7 @@
 
     <!--buttoms linkiar-->
     <color name="linkiar_pressed">#2c62b3</color>
-    <color name="linkiar_background">#deebff</color>
+    <color name="linkiar_background">#E8EEF6</color>
 
     <!--linkiar search-->
     <color name="linkiar_search_background">#fafbfc</color>

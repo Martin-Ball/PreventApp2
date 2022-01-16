@@ -12,16 +12,16 @@ import com.martin.preventapp.R;
 
 import java.util.List;
 
-public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHolder> {
-    private List<Anime> items;
+public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdapter.OrderViewHolder> {
+    private List<CardViewOrder> items;
 
-    public static class AnimeViewHolder extends RecyclerView.ViewHolder {
+    public static class OrderViewHolder extends RecyclerView.ViewHolder {
         // Campos respectivos de un item
         public ImageView imagen;
         public TextView nombre;
         public TextView visitas;
 
-        public AnimeViewHolder(View v) {
+        public OrderViewHolder(View v) {
             super(v);
             imagen = (ImageView) v.findViewById(R.id.imagen);
             nombre = (TextView) v.findViewById(R.id.nombre);
@@ -29,7 +29,7 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
         }
     }
 
-    public AnimeAdapter(List<Anime> items) {
+    public CardViewOrderAdapter(List<CardViewOrder> items) {
         this.items = items;
     }
 
@@ -39,14 +39,14 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
     }
 
     @Override
-    public AnimeViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+    public OrderViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.anime_card, viewGroup, false);
-        return new AnimeViewHolder(v);
+                .inflate(R.layout.card_view_order, viewGroup, false);
+        return new OrderViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(AnimeViewHolder viewHolder, int i) {
+    public void onBindViewHolder(OrderViewHolder viewHolder, int i) {
         viewHolder.imagen.setImageResource(items.get(i).getImagen());
         viewHolder.nombre.setText(items.get(i).getNombre());
         viewHolder.visitas.setText("Visitas:"+String.valueOf(items.get(i).getVisitas()));

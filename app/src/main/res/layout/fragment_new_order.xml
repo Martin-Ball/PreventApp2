@@ -9,40 +9,94 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="8dp">
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="21dp" />
 
         <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-            android:id="@+id/spinner_searchable_new_order"
+            android:id="@+id/spinner_searchable_new_client"
             android:layout_width="381dp"
-            android:layout_height="37dp"
+            android:layout_height="48dp"
             android:layout_gravity="center"
-            android:background="@drawable/shape"
+            android:background="@drawable/shape_blue"
             android:gravity="center|center_vertical"
-            app:hintText="Seleccione el cliente"
-            android:textColorHint="@color/linkiar_search_border"/>
+            android:textColorHint="@color/linkiar_search_border"
+            app:hintText="Pulse para seleccionar el cliente" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="29dp" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="360dp"
-            android:layout_height="37dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="89dp"
             android:background="@drawable/shape"
             android:gravity="center"
-            android:text="Escribe aqui para buscar"
-            android:textAlignment="center"
-            android:textColor="@color/linkiar_search_border" />
+            android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/reciclador"
+            <TextView
+                android:id="@+id/client_new_order"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="Nuevo pedido"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+
+            <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                android:id="@+id/spinner_new_product_searchable"
+                android:layout_width="381dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:background="@drawable/shape_blue"
+                android:gravity="center|center_vertical"
+                android:textColorHint="@color/linkiar_search_border"
+                app:hintText="Agregar producto al pedido" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="4dp" />
+
+        </LinearLayout>
+
+
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="25dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="381dp"
+            android:layout_height="32dp"
+            android:text="Productos en el pedido" />
+
+        <ScrollView
+            android:layout_width="382dp"
+            android:layout_height="357dp"
+            android:background="@drawable/shape_blue">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ordersRecycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="376dp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/order_done"
+            android:layout_width="267dp"
+            android:layout_height="wrap_content"
+            android:text="Finalizar pedido" />
 
     </LinearLayout>
 

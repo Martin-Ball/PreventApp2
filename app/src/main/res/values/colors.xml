@@ -14,6 +14,6 @@
     <color name="linkiar_background">#E8EEF6</color>
 
     <!--linkiar search-->
-    <color name="linkiar_search_background">#fafbfc</color>
+    <color name="linkiar_search_background">#F4F4F4</color>
     <color name="linkiar_search_border">#adafb3</color>
 </resources>

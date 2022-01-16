@@ -33,7 +33,7 @@
             android:layout_height="29dp" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="381dp"
             android:layout_height="89dp"
             android:background="@drawable/shape"
             android:gravity="center"
@@ -41,7 +41,7 @@
 
             <TextView
                 android:id="@+id/client_new_order"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:gravity="center"
                 android:text="Nuevo pedido"
@@ -50,7 +50,7 @@
 
             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                 android:id="@+id/spinner_new_product_searchable"
-                android:layout_width="381dp"
+                android:layout_width="364dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
                 android:background="@drawable/shape_blue"
@@ -78,7 +78,7 @@
         <ScrollView
             android:layout_width="382dp"
             android:layout_height="357dp"
-            android:background="@drawable/shape_blue">
+            android:background="@drawable/shape">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/ordersRecycler"
                     android:layout_width="match_parent"
-                    android:layout_height="376dp" />
+                    android:layout_height="353dp" />
             </LinearLayout>
         </ScrollView>
 

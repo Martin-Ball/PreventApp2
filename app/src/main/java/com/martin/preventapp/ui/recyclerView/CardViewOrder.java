@@ -3,19 +3,20 @@ package com.martin.preventapp.ui.recyclerView;
 public class CardViewOrder {
 
         private int imagen;
-        private String nombre;
-        private int visitas;
+        private String product;
+        private int amount;
 
-        public CardViewOrder(String nombre) {
-            this.nombre = nombre;
+        public CardViewOrder(String product, int amount) {
+            this.product = product;
+            this.amount = amount;
         }
 
         public String getNombre() {
-            return nombre;
+            return product;
         }
 
         public int getVisitas() {
-            return visitas;
+            return amount;
         }
 
         public int getImagen() {

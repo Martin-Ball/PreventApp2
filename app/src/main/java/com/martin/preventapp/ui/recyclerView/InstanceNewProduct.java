@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.martin.preventapp.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class InstanceNewProduct {

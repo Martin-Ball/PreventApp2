@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentNewOrderBinding;
 import com.martin.preventapp.firebase.Clients;
+import com.martin.preventapp.firebase.Products;
 import com.martin.preventapp.ui.AddNewClient;
 import com.martin.preventapp.ui.recyclerView.CardViewOrder;
 import com.martin.preventapp.ui.recyclerView.CardViewOrderAdapter;
@@ -55,9 +56,6 @@ public class NewOrderFragment extends Fragment {
         spinnerClient.setTitle("Seleccione un cliente");
         spinnerClient.setPositiveButton("CANCELAR");
 
-        //firebase
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Clients");
-
         spinnerClient.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -69,7 +67,7 @@ public class NewOrderFragment extends Fragment {
                 else
                 {
                     String sNumber = adapterView.getItemAtPosition(i).toString();
-                    clientNewOrder.setText("Nuevo pedido para el cliente: \n" + sNumber);
+                    clientNewOrder.setText("Nuevo pedido para el cliente: " + sNumber);
                 }
 
             }
@@ -88,14 +86,13 @@ public class NewOrderFragment extends Fragment {
         SearchableSpinner spinnerNewProduct = root.findViewById(R.id.spinner_new_product_searchable);
 
         //products
+        Products products = new Products();
 
-        ArrayAdapter<String> adapterNewProductSelector = new ArrayAdapter<>(root.getContext(), android.R.layout.simple_list_item_1,clients.clientlist());
+        ArrayAdapter<String> adapterNewProductSelector = new ArrayAdapter<>(root.getContext(), android.R.layout.simple_list_item_1,products.productlist());
         spinnerNewProduct.setAdapter(adapterNewProductSelector);
-        spinnerNewProduct.setTitle("Seleccione un cliente");
+        spinnerNewProduct.setTitle("Seleccione un producto");
         spinnerNewProduct.setPositiveButton("CANCELAR");
 
-        //firebase
-        DatabaseReference mDatabase2 = FirebaseDatabase.getInstance().getReference("Clients");
 
         spinnerNewProduct.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -108,9 +105,8 @@ public class NewOrderFragment extends Fragment {
                 else
                 {
                     String sNumber = adapterView.getItemAtPosition(i).toString();
-                    items.add(new CardViewOrder(sNumber));
+                    items.add(new CardViewOrder(sNumber, 2));
                     newProduct.cardViewNewProduct(items, root);
-
                 }
 
             }

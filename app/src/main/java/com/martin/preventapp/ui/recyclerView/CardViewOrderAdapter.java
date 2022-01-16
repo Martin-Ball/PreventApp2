@@ -16,16 +16,16 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
     private List<CardViewOrder> items;
 
     public static class OrderViewHolder extends RecyclerView.ViewHolder {
-        // Campos respectivos de un item
-        public ImageView imagen;
-        public TextView nombre;
-        public TextView visitas;
+        // items field on CardView
+
+        public TextView product;
+        public TextView amount;
 
         public OrderViewHolder(View v) {
             super(v);
-            imagen = (ImageView) v.findViewById(R.id.imagen);
-            nombre = (TextView) v.findViewById(R.id.nombre);
-            visitas = (TextView) v.findViewById(R.id.visitas);
+
+            product = (TextView) v.findViewById(R.id.Product);
+            amount = (TextView) v.findViewById(R.id.amount);
         }
     }
 
@@ -47,8 +47,8 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
 
     @Override
     public void onBindViewHolder(OrderViewHolder viewHolder, int i) {
-        viewHolder.imagen.setImageResource(items.get(i).getImagen());
-        viewHolder.nombre.setText(items.get(i).getNombre());
-        viewHolder.visitas.setText("Visitas:"+String.valueOf(items.get(i).getVisitas()));
+        //viewHolder.imagen.setImageResource(items.get(i).getImagen());
+        viewHolder.product.setText(items.get(i).getNombre());
+        viewHolder.amount.setText("Cantidad:"+String.valueOf(items.get(i).getVisitas()));
     }
 }

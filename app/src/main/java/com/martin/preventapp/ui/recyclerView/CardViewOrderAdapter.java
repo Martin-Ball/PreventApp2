@@ -47,8 +47,7 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
 
     @Override
     public void onBindViewHolder(OrderViewHolder viewHolder, int i) {
-        //viewHolder.imagen.setImageResource(items.get(i).getImagen());
-        viewHolder.product.setText(items.get(i).getNombre());
-        viewHolder.amount.setText("Cantidad:"+String.valueOf(items.get(i).getVisitas()));
+        viewHolder.product.setText(items.get(i).getProduct());
+        viewHolder.amount.setText("Cantidad:" + String.valueOf(items.get(i).getAmount()));
     }
 }

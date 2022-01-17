@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentNewOrderBinding;
 import com.martin.preventapp.firebase.Clients;
+import com.martin.preventapp.firebase.OrderDone;
 import com.martin.preventapp.firebase.Products;
 import com.martin.preventapp.ui.AddNewClient;
 import com.martin.preventapp.ui.recyclerView.CardViewOrder;
@@ -33,8 +35,7 @@ public class NewOrderFragment extends Fragment {
 
     private NewOrderViewModel newOrderViewModel;
     private FragmentNewOrderBinding binding;
-
-
+    private String selectedClient = " ";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -68,14 +69,12 @@ public class NewOrderFragment extends Fragment {
                 {
                     String sNumber = adapterView.getItemAtPosition(i).toString();
                     clientNewOrder.setText("Nuevo pedido para el cliente: " + sNumber);
+                    selectedClient = sNumber;
                 }
-
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
         //new products CardView
@@ -97,26 +96,44 @@ public class NewOrderFragment extends Fragment {
         spinnerNewProduct.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i == 0)
-                {
-                    AddNewClient newClient = new AddNewClient();
-                    newClient.newClient(root);
-                }
+                if (i == 0) {}
                 else
                 {
                     String sNumber = adapterView.getItemAtPosition(i).toString();
                     items.add(new CardViewOrder(sNumber, 2));
                     newProduct.cardViewNewProduct(items, root);
                 }
-
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
 
+        //button finish
+
+        Button finishOrder = root.findViewById(R.id.order_done);
+
+        finishOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OrderDone orderDone = new OrderDone();
+
+                orderDone.orderDone(items, selectedClient, binding.ordersRecycler);
             }
         });
 
+        //button delete
+
+        Button deleteProduct = root.findViewById(R.id.deleteProduct);
+
+        deleteProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OrderDone orderDone = new OrderDone();
+                int numberCV = 0;
+                orderDone.delete(items, numberCV, binding.ordersRecycler);
+            }
+        });
 
         return root;
     }

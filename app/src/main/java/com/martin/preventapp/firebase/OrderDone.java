@@ -1,14 +1,9 @@
 package com.martin.preventapp.firebase;
 
-import android.util.Log;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -36,8 +31,10 @@ public class OrderDone {
         items.clear();
     }
 
-    public void delete(List items, int numberCV, RecyclerView orderRecycler){
+    public List delete(List items, int numberCV, RecyclerView orderRecycler) {
         items.remove(numberCV);
         orderRecycler.setAdapter(null);
+
+        return items;
     }
 }

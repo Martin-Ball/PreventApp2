@@ -13,8 +13,6 @@ public class InstanceNewProduct {
 
     public void cardViewNewProduct(List items, View root)
     {
-        //cardview items
-
         // Get Recycler
         RecyclerView recycler = root.findViewById(R.id.ordersRecycler);
         recycler.setHasFixedSize(true);
@@ -26,5 +24,6 @@ public class InstanceNewProduct {
         // Create new adaptador
         RecyclerView.Adapter adapterCardViewOrders = new CardViewOrderAdapter(items);
         recycler.setAdapter(adapterCardViewOrders);
+
     }
 }

@@ -12,12 +12,6 @@
         tools:layout="@layout/fragment_new_order" />
 
     <fragment
-        android:id="@+id/nav_order_to_send"
-        android:name="com.martin.preventapp.ui.order_to_send.OrderToSend"
-        android:label="@string/menu_order_to_send"
-        tools:layout="@layout/fragment_order_to_send" />
-
-    <fragment
         android:id="@+id/nav_orders_sent"
         android:name="com.martin.preventapp.ui.orders_sent.OrdersSentFragment"
         android:label="@string/menu_orders_sent"

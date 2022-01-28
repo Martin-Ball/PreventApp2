@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/drawable/ic_baseline_delete.xml" value="0.3828125" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/drawable/ic_list.xml" value="0.3828125" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/drawable/ic_menu_camera.xml" value="0.3828125" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.3828125" />
+        <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/drawable/ic_whatsapp_logo_white.xml" value="0.3828125" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/drawable/list.xml" value="0.3828125" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/drawable/shape.xml" value="0.3828125" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/drawable/shape_blue.xml" value="0.3769230769230769" />
@@ -14,9 +16,12 @@
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/alert_dialog_custom.xml" value="0.36666666666666664" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/anime_card.xml" value="0.22916666666666666" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/app_bar_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/card_view_example.xml" value="0.32065217391304346" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/card_view_order.xml" value="0.5" />
+        <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/card_view_test.xml" value="0.3328804347826087" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/content_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/dialog_signin.xml" value="0.33" />
+        <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/example.xml" value="0.32472826086956524" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/fragment_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/fragment_new_order.xml" value="0.33" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/layout/fragment_order_to_send.xml" value="0.36666666666666664" />

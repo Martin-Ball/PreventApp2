@@ -96,7 +96,9 @@
             android:id="@+id/order_done"
             android:layout_width="267dp"
             android:layout_height="wrap_content"
-            android:text="Finalizar pedido" />
+            android:text="ENVIAR PEDIDO"
+            android:drawableRight="@drawable/ic_whatsapp_logo_white"/>
+
 
     </LinearLayout>
 

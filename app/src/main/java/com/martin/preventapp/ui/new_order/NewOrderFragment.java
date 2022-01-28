@@ -8,15 +8,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentNewOrderBinding;
 import com.martin.preventapp.firebase.Clients;
@@ -122,18 +118,8 @@ public class NewOrderFragment extends Fragment {
             }
         });
 
-        //button delete
 
-        Button deleteProduct = root.findViewById(R.id.deleteProduct);
 
-        deleteProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                OrderDone orderDone = new OrderDone();
-                int numberCV = 0;
-                orderDone.delete(items, numberCV, binding.ordersRecycler);
-            }
-        });
 
         return root;
     }

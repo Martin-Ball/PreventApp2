@@ -1,4 +1,4 @@
-package com.martin.preventapp.ui;
+package com.martin.preventapp.ui.new_order;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

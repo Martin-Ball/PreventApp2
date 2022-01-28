@@ -11,27 +11,31 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.martin.preventapp.ui.recyclerView.CardViewOrderAdapter;
+import com.martin.preventapp.ui.recyclerView.CardViewOrder;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentNewOrderBinding;
 import com.martin.preventapp.firebase.Clients;
 import com.martin.preventapp.firebase.OrderDone;
 import com.martin.preventapp.firebase.Products;
-import com.martin.preventapp.ui.AddNewClient;
-import com.martin.preventapp.ui.recyclerView.CardViewOrder;
-import com.martin.preventapp.ui.recyclerView.CardViewOrderAdapter;
-import com.martin.preventapp.ui.recyclerView.InstanceNewProduct;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class NewOrderFragment extends Fragment {
 
     private NewOrderViewModel newOrderViewModel;
     private FragmentNewOrderBinding binding;
     private String selectedClient = " ";
+
+    private ArrayList<CardViewOrder> arrayProducts;
+
+    private RecyclerView mRecyclerView;
+    private CardViewOrderAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -48,7 +52,10 @@ public class NewOrderFragment extends Fragment {
         //new client
         Clients clients = new Clients();
 
-        ArrayAdapter<String> adapterNewClientSelector = new ArrayAdapter<>(root.getContext(), android.R.layout.simple_list_item_1,clients.clientlist());
+        //initial ArrayList
+        arrayProducts = new ArrayList<>();
+
+        ArrayAdapter<String> adapterNewClientSelector = new ArrayAdapter<>(root.getContext(), android.R.layout.simple_list_item_1, clients.clientlist());
         spinnerClient.setAdapter(adapterNewClientSelector);
         spinnerClient.setTitle("Seleccione un cliente");
         spinnerClient.setPositiveButton("CANCELAR");
@@ -56,13 +63,10 @@ public class NewOrderFragment extends Fragment {
         spinnerClient.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i == 0)
-                {
+                if (i == 0) {
                     AddNewClient newClient = new AddNewClient();
                     newClient.newClient(root);
-                }
-                else
-                {
+                } else {
                     String sNumber = adapterView.getItemAtPosition(i).toString();
                     clientNewOrder.setText("Nuevo pedido para el cliente: " + sNumber);
                     selectedClient = sNumber;
@@ -70,12 +74,10 @@ public class NewOrderFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
         });
 
-        //new products CardView
-        InstanceNewProduct newProduct = new InstanceNewProduct();
-        List items = new ArrayList();
 
         //spinner searchable
         SearchableSpinner spinnerNewProduct = root.findViewById(R.id.spinner_new_product_searchable);
@@ -83,7 +85,7 @@ public class NewOrderFragment extends Fragment {
         //products
         Products products = new Products();
 
-        ArrayAdapter<String> adapterNewProductSelector = new ArrayAdapter<>(root.getContext(), android.R.layout.simple_list_item_1,products.productlist());
+        ArrayAdapter<String> adapterNewProductSelector = new ArrayAdapter<>(root.getContext(), android.R.layout.simple_list_item_1, products.productlist());
         spinnerNewProduct.setAdapter(adapterNewProductSelector);
         spinnerNewProduct.setTitle("Seleccione un producto");
         spinnerNewProduct.setPositiveButton("CANCELAR");
@@ -92,17 +94,18 @@ public class NewOrderFragment extends Fragment {
         spinnerNewProduct.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i == 0) {}
-                else
-                {
+                if (i == 0) {
+                } else {
                     String sNumber = adapterView.getItemAtPosition(i).toString();
-                    items.add(new CardViewOrder(sNumber, 2));
-                    newProduct.cardViewNewProduct(items, root);
+                    arrayProducts.add(new CardViewOrder(sNumber, "2"));
+                    buildRecyclerView(root);
+                    //newProduct.cardViewNewProduct(items, root);
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
         });
 
         //button finish
@@ -114,7 +117,7 @@ public class NewOrderFragment extends Fragment {
             public void onClick(View view) {
                 OrderDone orderDone = new OrderDone();
 
-                orderDone.orderDone(items, selectedClient, binding.ordersRecycler);
+                orderDone.orderDone(arrayProducts, selectedClient, binding.ordersRecycler);
             }
         });
 
@@ -128,5 +131,39 @@ public class NewOrderFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+
+    public void removeItem(int position) {
+        arrayProducts.remove(position);
+        mAdapter.notifyItemRemoved(position);
+    }
+
+    public void changeItem(int position, String text) {
+        arrayProducts.get(position).changeText1(text);
+        mAdapter.notifyItemChanged(position);
+    }
+
+
+    public void buildRecyclerView(View root) {
+        mRecyclerView = root.findViewById(R.id.ordersRecycler);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(root.getContext());
+        mAdapter = new CardViewOrderAdapter(arrayProducts);
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+
+        mAdapter.setOnItemClickListener(new CardViewOrderAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                changeItem(position, "Clicked");
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+                removeItem(position);
+            }
+        });
     }
 }

@@ -1,75 +1,93 @@
 package com.martin.preventapp.ui.recyclerView;
 
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.martin.preventapp.R;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
-import java.util.List;
-
-public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdapter.OrderViewHolder> {
-    private List<CardViewOrder> items;
 
 
-    public static class OrderViewHolder extends RecyclerView.ViewHolder {
-        // items field on CardView
+public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdapter.CardViewOrderViewHolder> {
+    private ArrayList<CardViewOrder> mExampleList;
+    private OnItemClickListener mListener;
 
-        public Button delete;
-        public TextView product;
-        public TextView amount;
+    public interface OnItemClickListener {
+        void onItemClick(int position);
 
+        void onDeleteClick(int position);
+    }
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
+    public static class CardViewOrderViewHolder extends RecyclerView.ViewHolder {
+        public ImageView mImageView;
+        public TextView mTextView1;
+        public TextView mTextView2;
+        public ImageView mDeleteImage;
 
-        public OrderViewHolder(View v) {
-            super(v);
+        public CardViewOrderViewHolder(View itemView, final OnItemClickListener listener) {
+            super(itemView);
+            mImageView = itemView.findViewById(R.id.imageView);
+            mTextView1 = itemView.findViewById(R.id.textView);
+            mTextView2 = itemView.findViewById(R.id.textView2);
+            mDeleteImage = itemView.findViewById(R.id.image_delete);
 
-            delete = (Button) v.findViewById(R.id.deleteProduct);
-            product = (TextView) v.findViewById(R.id.Product);
-            amount = (TextView) v.findViewById(R.id.amount);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
+            mDeleteImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onDeleteClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
-    public CardViewOrderAdapter(List<CardViewOrder> items) {
-        this.items = items;
+    public CardViewOrderAdapter(ArrayList<CardViewOrder> exampleList) {
+        mExampleList = exampleList;
+    }
+
+    @Override
+    public CardViewOrderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_order, parent, false);
+        CardViewOrderViewHolder evh = new CardViewOrderViewHolder(v, mListener);
+        return evh;
+    }
+
+    @Override
+    public void onBindViewHolder(CardViewOrderViewHolder holder, int position) {
+        CardViewOrder currentItem = mExampleList.get(position);
+
+        holder.mTextView1.setText(currentItem.getText1());
+        holder.mTextView2.setText(currentItem.getText2());
     }
 
     @Override
     public int getItemCount() {
-        return items.size();
-    }
-
-    @Override
-    public OrderViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_view_order, viewGroup, false);
-        return new OrderViewHolder(v);
-    }
-
-    @Override
-    public void onBindViewHolder(OrderViewHolder viewHolder, int position) {
-
-        viewHolder.product.setText(items.get(position).getProduct());
-        viewHolder.amount.setText("Cantidad:" + items.get(position).getAmount());
-
-        viewHolder.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                    //viewHolder.amount.setText("POSICION CV: " + position + "ELIMINADO: " + items.get(position).getProduct());
-                    //Toast.makeText(view.getContext(), Integer.toString(position), Toast.LENGTH_LONG).show();
-                    items.remove(viewHolder.getAdapterPosition());
-            }
-        });
-
+        return mExampleList.size();
     }
 }

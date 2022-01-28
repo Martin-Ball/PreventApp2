@@ -10,37 +10,40 @@
     card_view:cardUseCompatPadding="true">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp">
 
         <TextView
-            android:id="@+id/Product"
+            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="10dp"
-            android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_toEndOf="@+id/imageView"
+            android:text="Line 1"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/amount"
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/Product"
-            android:layout_alignLeft="@+id/Product"
-            android:text="Small Text"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:layout_below="@+id/textView"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@+id/imageView"
+            android:text="Line 2"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/image_delete"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_baseline_delete" />
 
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/deleteProduct"
-        android:layout_width="27dp"
-        android:layout_height="29dp"
-        android:layout_gravity="right|center_vertical"
-        android:background="@drawable/ic_baseline_delete"
-        android:gravity="center"
-        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.cardview.widget.CardView>
 

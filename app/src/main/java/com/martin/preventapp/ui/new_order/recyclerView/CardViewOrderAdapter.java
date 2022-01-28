@@ -1,4 +1,4 @@
-package com.martin.preventapp.ui.recyclerView;
+package com.martin.preventapp.ui.new_order.recyclerView;
 
 
 import android.view.LayoutInflater;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 
 public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdapter.CardViewOrderViewHolder> {
-    private ArrayList<CardViewOrder> mExampleList;
+    private ArrayList<CardViewOrder> arrayProducts;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
@@ -29,17 +29,15 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
     }
 
     public static class CardViewOrderViewHolder extends RecyclerView.ViewHolder {
-        public ImageView mImageView;
-        public TextView mTextView1;
-        public TextView mTextView2;
-        public ImageView mDeleteImage;
+        public TextView productText;
+        public TextView amountText;
+        public ImageView deleteImage;
 
         public CardViewOrderViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
-            mImageView = itemView.findViewById(R.id.imageView);
-            mTextView1 = itemView.findViewById(R.id.textView);
-            mTextView2 = itemView.findViewById(R.id.textView2);
-            mDeleteImage = itemView.findViewById(R.id.image_delete);
+            productText = itemView.findViewById(R.id.Product);
+            amountText = itemView.findViewById(R.id.Amount);
+            deleteImage = itemView.findViewById(R.id.image_delete);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -53,7 +51,7 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
                 }
             });
 
-            mDeleteImage.setOnClickListener(new View.OnClickListener() {
+            deleteImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (listener != null) {
@@ -68,7 +66,7 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
     }
 
     public CardViewOrderAdapter(ArrayList<CardViewOrder> exampleList) {
-        mExampleList = exampleList;
+        arrayProducts = exampleList;
     }
 
     @Override
@@ -80,14 +78,14 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
 
     @Override
     public void onBindViewHolder(CardViewOrderViewHolder holder, int position) {
-        CardViewOrder currentItem = mExampleList.get(position);
+        CardViewOrder currentItem = arrayProducts.get(position);
 
-        holder.mTextView1.setText(currentItem.getText1());
-        holder.mTextView2.setText(currentItem.getText2());
+        holder.productText.setText(currentItem.getProduct());
+        holder.amountText.setText(currentItem.getAmount());
     }
 
     @Override
     public int getItemCount() {
-        return mExampleList.size();
+        return arrayProducts.size();
     }
 }

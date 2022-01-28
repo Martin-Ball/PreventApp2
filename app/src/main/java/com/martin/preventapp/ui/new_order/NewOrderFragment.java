@@ -14,13 +14,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.martin.preventapp.ui.recyclerView.CardViewOrderAdapter;
-import com.martin.preventapp.ui.recyclerView.CardViewOrder;
+
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentNewOrderBinding;
 import com.martin.preventapp.firebase.Clients;
 import com.martin.preventapp.firebase.OrderDone;
 import com.martin.preventapp.firebase.Products;
+import com.martin.preventapp.ui.new_order.recyclerView.CardViewOrder;
+import com.martin.preventapp.ui.new_order.recyclerView.CardViewOrderAdapter;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.ArrayList;
@@ -140,7 +141,7 @@ public class NewOrderFragment extends Fragment {
     }
 
     public void changeItem(int position, String text) {
-        arrayProducts.get(position).changeText1(text);
+        arrayProducts.get(position).changeTextProduct(text);
         mAdapter.notifyItemChanged(position);
     }
 

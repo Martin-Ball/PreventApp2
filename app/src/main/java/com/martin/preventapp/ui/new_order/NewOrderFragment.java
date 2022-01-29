@@ -35,7 +35,7 @@ public class NewOrderFragment extends Fragment {
     private ArrayList<CardViewOrder> arrayProducts;
 
     private RecyclerView mRecyclerView;
-    private CardViewOrderAdapter mAdapter;
+    private CardViewOrderAdapter CardViewProductsAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -98,9 +98,8 @@ public class NewOrderFragment extends Fragment {
                 if (i == 0) {
                 } else {
                     String sNumber = adapterView.getItemAtPosition(i).toString();
-                    arrayProducts.add(new CardViewOrder(sNumber, "2"));
+                    arrayProducts.add(new CardViewOrder(sNumber, "0"));
                     buildRecyclerView(root);
-                    //newProduct.cardViewNewProduct(items, root);
                 }
             }
 
@@ -137,12 +136,26 @@ public class NewOrderFragment extends Fragment {
 
     public void removeItem(int position) {
         arrayProducts.remove(position);
-        mAdapter.notifyItemRemoved(position);
+        CardViewProductsAdapter.notifyItemRemoved(position);
     }
 
     public void changeItem(int position, String text) {
         arrayProducts.get(position).changeTextProduct(text);
-        mAdapter.notifyItemChanged(position);
+        CardViewProductsAdapter.notifyItemChanged(position);
+    }
+
+    public void addAmountItem(int position) {
+        int amountAdd = Integer.parseInt(arrayProducts.get(position).getAmount());
+        arrayProducts.get(position).changeTextAmount(Integer.toString(amountAdd + 1));
+        CardViewProductsAdapter.notifyItemChanged(position);
+    }
+
+    public void removeAmountItem(int position) {
+        int amountRemove = Integer.parseInt(arrayProducts.get(position).getAmount());
+        if (amountRemove > 0) {
+            arrayProducts.get(position).changeTextAmount(Integer.toString(amountRemove - 1));
+            CardViewProductsAdapter.notifyItemChanged(position);
+        }
     }
 
 
@@ -150,12 +163,12 @@ public class NewOrderFragment extends Fragment {
         mRecyclerView = root.findViewById(R.id.ordersRecycler);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(root.getContext());
-        mAdapter = new CardViewOrderAdapter(arrayProducts);
+        CardViewProductsAdapter = new CardViewOrderAdapter(arrayProducts);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(CardViewProductsAdapter);
 
-        mAdapter.setOnItemClickListener(new CardViewOrderAdapter.OnItemClickListener() {
+        CardViewProductsAdapter.setOnItemClickListener(new CardViewOrderAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 changeItem(position, "Clicked");
@@ -164,6 +177,18 @@ public class NewOrderFragment extends Fragment {
             @Override
             public void onDeleteClick(int position) {
                 removeItem(position);
+            }
+
+            @Override
+            public void addButtonClick(int position)
+            {
+                addAmountItem(position);
+            }
+
+            @Override
+            public void removeButtonClick(int position)
+            {
+                removeAmountItem(position);
             }
         });
     }

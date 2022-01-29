@@ -21,7 +21,6 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
 
 
     public interface OnItemClickListener {
-        void onItemClick(int position);
 
         void onDeleteClick(int position);
 
@@ -51,18 +50,6 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
             deleteImage = itemView.findViewById(R.id.image_delete_button);
             addImage = itemView.findViewById(R.id.image_add_button);
             removeImage = itemView.findViewById(R.id.image_remove_button);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-                        }
-                    }
-                }
-            });
 
             deleteImage.setOnClickListener(new View.OnClickListener() {
                 @Override

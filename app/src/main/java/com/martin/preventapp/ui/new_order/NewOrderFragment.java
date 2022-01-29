@@ -1,5 +1,7 @@
 package com.martin.preventapp.ui.new_order;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -32,7 +36,8 @@ public class NewOrderFragment extends Fragment {
     private FragmentNewOrderBinding binding;
     private String selectedClient = " ";
 
-    private ArrayList<CardViewOrder> arrayProducts;
+    private ArrayList<CardViewOrder> arrayCardViewProducts;
+    private ArrayList<ArrayList<String>> arrayProducts;
 
     private RecyclerView mRecyclerView;
     private CardViewOrderAdapter CardViewProductsAdapter;
@@ -54,6 +59,8 @@ public class NewOrderFragment extends Fragment {
         Clients clients = new Clients();
 
         //initial ArrayList
+        arrayCardViewProducts = new ArrayList<>();
+
         arrayProducts = new ArrayList<>();
 
         ArrayAdapter<String> adapterNewClientSelector = new ArrayAdapter<>(root.getContext(), android.R.layout.simple_list_item_1, clients.clientlist());
@@ -97,10 +104,22 @@ public class NewOrderFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0) {
                 } else {
-                    String sNumber = adapterView.getItemAtPosition(i).toString();
-                    arrayProducts.add(new CardViewOrder(sNumber, "0"));
+                    String productSelected = adapterView.getItemAtPosition(i).toString();
+                    arrayCardViewProducts.add(new CardViewOrder(productSelected, "0"));
+
+                    ArrayList<String> productAndAmount = new ArrayList<>();
+
+                    //add product and amount into ArrayList
+                    productAndAmount.add(0,productSelected);
+                    productAndAmount.add(1,"0");
+
+                    //add product and amount into array
+                    arrayProducts.add(productAndAmount);
+
+                    //build Recycler View with CardViews
                     buildRecyclerView(root);
                 }
+                spinnerNewProduct.setSelection(0);
             }
 
             @Override
@@ -115,15 +134,14 @@ public class NewOrderFragment extends Fragment {
         finishOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 OrderDone orderDone = new OrderDone();
 
-                orderDone.orderDone(arrayProducts, selectedClient, binding.ordersRecycler);
+                orderDone.orderDone(arrayCardViewProducts, arrayProducts, selectedClient, binding.ordersRecycler, root);
             }
         });
 
-
-
-
+        
         return root;
     }
 
@@ -135,25 +153,32 @@ public class NewOrderFragment extends Fragment {
 
 
     public void removeItem(int position) {
-        arrayProducts.remove(position);
+        arrayCardViewProducts.remove(position);
         CardViewProductsAdapter.notifyItemRemoved(position);
     }
 
     public void changeItem(int position, String text) {
-        arrayProducts.get(position).changeTextProduct(text);
+        arrayCardViewProducts.get(position).changeTextProduct(text);
         CardViewProductsAdapter.notifyItemChanged(position);
     }
 
     public void addAmountItem(int position) {
-        int amountAdd = Integer.parseInt(arrayProducts.get(position).getAmount());
-        arrayProducts.get(position).changeTextAmount(Integer.toString(amountAdd + 1));
+        int amountAdd = Integer.parseInt(arrayCardViewProducts.get(position).getAmount());
+        arrayCardViewProducts.get(position).changeTextAmount(Integer.toString(amountAdd + 1));
         CardViewProductsAdapter.notifyItemChanged(position);
+
+        ArrayList<String> productAndAmount = new ArrayList<>();
+
+        productAndAmount.add(0, arrayCardViewProducts.get(position).getProduct());
+        productAndAmount.add(1, Integer.toString(amountAdd + 1));
+
+        arrayProducts.set(position, productAndAmount);
     }
 
     public void removeAmountItem(int position) {
-        int amountRemove = Integer.parseInt(arrayProducts.get(position).getAmount());
+        int amountRemove = Integer.parseInt(arrayCardViewProducts.get(position).getAmount());
         if (amountRemove > 0) {
-            arrayProducts.get(position).changeTextAmount(Integer.toString(amountRemove - 1));
+            arrayCardViewProducts.get(position).changeTextAmount(Integer.toString(amountRemove - 1));
             CardViewProductsAdapter.notifyItemChanged(position);
         }
     }
@@ -163,16 +188,12 @@ public class NewOrderFragment extends Fragment {
         mRecyclerView = root.findViewById(R.id.ordersRecycler);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(root.getContext());
-        CardViewProductsAdapter = new CardViewOrderAdapter(arrayProducts);
+        CardViewProductsAdapter = new CardViewOrderAdapter(arrayCardViewProducts);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(CardViewProductsAdapter);
 
         CardViewProductsAdapter.setOnItemClickListener(new CardViewOrderAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                changeItem(position, "Clicked");
-            }
 
             @Override
             public void onDeleteClick(int position) {

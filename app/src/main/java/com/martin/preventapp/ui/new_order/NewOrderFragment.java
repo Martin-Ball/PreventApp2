@@ -135,13 +135,20 @@ public class NewOrderFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                OrderDone orderDone = new OrderDone();
+                if(selectedClient == " ")
+                {
+                    Toast.makeText(root.getContext(), "Seleccione un cliente", Toast.LENGTH_LONG).show();
+                }
+                else {
 
-                orderDone.orderDone(arrayCardViewProducts, arrayProducts, selectedClient, binding.ordersRecycler, root);
+                    OrderDone orderDone = new OrderDone();
+
+                    orderDone.orderDone(arrayCardViewProducts, arrayProducts, selectedClient, binding.ordersRecycler, root);
+                }
             }
         });
 
-        
+
         return root;
     }
 
@@ -180,6 +187,13 @@ public class NewOrderFragment extends Fragment {
         if (amountRemove > 0) {
             arrayCardViewProducts.get(position).changeTextAmount(Integer.toString(amountRemove - 1));
             CardViewProductsAdapter.notifyItemChanged(position);
+
+            ArrayList<String> productAndAmount = new ArrayList<>();
+
+            productAndAmount.add(0, arrayCardViewProducts.get(position).getProduct());
+            productAndAmount.add(1, Integer.toString(amountRemove - 1));
+
+            arrayProducts.set(position, productAndAmount);
         }
     }
 

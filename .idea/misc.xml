@@ -4,7 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/drawable/ic_baseline_delete.xml" value="0.3828125" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.23560910307898258" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout-w936dp/activity_login.xml" value="0.2455601092896175" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/activity_login.xml" value="0.32563405797101447" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/activity_main.xml" value="0.32563405797101447" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/app_bar_main.xml" value="0.32563405797101447" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/authentification.xml" value="0.32563405797101447" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/card_view_order.xml" value="0.33" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/dialog_signin.xml" value="0.32563405797101447" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/fragment_new_order.xml" value="0.31657608695652173" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/drawable/ic_baseline_delete.xml" value="0.3828125" />
         <entry key="..\:/Documentos/Martin/PreventApp/app/src/main/res/drawable/ic_list.xml" value="0.3828125" />

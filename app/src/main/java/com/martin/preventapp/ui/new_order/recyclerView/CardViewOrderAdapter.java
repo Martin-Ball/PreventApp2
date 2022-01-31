@@ -106,7 +106,9 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
 
             holder.productText.setText(currentItem.getProduct());
             holder.amountText.setText("Cantidad: " + currentItem.getAmount());
-            holder.amountTextSelected.setText(currentItem.getAmount());
+            if (Integer.parseInt(currentItem.getAmount()) > 0) {
+                holder.amountTextSelected.setText(currentItem.getAmount());
+            }
         }
 
         @Override

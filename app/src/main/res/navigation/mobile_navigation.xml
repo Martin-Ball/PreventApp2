@@ -22,4 +22,9 @@
         android:name="com.martin.preventapp.ui.list.ListFragment"
         android:label="@string/menu_list"
         tools:layout="@layout/fragment_list" />
+    <activity
+        android:id="@+id/logOut"
+        android:name="com.martin.preventapp.LogOut"
+        android:label="activity_log_out"
+        tools:layout="@layout/activity_log_out" />
 </navigation>

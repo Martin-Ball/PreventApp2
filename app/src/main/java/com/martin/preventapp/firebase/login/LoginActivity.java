@@ -1,4 +1,4 @@
-package com.martin.preventapp.ui.login;
+package com.martin.preventapp.firebase.login;
 
 
 import android.content.Intent;
@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.martin.preventapp.MainActivity;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.ActivityLoginBinding;
@@ -45,6 +47,13 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        if(mAuth.getCurrentUser() != null){
+            Toast.makeText(binding.password.getContext(), "Sesion iniciada como: " + mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
+            showMainActivity();
+        }else{
+            Toast.makeText(binding.password.getContext(), "Sin sesiones activas", Toast.LENGTH_SHORT).show();
+        }
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                 psw = passwordEditText.getText().toString();
 
                 if (email != null && psw != null){
-                    registerUser();
+                    registerUser(binding.getRoot());
                 }else{
                     Toast.makeText(binding.getRoot().getContext(), "Debe completar los campos", Toast.LENGTH_SHORT).show();
                 }
@@ -88,13 +97,14 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void registerUser(){
+    private void registerUser(View root){
 
         mAuth.createUserWithEmailAndPassword(email, psw).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                if (task.isSuccessful()){
                    showMainActivity();
+                   createUserOnDatabase(root);
                }else {
                    Toast.makeText(binding.password.getContext(), "No se puede registrar el usuario", Toast.LENGTH_SHORT).show();
                }
@@ -103,8 +113,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showMainActivity(){
-        Intent intent = new Intent(binding.getRoot().getContext(), MainActivity.class);
+        Intent intent = new Intent(binding.getRoot().getContext(), MainActivity.class).putExtra("email", email);
         startActivity(intent);
         finish();
+    }
+
+    private void createUserOnDatabase(View root){
+        DatabaseReference createUser = FirebaseDatabase.getInstance().getReference("Users");
+        String email2 = email.substring(0, email.indexOf("@"));
+        createUser.child(email2).setValue(email);
+
+        createUser.child(email2).child("Nutrifresca").child("List").setValue("Lista1");
+        createUser.child(email2).child("Nutrifresca").child("Clients").setValue("Clients");
+        createUser.child(email2).child("Nutrifresca").child("Orders").setValue("Orders");
+
+        Toast.makeText(root.getContext(), "Registro de usuario exitoso", Toast.LENGTH_SHORT).show();
     }
 }

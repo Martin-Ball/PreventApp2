@@ -1,15 +1,17 @@
 package com.martin.preventapp.ui.new_order;
 
-import android.content.ActivityNotFoundException;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ipsec.ike.TunnelModeChildSessionParams;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.BaseInputConnection;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentNewOrderBinding;
 import com.martin.preventapp.firebase.Clients;
@@ -35,7 +40,7 @@ public class NewOrderFragment extends Fragment {
 
     private NewOrderViewModel newOrderViewModel;
     private FragmentNewOrderBinding binding;
-    private String selectedClient = " ";
+    private String selectedClient;
 
     private ArrayList<CardViewOrder> arrayCardViewProducts;
     private ArrayList<ArrayList<String>> arrayProducts;
@@ -43,6 +48,7 @@ public class NewOrderFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private CardViewOrderAdapter CardViewProductsAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private String comment;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -51,6 +57,11 @@ public class NewOrderFragment extends Fragment {
 
         binding = FragmentNewOrderBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        Intent intent = getActivity().getIntent();
+
+        String email = intent.getStringExtra("email");
+
 
         //spinner searchable
         SearchableSpinner spinnerClient = root.findViewById(R.id.spinner_searchable_new_client);
@@ -136,15 +147,14 @@ public class NewOrderFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                if(selectedClient == " ")
-                {
+                if(selectedClient == null) {
                     Toast.makeText(root.getContext(), "Seleccione un cliente", Toast.LENGTH_LONG).show();
-                }
-                else {
-
+                }else if (arrayProducts.isEmpty()){
+                    Toast.makeText(root.getContext(), "Seleccione productos", Toast.LENGTH_LONG).show();
+                }else {
+                    alertDialogComments(root);
                     OrderDone orderDone = new OrderDone();
-
-                    orderDone.orderDone(arrayCardViewProducts, arrayProducts, selectedClient, binding.ordersRecycler, root);
+                    orderDone.orderDone(arrayCardViewProducts, arrayProducts, selectedClient, binding.ordersRecycler, comment, root);
                 }
             }
         });
@@ -227,5 +237,56 @@ public class NewOrderFragment extends Fragment {
                 removeAmountItem(position);
             }
         });
+    }
+
+    private String alertDialogComments(View root)
+    {
+        LayoutInflater li = LayoutInflater.from(root.getContext());
+        View promptsView = li.inflate(R.layout.dialog_comment_finish_button, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(root.getContext());
+
+        alertDialogBuilder.setView(promptsView);
+
+        final EditText userInput = (EditText) promptsView.findViewById(R.id.etUserInput);
+
+
+        // set dialog message
+        alertDialogBuilder.setCancelable(false).setPositiveButton("Enviar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        comment = userInput.getText().toString();
+                        Toast.makeText(promptsView.getContext(), "Comentario agregado al pedido", Toast.LENGTH_SHORT).show();
+                        uploadClients();
+                    }
+                })
+                .setNegativeButton("NO",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                comment = " ";
+                            }
+                        })
+                .setNeutralButton("CANCELAR", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+
+        return comment;
+    }
+
+    private void uploadClients(){
+        DatabaseReference createUser = FirebaseDatabase.getInstance().getReference("Users");
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String email2 = email.substring(0, email.indexOf("@"));
+        createUser.child(email2).setValue(email);
+
+        createUser.child(email2).child("Nutrifresca").child("Clients").push().setValue("A LA PARR S.R.L");
     }
 }

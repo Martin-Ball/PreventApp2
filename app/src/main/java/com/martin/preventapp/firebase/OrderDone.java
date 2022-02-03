@@ -18,16 +18,16 @@ import java.util.Locale;
 
 public class OrderDone {
 
-    public void orderDone (ArrayList items, ArrayList<ArrayList<String>> arrayProducts, String selectedClient, RecyclerView ordersRecycler, View root) {
+    private StringBuilder message;
+
+    public void orderDone (ArrayList items, ArrayList<ArrayList<String>> arrayProducts, String selectedClient, RecyclerView ordersRecycler, String comment, View root) {
 
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
 
-        //Send order from Whatsapp
-
         String limitText = "===========================\n";
 
-        StringBuilder message = new StringBuilder();
+        message = new StringBuilder();
 
         //Header Builder
 
@@ -46,56 +46,61 @@ public class OrderDone {
 
         message.append("\n" + limitText);
 
-            //Toast.makeText(root.getContext(), message, Toast.LENGTH_LONG).show();
+            if(comment != " "){
+                message.append("Comentarios: \n" + comment);
+                message.append("\n" + limitText);
+            }
 
+            whatsapp(root);
+            firebase(items, currentDate, currentTime, selectedClient);
 
-        // Creating new intent
-        Intent intent = new Intent(Intent.ACTION_SEND);
+            //clear recyclerView
 
-        intent.setType("text/plain");
-        intent.setPackage("com.whatsapp");
+            clearRecyclerView(ordersRecycler, items);
+            clearArray(arrayProducts);
+    }
 
-        // Give your message here
-        intent.putExtra(Intent.EXTRA_TEXT, message.toString());
-
-        // Checking whether Whatsapp
-        // is installed or not
-
-        // Starting Whatsapp
-
+    private void whatsapp(View root){
         try{
+            // Starting Whatsapp
+            // Creating new intent
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+
+            intent.setType("text/plain");
+            intent.setPackage("com.whatsapp");
+
+            // Give your message here
+            intent.putExtra(Intent.EXTRA_TEXT, message.toString());
+
+            // Checking whether Whatsapp
+            // is installed or not
             root.getContext().startActivity(intent);
+
         }catch (ActivityNotFoundException ex){
-
             Toast.makeText(root.getContext(), "Whastapp No Instalado", Toast.LENGTH_SHORT).show();
-
         }
+    }
 
-
+    private void firebase(ArrayList items, String currentDate, String currentTime, String selectedClient){
         //Upload order in firebase
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("OrderToSend");
 
-            for (int i = 1; i <= items.size(); i++) {
+        for (int i = 1; i <= items.size(); i++) {
 
-                mDatabase.child(currentTime + " " + currentDate + " " + selectedClient)
-                        .child(Integer.toString(i))
-                        .setValue(items.get(i-1));
-            }
-
-            clearRecyclerView(ordersRecycler, items);
-            clearArray(arrayProducts);
-
-
+            mDatabase.child(currentTime + " " + currentDate + " " + selectedClient)
+                    .child(Integer.toString(i))
+                    .setValue(items.get(i-1));
+        }
     }
 
-    private void clearRecyclerView(RecyclerView orderRecycler, List items) {
+    private void clearRecyclerView(RecyclerView orderRecycler, ArrayList items) {
         orderRecycler.setAdapter(null);
         items.clear();
     }
 
-    private void clearArray(ArrayList<ArrayList<String>> arrayProducts)
-    {
+    private void clearArray(ArrayList<ArrayList<String>> arrayProducts) {
         arrayProducts.clear();
     }
 }

@@ -3,8 +3,10 @@ package com.martin.preventapp.ui.new_order;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.icu.text.IDNA;
 import android.net.ipsec.ike.TunnelModeChildSessionParams;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +18,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentNewOrderBinding;
 import com.martin.preventapp.firebase.Clients;
@@ -34,7 +47,13 @@ import com.martin.preventapp.ui.new_order.recyclerView.CardViewOrder;
 import com.martin.preventapp.ui.new_order.recyclerView.CardViewOrderAdapter;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class NewOrderFragment extends Fragment {
 
@@ -130,6 +149,8 @@ public class NewOrderFragment extends Fragment {
 
                     //build Recycler View with CardViews
                     buildRecyclerView(root);
+
+                    uploadClients();
                 }
                 spinnerNewProduct.setSelection(0);
             }
@@ -256,7 +277,7 @@ public class NewOrderFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         comment = userInput.getText().toString();
                         Toast.makeText(promptsView.getContext(), "Comentario agregado al pedido", Toast.LENGTH_SHORT).show();
-                        uploadClients();
+
                     }
                 })
                 .setNegativeButton("NO",
@@ -282,11 +303,91 @@ public class NewOrderFragment extends Fragment {
     }
 
     private void uploadClients(){
-        DatabaseReference createUser = FirebaseDatabase.getInstance().getReference("Users");
-        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-        String email2 = email.substring(0, email.indexOf("@"));
-        createUser.child(email2).setValue(email);
 
-        createUser.child(email2).child("Nutrifresca").child("Clients").push().setValue("A LA PARR S.R.L");
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+
+
+        ConexionBD();
+
+
+        /*DatabaseReference createUser = FirebaseDatabase.getInstance().getReference("Users");
+
+        //createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("Clients").push().setValue("ALBRECHT CARINA B.2");
+
+        List<String> test = null;
+
+        test.add("Nombre");
+        test.add("Direccion");
+
+        createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("Clients").push().child("Name").setValue(test);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Create a new user with a first and last name
+        Map<String, Object> user = new HashMap<>();
+        Map<String, Object> Client = new HashMap<>();
+        Map<String, Object> InfoClient = new HashMap<>();
+
+        InfoClient.put("CODE", "690");
+        InfoClient.put("Street Address", "3 DE FEBRERO 4865 ESQ. PASAJE NEWBERY");
+        InfoClient.put("Fantasy Name", "PARTICULAR");
+        InfoClient.put("CUIT", "27221721123");
+
+        Client.put("ALBRECHT CARINA 2", InfoClient);
+
+        user.put("Clients", Client);
+
+
+        // Add a new document with a generated ID
+        db
+                .collection("users")
+                .document(currentFirebaseUser.getUid())
+                .set(user);
+
+        db.collection("users").document(currentFirebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                 Map<String, Object> data = documentSnapshot.getData();
+                 Map<String, Object> data1 = (Map<String, Object>) data.get("Clients");
+                 Map<String, Object> data2 = (Map<String, Object>) data1.get("ALBRECHT CARINA 2");
+
+                binding.clientNewOrder.setText(data2.);
+            }
+        });/*
+
+
+
+
+
+
+
+        /*createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("List").child("Clients")
+                .push().child("Name").setValue("ALBRECHT CARINA 222");*/
+
+
+        //Toast.makeText(binding.getRoot().getContext(), , Toast.LENGTH_SHORT).show();
+        /*createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("Clients").child("ALBRECHT CARINA B.2").child("CODE").setValue("690");
+        createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("Clients").child("ALBRECHT CARINA B.2").child("Street Address").setValue("3 DE FEBRERO 4865 ESQ. PASAJE NEWBERY");
+        createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("Clients").child("ALBRECHT CARINA B.2").child("Fantasy Name").setValue("PARTICULAR");
+        createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("Clients").child("ALBRECHT CARINA B.2").child("CUIT").setValue("27221721123");*/
+    }
+
+    public Connection ConexionBD()
+    {
+        Connection connection = null;
+        try {
+            
+            StrictMode.ThreadPolicy a = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(a);
+            Class.forName("net.sourceforge.jtds.jdbc.Driver");
+            String connectURL = "database-1.cbj01uw6ysjb.sa-east-1.rds.amazonaws.com";
+            connection = DriverManager.getConnection(connectURL, "admin", "Martin1432");
+            Toast.makeText(binding.getRoot().getContext(), "Conexion exitosa", Toast.LENGTH_SHORT).show();
+
+        } catch (Exception e) {
+            Toast.makeText(binding.getRoot().getContext(), "error:" + e, Toast.LENGTH_SHORT).show();
+        }
+        return connection;
     }
 }

@@ -42,7 +42,7 @@
             <TextView
                 android:id="@+id/client_new_order"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Nuevo pedido"
                 android:textAlignment="center"
@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:text="ENVIAR PEDIDO"
             android:backgroundTint="@color/linkiar_signin"
-            android:drawableRight="@drawable/ic_whatsapp_logo_white"/>
+            android:drawableLeft="@drawable/ic_whatsapp_logo_white"/>
 
 
     </LinearLayout>

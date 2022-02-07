@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.martin.preventapp.MainActivity;
@@ -119,13 +120,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void createUserOnDatabase(View root){
-        DatabaseReference createUser = FirebaseDatabase.getInstance().getReference("Users");
-        String email2 = email.substring(0, email.indexOf("@"));
-        createUser.child(email2).setValue(email);
 
-        createUser.child(email2).child("Nutrifresca").child("List").setValue("Lista1");
-        createUser.child(email2).child("Nutrifresca").child("Clients").setValue("Clients");
-        createUser.child(email2).child("Nutrifresca").child("Orders").setValue("Orders");
+        /*
+
+        */
+        DatabaseReference createUser = FirebaseDatabase.getInstance().getReference("Users");
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+
+        createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("List").setValue("Lista 1");
+        createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("Clients").setValue("Clients");
+        createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("Orders").setValue("Orders");
 
         Toast.makeText(root.getContext(), "Registro de usuario exitoso", Toast.LENGTH_SHORT).show();
     }

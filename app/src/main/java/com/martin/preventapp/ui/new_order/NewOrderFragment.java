@@ -69,6 +69,11 @@ public class NewOrderFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private String comment;
 
+    //test
+    private HashMap<String, Object> user = new HashMap<>();
+    private HashMap<String,Object> Client = new HashMap<>();
+    private HashMap<String, String> ClientInfo = new HashMap<>();
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         newOrderViewModel =
@@ -302,34 +307,48 @@ public class NewOrderFragment extends Fragment {
         return comment;
     }
 
+
+
     private void uploadClients(){
 
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
 
+        //user:
+        //{"Clients"={"ALBRECHT CARINA 2"={"COD"=xx, "Street Address"=xx, "Fantasy Name"=xx, "CUIT"=xx}}}
 
-        ConexionBD();
+        //Clients:
+        //{"ALBRECHT CARINA 2"={"COD"=xx, "Street Address"=xx, "Fantasy Name"=xx, "CUIT"=xx}}
 
+        //ALBRECHT CARINA 2:
+        //{"COD"=690, "Street Address"=xx, "Fantasy Name"=xx, "CUIT"=xx}
 
-        /*DatabaseReference createUser = FirebaseDatabase.getInstance().getReference("Users");
+        //When i use get("COD") the result is 690
 
-        //createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("Clients").push().setValue("ALBRECHT CARINA B.2");
-
-        List<String> test = null;
-
-        test.add("Nombre");
-        test.add("Direccion");
-
-        createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("Clients").push().child("Name").setValue(test);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+
+
+        db.collection("users").document(currentFirebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                user = (HashMap<String, Object>) documentSnapshot.getData();
+                Client = (HashMap<String, Object>) user.get("Clients");
+                ClientInfo = (HashMap<String, String>) Client.get("ALBRECHT CARINA 2");
+
+                binding.clientNewOrder.setText(ClientInfo.get("CUIT"));
+            }
+            });
+
+
         // Create a new user with a first and last name
-        Map<String, Object> user = new HashMap<>();
-        Map<String, Object> Client = new HashMap<>();
-        Map<String, Object> InfoClient = new HashMap<>();
+        HashMap<String, Object> user = new HashMap<>();
+        HashMap<String, Object> Client = new HashMap<>();
+        HashMap<String, Object> InfoClient = new HashMap<>();
 
         InfoClient.put("CODE", "690");
-        InfoClient.put("Street Address", "3 DE FEBRERO 4865 ESQ. PASAJE NEWBERY");
+        InfoClient.put("Street Address", "---3 DE FEBRERO 4865 ESQ. PASAJE NEWBERY");
         InfoClient.put("Fantasy Name", "PARTICULAR");
         InfoClient.put("CUIT", "27221721123");
 
@@ -338,56 +357,11 @@ public class NewOrderFragment extends Fragment {
         user.put("Clients", Client);
 
 
-        // Add a new document with a generated ID
+        // Add a new document with ID for user
         db
                 .collection("users")
                 .document(currentFirebaseUser.getUid())
-                .set(user);
+                .update(user);
+          }
 
-        db.collection("users").document(currentFirebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                 Map<String, Object> data = documentSnapshot.getData();
-                 Map<String, Object> data1 = (Map<String, Object>) data.get("Clients");
-                 Map<String, Object> data2 = (Map<String, Object>) data1.get("ALBRECHT CARINA 2");
-
-                binding.clientNewOrder.setText(data2.);
-            }
-        });/*
-
-
-
-
-
-
-
-        /*createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("List").child("Clients")
-                .push().child("Name").setValue("ALBRECHT CARINA 222");*/
-
-
-        //Toast.makeText(binding.getRoot().getContext(), , Toast.LENGTH_SHORT).show();
-        /*createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("Clients").child("ALBRECHT CARINA B.2").child("CODE").setValue("690");
-        createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("Clients").child("ALBRECHT CARINA B.2").child("Street Address").setValue("3 DE FEBRERO 4865 ESQ. PASAJE NEWBERY");
-        createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("Clients").child("ALBRECHT CARINA B.2").child("Fantasy Name").setValue("PARTICULAR");
-        createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("Clients").child("ALBRECHT CARINA B.2").child("CUIT").setValue("27221721123");*/
-    }
-
-    public Connection ConexionBD()
-    {
-        Connection connection = null;
-        try {
-            
-            StrictMode.ThreadPolicy a = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(a);
-            Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            String connectURL = "database-1.cbj01uw6ysjb.sa-east-1.rds.amazonaws.com";
-            connection = DriverManager.getConnection(connectURL, "admin", "Martin1432");
-            Toast.makeText(binding.getRoot().getContext(), "Conexion exitosa", Toast.LENGTH_SHORT).show();
-
-        } catch (Exception e) {
-            Toast.makeText(binding.getRoot().getContext(), "error:" + e, Toast.LENGTH_SHORT).show();
-        }
-        return connection;
-    }
 }

@@ -19,9 +19,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.martin.preventapp.MainActivity;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.ActivityLoginBinding;
+
+import java.util.HashMap;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -121,15 +124,22 @@ public class LoginActivity extends AppCompatActivity {
 
     private void createUserOnDatabase(View root){
 
-        /*
-
-        */
-        DatabaseReference createUser = FirebaseDatabase.getInstance().getReference("Users");
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
 
-        createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("List").setValue("Lista 1");
-        createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("Clients").setValue("Clients");
-        createUser.child(currentFirebaseUser.getUid()).child("Nutrifresca").child("Orders").setValue("Orders");
+        // Create a new user with a first and last name
+        HashMap<String, Object> User = new HashMap<>();
+        HashMap<String, Object> InfoUser = new HashMap<>();
+
+        InfoUser.put("List", "");
+        InfoUser.put("Orders", "");
+        InfoUser.put("Clients", "");
+
+        // Add a new document with a generated ID
+        db
+                .collection("users")
+                .document(currentFirebaseUser.getUid())
+                .set(InfoUser);
 
         Toast.makeText(root.getContext(), "Registro de usuario exitoso", Toast.LENGTH_SHORT).show();
     }

@@ -70,7 +70,7 @@ public class NewOrderFragment extends Fragment {
     private String comment;
 
     //test
-    private HashMap<String, Object> user = new HashMap<>();
+    private HashMap<String, Object> User = new HashMap<>();
     private HashMap<String,Object> Client = new HashMap<>();
     private HashMap<String, String> ClientInfo = new HashMap<>();
 
@@ -308,7 +308,6 @@ public class NewOrderFragment extends Fragment {
     }
 
 
-
     private void uploadClients(){
 
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
@@ -327,14 +326,12 @@ public class NewOrderFragment extends Fragment {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
-
         db.collection("users").document(currentFirebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                user = (HashMap<String, Object>) documentSnapshot.getData();
-                Client = (HashMap<String, Object>) user.get("Clients");
+                User = (HashMap<String, Object>) documentSnapshot.getData();
+                Client = (HashMap<String, Object>) User.get("Clients");
                 ClientInfo = (HashMap<String, String>) Client.get("ALBRECHT CARINA 2");
 
                 binding.clientNewOrder.setText(ClientInfo.get("CUIT"));
@@ -342,26 +339,7 @@ public class NewOrderFragment extends Fragment {
             });
 
 
-        // Create a new user with a first and last name
-        HashMap<String, Object> user = new HashMap<>();
-        HashMap<String, Object> Client = new HashMap<>();
-        HashMap<String, Object> InfoClient = new HashMap<>();
 
-        InfoClient.put("CODE", "690");
-        InfoClient.put("Street Address", "---3 DE FEBRERO 4865 ESQ. PASAJE NEWBERY");
-        InfoClient.put("Fantasy Name", "PARTICULAR");
-        InfoClient.put("CUIT", "27221721123");
-
-        Client.put("ALBRECHT CARINA 2", InfoClient);
-
-        user.put("Clients", Client);
-
-
-        // Add a new document with ID for user
-        db
-                .collection("users")
-                .document(currentFirebaseUser.getUid())
-                .update(user);
-          }
+        }
 
 }

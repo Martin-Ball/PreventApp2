@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -11,7 +12,7 @@
         android:text="Agregar un nuevo cliente"
         android:textAlignment="center"
         android:textColor="@color/linkiar_pressed"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/editTextNameClient"
@@ -19,12 +20,55 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:ems="10"
-        android:hint="Escriba el nombre del cliente"
+        android:hint="Razon Social (Nombre)"
         android:inputType="textEmailAddress"
         android:textColor="@color/linkiar_search_border"
         android:textColorHighlight="#2c62b3"
         android:textColorLink="#2c62b3"
-        android:textSize="14dp" />
+        android:textSize="14sp"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/editTextCUITClient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="CUIT"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/linkiar_search_border"
+        android:textColorHighlight="#2c62b3"
+        android:textColorLink="#2c62b3"
+        android:textSize="14sp"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/editTextStreetAddressClient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="Dirección"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/linkiar_search_border"
+        android:textColorHighlight="#2c62b3"
+        android:textColorLink="#2c62b3"
+        android:textSize="14sp"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/editTextFantasyNameClient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="Nombre de fantasia"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/linkiar_search_border"
+        android:textColorHighlight="#2c62b3"
+        android:textColorLink="#2c62b3"
+        android:textSize="14sp"
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
 
 </LinearLayout>

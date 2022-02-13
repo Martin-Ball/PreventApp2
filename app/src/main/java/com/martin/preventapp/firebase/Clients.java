@@ -17,38 +17,48 @@ import com.martin.preventapp.ui.new_order.NewOrderFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Clients {
 
-    public ArrayList<String> clientlist ()
+    private HashMap<String, Object> User = new HashMap<>();
+    private HashMap<String,Object> Client = new HashMap<>();
+    private ArrayList<String> List = new ArrayList<String>();
+
+    public ArrayList<String> clientlist (View view)
     {
-        ArrayList<String> numberList = new ArrayList<>();
+        List.add("+ Agregar nuevo cliente");
 
-        numberList.add("+ Agregar nuevo cliente");
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Clients");
+        //user:
+        //{"Clients"={"ALBRECHT CARINA 2"={"COD"=xx, "Street Address"=xx, "Fantasy Name"=xx, "CUIT"=xx}}}
 
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        //Clients:
+        //{"ALBRECHT CARINA 2"={"COD"=xx, "Street Address"=xx, "Fantasy Name"=xx, "CUIT"=xx}}
+
+        //ALBRECHT CARINA 2:
+        //{"COD"=690, "Street Address"=xx, "Fantasy Name"=xx, "CUIT"=xx}
+
+        //When i use get("COD") the result is 690
 
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+
+        db.collection("users").document(currentFirebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    numberList.add(postSnapshot.getValue().toString());
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-
-                // ...
+                User = (HashMap<String, Object>) documentSnapshot.getData();
+                Client = (HashMap<String, Object>) User.get("Clients");
+                List.addAll(Client.keySet());
             }
         });
 
-
-        return numberList;
+        return List;
     }
 
     public void addNewClient (String name, String CUIT, String StreetAddress, String FantasyName, View view)
@@ -57,7 +67,7 @@ public class Clients {
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
 
         // Create a new user with a CODE, Street Address, Fantasy Name and CUIT
-        HashMap<String, Object> user = new HashMap<>();
+        HashMap<String, Object> User = new HashMap<>();
         HashMap<String, Object> Client = new HashMap<>();
         HashMap<String, Object> InfoClient = new HashMap<>();
 
@@ -67,15 +77,36 @@ public class Clients {
 
         Client.put(name, InfoClient);
 
-        user.put("Clients", Client);
+        User.put("Clients", Client);
 
         try {
             // Add a new document with ID for user
-            db.collection("users").document(currentFirebaseUser.getUid()).set(user, SetOptions.merge());
+            db.collection("users").document(currentFirebaseUser.getUid()).set(User, SetOptions.merge());
 
             Toast.makeText(view.getContext(), "Cliente agregado", Toast.LENGTH_SHORT).show();
         }catch(Exception e){
             Toast.makeText(view.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
     }
+    }
+
+    public void addListOfClients()
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+
+        // Create a new user with a CODE, Street Address, Fantasy Name and CUIT
+        HashMap<String, Object> User = new HashMap<>();
+        HashMap<String, Object> Client = new HashMap<>();
+        HashMap<String, Object> InfoClient = new HashMap<>();
+
+        InfoClient.put("CUIT", "CUIT");
+        InfoClient.put("Fantasy Name", "FantasyName");
+        InfoClient.put("Street Address", "StreetAddress");
+
+        Client.put("name", InfoClient);
+
+        User.put("Clients", Client);
+            // Add a new document with ID for user
+            db.collection("users").document(currentFirebaseUser.getUid()).set(User, SetOptions.merge());
     }
 }

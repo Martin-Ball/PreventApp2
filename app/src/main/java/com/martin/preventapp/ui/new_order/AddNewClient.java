@@ -26,6 +26,9 @@ public class AddNewClient {
         EditText StreetAddress = dialoglayout.findViewById(R.id.editTextStreetAddressClient);
         EditText FantasyName = dialoglayout.findViewById(R.id.editTextFantasyNameClient);
 
+        alert.setTitle("Agregar un nuevo cliente");
+        alert.setMessage("Escriba los datos del cliente");
+
         alert.setView(dialoglayout);
 
         alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {

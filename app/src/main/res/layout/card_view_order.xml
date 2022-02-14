@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardBackgroundColor="@color/linkiar_search_background"
-    card_view:cardCornerRadius="4dp"
+    card_view:cardCornerRadius="20dp"
     card_view:cardElevation="5dp"
     card_view:cardUseCompatPadding="true">
 
@@ -38,7 +38,7 @@
             android:layout_height="38dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="14dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="12dp"
             android:layout_toStartOf="@+id/amountSelected"
             android:src="@drawable/ic_add" />
 
@@ -48,11 +48,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginEnd="12dp"
             android:layout_toStartOf="@+id/image_remove_button"
             android:hint="0"
             android:inputType="number"
+            android:minWidth="48dp"
+            android:textAlignment="center"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <ImageView
@@ -70,8 +72,8 @@
             android:layout_width="34dp"
             android:layout_height="38dp"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="13dp"
-            android:layout_marginEnd="51dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="22dp"
             android:layout_toStartOf="@+id/image_delete_button"
             android:src="@drawable/ic_remove" />
 

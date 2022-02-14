@@ -3,10 +3,7 @@ package com.martin.preventapp.ui.new_order;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.icu.text.IDNA;
-import android.net.ipsec.ike.TunnelModeChildSessionParams;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,46 +11,34 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentNewOrderBinding;
 import com.martin.preventapp.firebase.Clients;
+import com.martin.preventapp.firebase.Company;
 import com.martin.preventapp.firebase.OrderDone;
 import com.martin.preventapp.firebase.Products;
 import com.martin.preventapp.ui.new_order.recyclerView.CardViewOrder;
 import com.martin.preventapp.ui.new_order.recyclerView.CardViewOrderAdapter;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class NewOrderFragment extends Fragment {
 
@@ -84,7 +69,30 @@ public class NewOrderFragment extends Fragment {
 
         Intent intent = getActivity().getIntent();
 
-        String email = intent.getStringExtra("email");
+        //Spinner company
+
+        Company CompanyList = new Company();
+
+        Spinner SpinnerCompany = root.findViewById(R.id.spinner_company);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, CompanyList.companyList(root));
+        SpinnerCompany.setPrompt("Seleccione la empresa");
+        SpinnerCompany.setAdapter(dataAdapter);
+
+        SpinnerCompany.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+
+                    public void onItemSelected(AdapterView<?> spn, android.view.View v, int position, long id)
+                    {
+                        if(position>0) {
+                            String CompanyName = spn.getItemAtPosition(position).toString();
+
+                            Toast.makeText(spn.getContext(), "Has seleccionado " + CompanyName, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    public void onNothingSelected(AdapterView<?> spn) {
+                    }
+                });
 
 
         //spinner searchable
@@ -155,8 +163,6 @@ public class NewOrderFragment extends Fragment {
 
                     //build Recycler View with CardViews
                     buildRecyclerView(root);
-
-                    uploadClients();
                 }
                 spinnerNewProduct.setSelection(0);
             }

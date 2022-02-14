@@ -88,10 +88,5 @@ public class Products {
                 db.collection("users").document(currentFirebaseUser.getUid()).set(User2, SetOptions.merge());
             }
         });
-
-
-
-
-
     }
 }

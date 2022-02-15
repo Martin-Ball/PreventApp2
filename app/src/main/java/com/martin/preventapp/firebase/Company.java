@@ -21,8 +21,6 @@ public class Company {
 
     public ArrayList<String> companyList (View view) {
 
-        CompanyList.add("Seleccione un Proveedor");
-
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -34,7 +32,6 @@ public class Company {
                 User = (HashMap<String, Object>) documentSnapshot.getData();
                 List = (HashMap<String, Object>) User.get("List");
                 CompanyList.addAll(List.keySet());
-
             }
         });
 

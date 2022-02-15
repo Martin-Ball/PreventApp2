@@ -59,6 +59,9 @@ public class NewOrderFragment extends Fragment {
     private HashMap<String,Object> Client = new HashMap<>();
     private HashMap<String, String> ClientInfo = new HashMap<>();
 
+    //
+    String CompanyNameSelected = "";
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         newOrderViewModel =
@@ -68,31 +71,6 @@ public class NewOrderFragment extends Fragment {
         View root = binding.getRoot();
 
         Intent intent = getActivity().getIntent();
-
-        //Spinner company
-
-        Company CompanyList = new Company();
-
-        Spinner SpinnerCompany = root.findViewById(R.id.spinner_company);
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, CompanyList.companyList(root));
-        SpinnerCompany.setPrompt("Seleccione la empresa");
-        SpinnerCompany.setAdapter(dataAdapter);
-
-        SpinnerCompany.setOnItemSelectedListener(
-                new AdapterView.OnItemSelectedListener() {
-
-                    public void onItemSelected(AdapterView<?> spn, android.view.View v, int position, long id)
-                    {
-                        if(position>0) {
-                            String CompanyName = spn.getItemAtPosition(position).toString();
-
-                            Toast.makeText(spn.getContext(), "Has seleccionado " + CompanyName, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    public void onNothingSelected(AdapterView<?> spn) {
-                    }
-                });
 
 
         //spinner searchable
@@ -107,7 +85,7 @@ public class NewOrderFragment extends Fragment {
 
         arrayProducts = new ArrayList<>();
 
-        ArrayAdapter<String> adapterNewClientSelector = new ArrayAdapter<>(root.getContext(), android.R.layout.simple_list_item_1, clients.clientlist(root));
+        ArrayAdapter<String> adapterNewClientSelector = new ArrayAdapter<>(root.getContext(), android.R.layout.simple_list_item_1, clients.clientlist(root, CompanyNameSelected));
         spinnerClient.setAdapter(adapterNewClientSelector);
         spinnerClient.setTitle("Seleccione un cliente");
         spinnerClient.setPositiveButton("CANCELAR");
@@ -117,7 +95,7 @@ public class NewOrderFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0) {
                     AddNewClient newClient = new AddNewClient();
-                    newClient.newClient(root);
+                    newClient.newClient(root, CompanyNameSelected);
                 } else {
                     String sNumber = adapterView.getItemAtPosition(i).toString();
                     clientNewOrder.setText("Nuevo pedido para el cliente: " + sNumber);
@@ -345,6 +323,6 @@ public class NewOrderFragment extends Fragment {
             }
             });
 
-        }
+    }
 
 }

@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/nav_new_order"
-        android:name="com.martin.preventapp.ui.new_order.NewOrderFragment"
+        android:name="com.martin.preventapp.ui.new_order.Company.CompanyFragment"
         android:label="@string/menu_new_order"
-        tools:layout="@layout/fragment_new_order" />
+        tools:layout="@layout/fragment_company" />
 
     <fragment
         android:id="@+id/nav_orders_sent"

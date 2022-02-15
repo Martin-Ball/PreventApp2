@@ -22,11 +22,12 @@ import java.util.Map;
 
 public class Clients {
 
-    private HashMap<String, Object> User = new HashMap<>();
-    private HashMap<String,Object> Client = new HashMap<>();
+    private HashMap <String, Object> User = new HashMap<>();
+    private HashMap <String, Object> Company = new HashMap<>();
+    private HashMap <String,Object> Client = new HashMap<>();
     private ArrayList<String> List = new ArrayList<String>();
 
-    public ArrayList<String> clientlist (View view)
+    public ArrayList<String> clientlist (View view, String CompanyNameSelected)
     {
         List.add("+ Agregar nuevo cliente");
 
@@ -53,7 +54,8 @@ public class Clients {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
                 User = (HashMap<String, Object>) documentSnapshot.getData();
-                Client = (HashMap<String, Object>) User.get("Clients");
+                Company = (HashMap<String, Object>) User.get("Clients");
+                Client = (HashMap<String, Object>) Company.get("Nutrifresca");
                 List.addAll(Client.keySet());
             }
         });
@@ -61,13 +63,14 @@ public class Clients {
         return List;
     }
 
-    public void addNewClient (String name, String CUIT, String StreetAddress, String FantasyName, View view)
+    public void addNewClient (String CompanySelected, String Name, String CUIT, String StreetAddress, String FantasyName, View view)
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
 
         // Create a new user with a CODE, Street Address, Fantasy Name and CUIT
         HashMap<String, Object> User = new HashMap<>();
+        HashMap<String, Object> Company = new HashMap<>();
         HashMap<String, Object> Client = new HashMap<>();
         HashMap<String, Object> InfoClient = new HashMap<>();
 
@@ -75,9 +78,11 @@ public class Clients {
         InfoClient.put("Fantasy Name", FantasyName);
         InfoClient.put("Street Address", StreetAddress);
 
-        Client.put(name, InfoClient);
+        Client.put(Name, InfoClient);
 
-        User.put("Clients", Client);
+        Company.put(CompanySelected, Client);
+
+        User.put("Clients", Company);
 
         try {
             // Add a new document with ID for user

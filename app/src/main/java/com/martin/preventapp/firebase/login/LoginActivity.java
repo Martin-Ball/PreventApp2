@@ -117,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showMainActivity(){
-        Intent intent = new Intent(binding.getRoot().getContext(), MainActivity.class).putExtra("email", email);
+        Intent intent = new Intent(binding.getRoot().getContext(), MainActivity.class);
         startActivity(intent);
         finish();
     }

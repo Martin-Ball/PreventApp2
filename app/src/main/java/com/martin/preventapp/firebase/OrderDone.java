@@ -20,7 +20,7 @@ public class OrderDone {
 
     private StringBuilder message;
 
-    public void orderDone (ArrayList items, ArrayList<ArrayList<String>> arrayProducts, String selectedClient, RecyclerView ordersRecycler, String comment, View root) {
+    public void orderDone (ArrayList items, String CompanySelected, ArrayList<ArrayList<String>> arrayProducts, String selectedClient, RecyclerView ordersRecycler, String comment, View root) {
 
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
@@ -34,7 +34,7 @@ public class OrderDone {
         message.append(limitText)
                 .append("*Cliente:* " + selectedClient + "\n")
                 .append("*Fecha:* " + currentDate + "\n")
-                .append("*Lista:* NUTRIFRESCA\n")
+                .append("*Lista:*" + CompanySelected + "\n")
                 .append("*Productos:* " + arrayProducts.size() + "\n");
 
         message.append(limitText);
@@ -52,7 +52,7 @@ public class OrderDone {
             }
 
             whatsapp(root);
-            firebase(items, currentDate, currentTime, selectedClient);
+            firebase(items, currentDate, currentTime, CompanySelected, selectedClient);
 
             //clear recyclerView
 
@@ -82,7 +82,7 @@ public class OrderDone {
         }
     }
 
-    private void firebase(ArrayList items, String currentDate, String currentTime, String selectedClient){
+    private void firebase(ArrayList items, String currentDate, String currentTime, String CompanySelected, String selectedClient){
         //Upload order in firebase
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("OrderToSend");

@@ -45,28 +45,32 @@ public class CompanyFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 companySelected = adapterView.getItemAtPosition(i).toString();
-                Toast.makeText(root.getContext(), companySelected, Toast.LENGTH_LONG).show();
             }
         });
 
         //go to NewOrderFragment
         Button GoNewOrder = root.findViewById(R.id.go_order);
 
+        Bundle bundle = new Bundle();
+
+        FragmentManager fragmentManager = getParentFragmentManager();// getSupportFragmentManager();
+        NewOrderFragment newOrderFragment = new NewOrderFragment();
+
         GoNewOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentManager fragmentManager = getParentFragmentManager();// getSupportFragmentManager();
+
+                bundle.putString("CompanySelected", companySelected); // Put anything what you want
+                newOrderFragment.setArguments(bundle);
+
                 fragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment_content_main,  NewOrderFragment.class, null)
+                        .replace(R.id.nav_host_fragment_content_main,  newOrderFragment, null)
                         //.setReorderingAllowed(true)
                         .addToBackStack(null) // name can be null
                         .commit();
             }
         });
 
-
-        // Inflate the layout for this fragment
         return root;
-
     }
 }

@@ -32,7 +32,7 @@ public class Products {
     private HashMap<String, Object> List2 = new HashMap<>();
     private ArrayList<String> ProductsNew = new ArrayList<>();
 
-    public ArrayList<String> productlist (View root)
+    public ArrayList<String> productlist (View root, String CompanySelected)
     {
         Products.add("+ Seleccione un producto");
 
@@ -58,7 +58,7 @@ public class Products {
 
                 User = (HashMap<String, Object>) documentSnapshot.getData();
                 List = (HashMap<String, Object>) User.get("List");
-                Products.addAll((Collection<? extends String>) List.get("Nutrifresca"));
+                Products.addAll((Collection<? extends String>) List.get(CompanySelected));
             }
         });
 

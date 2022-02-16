@@ -27,7 +27,7 @@ public class Clients {
     private HashMap <String,Object> Client = new HashMap<>();
     private ArrayList<String> List = new ArrayList<String>();
 
-    public ArrayList<String> clientlist (View view, String CompanyNameSelected)
+    public ArrayList<String> clientlist (View view, String CompanySelected)
     {
         List.add("+ Agregar nuevo cliente");
 
@@ -55,7 +55,7 @@ public class Clients {
 
                 User = (HashMap<String, Object>) documentSnapshot.getData();
                 Company = (HashMap<String, Object>) User.get("Clients");
-                Client = (HashMap<String, Object>) Company.get("Nutrifresca");
+                Client = (HashMap<String, Object>) Company.get(CompanySelected);
                 List.addAll(Client.keySet());
             }
         });

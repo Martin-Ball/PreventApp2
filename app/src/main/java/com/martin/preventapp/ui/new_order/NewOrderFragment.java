@@ -60,7 +60,7 @@ public class NewOrderFragment extends Fragment {
     private HashMap<String, String> ClientInfo = new HashMap<>();
 
     //
-    String CompanyNameSelected = "";
+    String CompanySelected = "";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -70,7 +70,12 @@ public class NewOrderFragment extends Fragment {
         binding = FragmentNewOrderBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        Intent intent = getActivity().getIntent();
+        Bundle bundle = this.getArguments();
+
+        if(bundle != null){
+            CompanySelected = bundle.get("CompanySelected").toString();
+            Toast.makeText(root.getContext(), bundle.get("CompanySelected").toString(), Toast.LENGTH_LONG).show();
+        }
 
 
         //spinner searchable
@@ -85,7 +90,10 @@ public class NewOrderFragment extends Fragment {
 
         arrayProducts = new ArrayList<>();
 
-        ArrayAdapter<String> adapterNewClientSelector = new ArrayAdapter<>(root.getContext(), android.R.layout.simple_list_item_1, clients.clientlist(root, CompanyNameSelected));
+        ArrayAdapter<String> adapterNewClientSelector = new ArrayAdapter<>(root.getContext(),
+                                                                            android.R.layout.simple_list_item_1,
+                                                                            clients.clientlist(root,
+                                                                            CompanySelected));
         spinnerClient.setAdapter(adapterNewClientSelector);
         spinnerClient.setTitle("Seleccione un cliente");
         spinnerClient.setPositiveButton("CANCELAR");
@@ -95,7 +103,7 @@ public class NewOrderFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0) {
                     AddNewClient newClient = new AddNewClient();
-                    newClient.newClient(root, CompanyNameSelected);
+                    newClient.newClient(root, CompanySelected);
                 } else {
                     String sNumber = adapterView.getItemAtPosition(i).toString();
                     clientNewOrder.setText("Nuevo pedido para el cliente: " + sNumber);
@@ -115,7 +123,9 @@ public class NewOrderFragment extends Fragment {
         //products
         Products products = new Products();
 
-        ArrayAdapter<String> adapterNewProductSelector = new ArrayAdapter<>(root.getContext(), android.R.layout.simple_list_item_1, products.productlist(root));
+        ArrayAdapter<String> adapterNewProductSelector = new ArrayAdapter<>(root.getContext(),
+                                                                            android.R.layout.simple_list_item_1,
+                                                                            products.productlist(root, CompanySelected));
         spinnerNewProduct.setAdapter(adapterNewProductSelector);
         spinnerNewProduct.setTitle("Seleccione un producto");
         spinnerNewProduct.setPositiveButton("CANCELAR");
@@ -165,11 +175,10 @@ public class NewOrderFragment extends Fragment {
                 }else {
                     alertDialogComments(root);
                     OrderDone orderDone = new OrderDone();
-                    orderDone.orderDone(arrayCardViewProducts, arrayProducts, selectedClient, binding.ordersRecycler, comment, root);
+                    orderDone.orderDone(arrayCardViewProducts, CompanySelected, arrayProducts, selectedClient, binding.ordersRecycler, comment, root);
                 }
             }
         });
-
 
         return root;
     }

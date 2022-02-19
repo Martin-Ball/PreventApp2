@@ -25,7 +25,7 @@
 
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="382dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/shape"
                     android:gravity="center"
@@ -46,7 +46,7 @@
 
                     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                         android:id="@+id/spinner_searchable_new_client"
-                        android:layout_width="380dp"
+                        android:layout_width="360dp"
                         android:layout_height="48dp"
                         android:layout_gravity="center"
                         android:background="@drawable/shape_blue"
@@ -60,7 +60,7 @@
 
                     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                         android:id="@+id/spinner_new_product_searchable"
-                        android:layout_width="380dp"
+                        android:layout_width="360dp"
                         android:layout_height="48dp"
                         android:layout_gravity="center"
                         android:background="@drawable/shape_blue"

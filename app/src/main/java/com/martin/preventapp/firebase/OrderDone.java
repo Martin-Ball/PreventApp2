@@ -3,29 +3,44 @@ package com.martin.preventapp.firebase;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.view.View;
+import android.webkit.HttpAuthHandler;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.martin.preventapp.ui.new_order.NewOrderFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+import com.martin.preventapp.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class OrderDone {
 
     private StringBuilder message;
 
-    public void orderDone (ArrayList items, String CompanySelected, ArrayList<ArrayList<String>> arrayProducts, String selectedClient, RecyclerView ordersRecycler, String comment, View root) {
+    private HashMap<String, Object> User = new HashMap<>();
+    private HashMap<String, Object> Orders = new HashMap<>();
+    private ArrayList<String> Products = new ArrayList<>();
+
+    public void orderDone (ArrayList items, ArrayList<ArrayList<String>> arrayProducts,
+                           String CompanySelected,
+                           HashMap<String, HashMap<String, Object>> ProductsOrders,
+                           String selectedClient,
+                           RecyclerView ordersRecycler,
+                           String comment, View root) {
 
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
 
         String limitText = "===========================\n";
+
+
 
         message = new StringBuilder();
 
@@ -35,11 +50,11 @@ public class OrderDone {
                 .append("*Cliente:* " + selectedClient + "\n")
                 .append("*Fecha:* " + currentDate + "\n")
                 .append("*Lista:*" + CompanySelected + "\n")
-                .append("*Productos:* " + arrayProducts.size() + "\n");
+                .append("*Productos:* " + ProductsOrders.size() + "\n");
 
         message.append(limitText);
 
-        for (int i = 0; i <= arrayProducts.size() - 1; i++) {
+        for (int i = 0; i <= ProductsOrders.size() - 1; i++) {
                 message.append("\n[-] ").append(arrayProducts.get(i).get(0) + "  [CANTIDAD: " + arrayProducts.get(i).get(1) + "] ")
                         .append("\n");
         }
@@ -51,13 +66,12 @@ public class OrderDone {
                 message.append("\n" + limitText);
             }
 
-            whatsapp(root);
-            firebase(items, currentDate, currentTime, CompanySelected, selectedClient);
-
+            //whatsapp(root);
+            firebase(arrayProducts, currentDate, currentTime, CompanySelected, selectedClient, comment, root);
             //clear recyclerView
 
             clearRecyclerView(ordersRecycler, items);
-            clearArray(arrayProducts);
+            //clearArray(arrayProducts);
     }
 
     private void whatsapp(View root){
@@ -82,16 +96,39 @@ public class OrderDone {
         }
     }
 
-    private void firebase(ArrayList items, String currentDate, String currentTime, String CompanySelected, String selectedClient){
+    private void firebase(ArrayList<ArrayList<String>> arrayProducts, String currentDate, String currentTime, String CompanySelected, String selectedClient, String comment, View root){
         //Upload order in firebase
 
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("OrderToSend");
+        HashMap<String, Object> ProductAndAmount = new HashMap<>();
 
-        for (int i = 1; i <= items.size(); i++) {
+        for(int i=1; i<= arrayProducts.size(); i++){
+            ProductAndAmount.put(Integer.toString(i), arrayProducts.get(i-1));
+        }
 
-            mDatabase.child(currentTime + " " + currentDate + " " + selectedClient)
-                    .child(Integer.toString(i))
-                    .setValue(items.get(i-1));
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+
+        // Orders --> Company --> Date --> Product
+        //                             |--> Amount
+
+        HashMap<String, Object> Orders = new HashMap<>();
+        HashMap<String, Object> Client = new HashMap<>();
+        HashMap<String, Object> Company = new HashMap<>();
+        HashMap<String, Object> User = new HashMap<>();
+
+        ProductAndAmount.put("comment", comment);
+
+        Orders.put(currentDate + currentTime, ProductAndAmount);
+        Client.put(selectedClient, Orders);
+        Company.put(CompanySelected, Client);
+        User.put("Orders", Company);
+
+        try {
+            // Add a new document with ID for user
+            db.collection("users").document(currentFirebaseUser.getUid()).set(User, SetOptions.merge());
+            clearArray(arrayProducts, Orders, Client, Company, User);
+        }catch(Exception e){
+            Toast.makeText(root.getContext(), "Error: " + e, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -100,7 +137,15 @@ public class OrderDone {
         items.clear();
     }
 
-    private void clearArray(ArrayList<ArrayList<String>> arrayProducts) {
+    private void clearArray(ArrayList<ArrayList<String>> arrayProducts,
+                                HashMap<String, Object> Orders,
+                                HashMap<String, Object> Client,
+                                HashMap<String, Object> Company,
+                                HashMap<String, Object> User) {
         arrayProducts.clear();
+        Orders.clear();
+        Client.clear();
+        Company.clear();
+        User.clear();
     }
 }

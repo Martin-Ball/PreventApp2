@@ -54,9 +54,13 @@ public class NewOrderFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private String comment;
 
-    //test
+    //Orders
+    private HashMap<String, Object> ProductAndAmount = new HashMap<>();
+    private HashMap<String, HashMap <String, Object>> ProductsOrders = new HashMap<>();
+
+    //Clients
     private HashMap<String, Object> User = new HashMap<>();
-    private HashMap<String,Object> Client = new HashMap<>();
+    private HashMap<String, Object> Client = new HashMap<>();
     private HashMap<String, String> ClientInfo = new HashMap<>();
 
     //
@@ -149,6 +153,14 @@ public class NewOrderFragment extends Fragment {
                     //add product and amount into array
                     arrayProducts.add(productAndAmount);
 
+                    //add product and amount into hashmap
+                    //ProductAndAmount.put("Product", productAndAmount);
+                    //ProductAndAmount.put("Amount", "0");
+
+                    //add product and amount hashmap on Order Hashmap
+
+                    //ProductsOrders.put("Orders", ProductAndAmount);
+
                     //build Recycler View with CardViews
                     buildRecyclerView(root);
                 }
@@ -174,8 +186,6 @@ public class NewOrderFragment extends Fragment {
                     Toast.makeText(root.getContext(), "Seleccione productos", Toast.LENGTH_LONG).show();
                 }else {
                     alertDialogComments(root);
-                    OrderDone orderDone = new OrderDone();
-                    orderDone.orderDone(arrayCardViewProducts, CompanySelected, arrayProducts, selectedClient, binding.ordersRecycler, comment, root);
                 }
             }
         });
@@ -276,7 +286,8 @@ public class NewOrderFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         comment = userInput.getText().toString();
                         Toast.makeText(promptsView.getContext(), "Comentario agregado al pedido", Toast.LENGTH_SHORT).show();
-
+                        OrderDone orderDone = new OrderDone();
+                        orderDone.orderDone(arrayCardViewProducts, arrayProducts, CompanySelected, ProductsOrders, selectedClient, binding.ordersRecycler, comment, root);
                     }
                 })
                 .setNegativeButton("NO",

@@ -339,10 +339,40 @@ public class NewOrderFragment extends Fragment {
                 Client = (HashMap<String, Object>) User.get("Clients");
                 ClientInfo = (HashMap<String, String>) Client.get("ALBRECHT CARINA 2");
 
-                binding.clientNewOrder.setText(ClientInfo.get("CUIT"));
+                //binding.clientNewOrder.setText(ClientInfo.get("CUIT"));
             }
             });
 
+    }
+
+    private void uploadList(){
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+
+        //user:
+        //{"Clients"={"ALBRECHT CARINA 2"={"COD"=xx, "Street Address"=xx, "Fantasy Name"=xx, "CUIT"=xx}}}
+
+        //Clients:
+        //{"ALBRECHT CARINA 2"={"COD"=xx, "Street Address"=xx, "Fantasy Name"=xx, "CUIT"=xx}}
+
+        //ALBRECHT CARINA 2:
+        //{"COD"=690, "Street Address"=xx, "Fantasy Name"=xx, "CUIT"=xx}
+
+        //When i use get("COD") the result is 690
+
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("users").document(currentFirebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                User = (HashMap<String, Object>) documentSnapshot.getData();
+                Client = (HashMap<String, Object>) User.get("List");
+                ClientInfo = (HashMap<String, String>) Client.get("ALBRECHT CARINA 2");
+
+                //binding.clientNewOrder.setText(ClientInfo.get("CUIT"));
+            }
+        });
     }
 
 }

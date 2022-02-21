@@ -28,7 +28,8 @@ public class OrderDone {
     private HashMap<String, Object> Orders = new HashMap<>();
     private ArrayList<String> Products = new ArrayList<>();
 
-    public void orderDone (ArrayList items, ArrayList<ArrayList<String>> arrayProducts,
+    public void orderDone (ArrayList items,
+                           ArrayList<ArrayList<String>> arrayProducts,
                            String CompanySelected,
                            HashMap<String, HashMap<String, Object>> ProductsOrders,
                            String selectedClient,
@@ -49,14 +50,16 @@ public class OrderDone {
         message.append(limitText)
                 .append("*Cliente:* " + selectedClient + "\n")
                 .append("*Fecha:* " + currentDate + "\n")
-                .append("*Lista:*" + CompanySelected + "\n")
+                .append("*Lista:* " + CompanySelected + "\n")
                 .append("*Productos:* " + ProductsOrders.size() + "\n");
 
         message.append(limitText);
 
-        for (int i = 0; i <= ProductsOrders.size() - 1; i++) {
+
+        for (int i = 0; i <= arrayProducts.size() - 1; i++) {
                 message.append("\n[-] ").append(arrayProducts.get(i).get(0) + "  [CANTIDAD: " + arrayProducts.get(i).get(1) + "] ")
                         .append("\n");
+
         }
 
         message.append("\n" + limitText);
@@ -66,12 +69,12 @@ public class OrderDone {
                 message.append("\n" + limitText);
             }
 
-            //whatsapp(root);
+
+            whatsapp(root);
             firebase(arrayProducts, currentDate, currentTime, CompanySelected, selectedClient, comment, root);
             //clear recyclerView
 
             clearRecyclerView(ordersRecycler, items);
-            //clearArray(arrayProducts);
     }
 
     private void whatsapp(View root){

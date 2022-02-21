@@ -74,15 +74,17 @@ public class Products {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                User2 = (HashMap<String, Object>) documentSnapshot.getData();
+                /*User2 = (HashMap<String, Object>) documentSnapshot.getData();
                 List2 = (HashMap<String, Object>) User2.get("List");
-                ProductsNew.addAll((Collection<? extends String>) List2.get("Ideas Gastronómicas"));
+                ProductsNew.addAll((Collection<? extends String>) List2.get("Ideas Gastronómicas"));*/
                 //Name of New Product
-                ProductsNew.add("12312333333555");
+                for(int i=0; i<=20; i++) {
+                    ProductsNew.add("Product" + i);
+                }
 
-                List2.put(name, ProductsNew);
+                List2.put("Nutrifresca", ProductsNew);
 
-                User2.put("Clients", List);
+                User2.put("List", List2);
 
                 // Add a new document with ID for user
                 db.collection("users").document(currentFirebaseUser.getUid()).set(User2, SetOptions.merge());

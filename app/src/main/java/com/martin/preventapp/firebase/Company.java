@@ -30,8 +30,11 @@ public class Company {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
                 User = (HashMap<String, Object>) documentSnapshot.getData();
-                List = (HashMap<String, Object>) User.get("List");
-                CompanyList.addAll(List.keySet());
+
+                if(!User.isEmpty()) {
+                    List = (HashMap<String, Object>) User.get("List");
+                    CompanyList.addAll(List.keySet());
+                }
             }
         });
 

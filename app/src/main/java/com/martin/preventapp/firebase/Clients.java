@@ -101,16 +101,21 @@ public class Clients {
 
         // Create a new user with a CODE, Street Address, Fantasy Name and CUIT
         HashMap<String, Object> User = new HashMap<>();
+        HashMap<String, Object> Company = new HashMap<>();
         HashMap<String, Object> Client = new HashMap<>();
         HashMap<String, Object> InfoClient = new HashMap<>();
 
-        InfoClient.put("CUIT", "CUIT");
+        InfoClient.put("CUIT", "22255522");
         InfoClient.put("Fantasy Name", "FantasyName");
         InfoClient.put("Street Address", "StreetAddress");
 
-        Client.put("name", InfoClient);
+        for(int i=0;i<=20; i++) {
+            Client.put(Integer.toString(i), InfoClient);
+        }
 
-        User.put("Clients", Client);
+        Company.put("Nutrifresca", Client);
+
+        User.put("Clients", Company);
             // Add a new document with ID for user
             db.collection("users").document(currentFirebaseUser.getUid()).set(User, SetOptions.merge());
     }

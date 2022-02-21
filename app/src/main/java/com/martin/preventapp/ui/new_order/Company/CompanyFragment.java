@@ -19,7 +19,9 @@ import com.martin.preventapp.MainActivity;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentCompanyBinding;
 import com.martin.preventapp.databinding.FragmentNewOrderBinding;
+import com.martin.preventapp.firebase.Clients;
 import com.martin.preventapp.firebase.Company;
+import com.martin.preventapp.firebase.Products;
 import com.martin.preventapp.ui.new_order.NewOrderFragment;
 
 public class CompanyFragment extends Fragment {
@@ -60,14 +62,22 @@ public class CompanyFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                bundle.putString("CompanySelected", companySelected); // Put anything what you want
-                newOrderFragment.setArguments(bundle);
+                Products prod = new Products();
+                prod.addNewProduct("Ideas Gastronómicas", root);
 
-                fragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment_content_main,  newOrderFragment, null)
-                        //.setReorderingAllowed(true)
-                        .addToBackStack(null) // name can be null
-                        .commit();
+                if(companySelected == null){
+                    Toast.makeText(root.getContext(), "Seleccione un proveedor", Toast.LENGTH_SHORT).show();
+                }else {
+
+                    bundle.putString("CompanySelected", companySelected); // Put anything what you want
+                    newOrderFragment.setArguments(bundle);
+
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.nav_host_fragment_content_main, newOrderFragment, null)
+                            //.setReorderingAllowed(true)
+                            .addToBackStack(null) // name can be null
+                            .commit();
+                }
             }
         });
 

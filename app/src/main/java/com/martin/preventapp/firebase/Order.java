@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class OrderDone {
+public class Order {
 
     private StringBuilder message;
 
@@ -121,7 +121,7 @@ public class OrderDone {
 
         ProductAndAmount.put("comment", comment);
 
-        Orders.put(currentDate + currentTime, ProductAndAmount);
+        Orders.put(currentDate + " " + currentTime, ProductAndAmount);
         Client.put(selectedClient, Orders);
         Company.put(CompanySelected, Client);
         User.put("Orders", Company);
@@ -150,5 +150,9 @@ public class OrderDone {
         Client.clear();
         Company.clear();
         User.clear();
+    }
+
+    private void ordersList(){
+
     }
 }

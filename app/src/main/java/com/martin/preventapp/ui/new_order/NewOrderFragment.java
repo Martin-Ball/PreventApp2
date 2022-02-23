@@ -2,7 +2,6 @@ package com.martin.preventapp.ui.new_order;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,17 +10,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,13 +25,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentNewOrderBinding;
 import com.martin.preventapp.firebase.Clients;
-import com.martin.preventapp.firebase.Company;
-import com.martin.preventapp.firebase.OrderDone;
+import com.martin.preventapp.firebase.Order;
 import com.martin.preventapp.firebase.Products;
 import com.martin.preventapp.ui.new_order.recyclerView.CardViewOrder;
 import com.martin.preventapp.ui.new_order.recyclerView.CardViewOrderAdapter;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -286,8 +279,8 @@ public class NewOrderFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int id) {
                         comment = userInput.getText().toString();
                         Toast.makeText(promptsView.getContext(), "Comentario agregado al pedido", Toast.LENGTH_SHORT).show();
-                        OrderDone orderDone = new OrderDone();
-                        orderDone.orderDone(arrayCardViewProducts, arrayProducts, CompanySelected, ProductsOrders, selectedClient, binding.ordersRecycler, comment, root);
+                        Order order = new Order();
+                        order.orderDone(arrayCardViewProducts, arrayProducts, CompanySelected, ProductsOrders, selectedClient, binding.ordersRecycler, comment, root);
                     }
                 })
                 .setNegativeButton("NO",

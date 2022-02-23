@@ -1,24 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rvAnimals"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp"
     android:background="@drawable/shape"
-    android:orientation="vertical"
     android:padding="10dp">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pedido de:" />
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_checklist" />
 
-    <TextView
-        android:id="@+id/tvAnimalName"
-        android:layout_width="394dp"
+    <Space
+        android:layout_width="20dp"
+        android:layout_height="55dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:textSize="20sp" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/company"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Empresa: " />
+
+        <TextView
+            android:id="@+id/client"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Cliente: " />
+
+        <TextView
+            android:id="@+id/dateAndHour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fecha y Hora: " />
+    </LinearLayout>
 
 </LinearLayout>

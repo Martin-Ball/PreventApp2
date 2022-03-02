@@ -5,9 +5,13 @@
       <map>
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/drawable/ic_arrow.xml" value="0.3769230769230769" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/drawable/ic_baseline_delete.xml" value="0.3828125" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/drawable/ic_check.xml" value="0.3828125" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/drawable/ic_whatsapp.xml" value="0.3828125" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/drawable/ic_whatsapp_logo_white.xml" value="0.23020833333333332" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/drawable/shape.xml" value="0.3769230769230769" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/drawable/shape_background_off.xml" value="0.3769230769230769" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/drawable/shape_blue.xml" value="0.3769230769230769" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/drawable/whatsapp_24.xml" value="0.23020833333333332" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.23560910307898258" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout-w936dp/activity_login.xml" value="0.2455601092896175" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/activity_log_out.xml" value="0.3134057971014493" />
@@ -17,6 +21,7 @@
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/authentification.xml" value="0.32563405797101447" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/card_view_order.xml" value="0.33" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/content_main.xml" value="0.32155797101449274" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/date_picker_layout.xml" value="0.3392210144927536" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/dialog_comment_finish_button.xml" value="0.3134057971014493" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/dialog_comment_finish_with_editext.xml" value="0.3134057971014493" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/dialog_new_client.xml" value="0.3134057971014493" />

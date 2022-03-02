@@ -109,7 +109,7 @@
                     android:layout_width="267dp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/linkiar_signin"
-                    android:drawableLeft="@drawable/ic_whatsapp_logo_white"
+                    android:drawableLeft="@drawable/ic_whatsapp"
                     android:text="ENVIAR PEDIDO"
                     app:cornerRadius="20dp" />
 

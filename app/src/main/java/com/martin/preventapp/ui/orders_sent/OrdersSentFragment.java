@@ -5,17 +5,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentOrdersSentBinding;
-import com.martin.preventapp.ui.orders_sent.dialogCalendar.DatePicker;
+import com.martin.preventapp.databinding.FragmentSpinnerSearchableClientBinding;
+import com.martin.preventapp.firebase.Company;
 import com.martin.preventapp.ui.orders_sent.fragment_orders.OrdersFragment;
 
 import java.util.Calendar;
@@ -25,6 +31,10 @@ public class OrdersSentFragment extends Fragment {
     private OrdersSentViewModel ordersSentViewModel;
     private FragmentOrdersSentBinding binding;
 
+    private String CompanySelected = "";
+    private String SelectedClient;
+    private String DateSelected = "";
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         ordersSentViewModel =
@@ -33,40 +43,37 @@ public class OrdersSentFragment extends Fragment {
         binding = FragmentOrdersSentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        Button bt = root.findViewById(R.id.button);
-        OrdersFragment of = new OrdersFragment();
+        //Spinner Client Fragment
+        FragmentSpinnerSearchableClient spinnerFragment = new FragmentSpinnerSearchableClient();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
-        EditText etPlannedDate = (EditText) root.findViewById(R.id.etPlannedDate);
-        etPlannedDate.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 final Calendar cldr = Calendar.getInstance();
-                 int day = cldr.get(Calendar.DAY_OF_MONTH);
-                 int month = cldr.get(Calendar.MONTH);
-                 int year = cldr.get(Calendar.YEAR);
+        //Spinner Company
 
-                 // date picker dialog
-                 DatePickerDialog picker = new DatePickerDialog(root.getContext(), R.style.DatePicker, new DatePickerDialog.OnDateSetListener() {
-                     @Override
-                     public void onDateSet(android.widget.DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-                         etPlannedDate.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                     }
-                 }, year, month, day);
-                 picker.show();
-             }
-         });
+        Company CompanyList = new Company();
+        ArrayAdapter arrayAdapter = new ArrayAdapter(root.getContext(), android.R.layout.simple_list_item_1, CompanyList.companyList(root));
+        binding.companyAutoCompleteTextView.setAdapter(arrayAdapter);
 
-        bt.setOnClickListener(new View.OnClickListener() {
+        binding.companyAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                if(!of.isAdded()) {
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.add(R.id.fragment_container, of);
-                    fragmentTransaction.commit();
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                CompanySelected = adapterView.getItemAtPosition(i).toString();
+                //Toast.makeText(root.getContext(), CompanySelected, Toast.LENGTH_SHORT).show();
+
+                if(CompanySelected == ""){
+                    Toast.makeText(root.getContext(), "Seleccione un proveedor", Toast.LENGTH_SHORT).show();
+                }else {
+
+                    if (!spinnerFragment.isAdded()) {
+                        addFragmentClient(spinnerFragment, fragmentManager);
+                    }
+
+                    if (spinnerFragment.isAdded()){
+                        removeFragmentClient(fragmentManager);
+                    }
                 }
             }
         });
+
 
         return root;
     }
@@ -77,18 +84,24 @@ public class OrdersSentFragment extends Fragment {
         binding = null;
     }
 
-    private void showDatePickerDialog(EditText etPlannedDate) {
-        DatePicker newFragment = DatePicker.newInstance(new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(android.widget.DatePicker datePicker, int year, int month, int day) {
-                // +1 because January is zero
-                final String selectedDate = day + " / " + (month+1) + " / " + year;
-                etPlannedDate.setText(selectedDate);
-            }
-        });
+    private void addFragmentClient(FragmentSpinnerSearchableClient spinnerFragment, FragmentManager fragmentManager){
 
+        Bundle bundle = new Bundle();
+        bundle.putString("CompanySelected", CompanySelected);
+        spinnerFragment.setArguments(bundle);
 
-        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fragment_spinner_client_container, spinnerFragment);
+        fragmentTransaction.commit();
+    }
+
+    private void removeFragmentClient(FragmentManager fragmentManager){
+
+        FragmentSpinnerSearchableClient spinnerFragment = new FragmentSpinnerSearchableClient();
+
+        spinnerFragment.onDestroyView();
+
+        addFragmentClient(spinnerFragment, fragmentManager);
     }
 }
 

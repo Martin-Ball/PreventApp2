@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.martin.preventapp.R;
@@ -83,5 +84,9 @@ public class RecyclerViewAdapterOrders extends RecyclerView.Adapter<RecyclerView
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onItemClick(View view, int position);
+    }
+
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView){
+        super.onDetachedFromRecyclerView(recyclerView);
     }
 }

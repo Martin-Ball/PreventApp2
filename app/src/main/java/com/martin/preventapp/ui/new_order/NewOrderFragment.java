@@ -57,7 +57,7 @@ public class NewOrderFragment extends Fragment {
     private HashMap<String, String> ClientInfo = new HashMap<>();
 
     //
-    String CompanySelected = "";
+    private String CompanySelected = "";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

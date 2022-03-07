@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.orders_sent.FragmentSpinnerSearchableClient">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <!--Spinner Searchable Client-->
+
+        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+            android:id="@+id/spinner_searchable_new_client"
+            android:layout_width="360dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center|top"
+            android:background="@drawable/shape_blue"
+            android:gravity="center|center_vertical"
+            android:spinnerMode="dialog"
+            app:hintText="Seleccionar el cliente" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <!--Date picker-->
+
+        <EditText
+            android:id="@+id/etPlannedDate"
+            android:layout_width="360dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_blue"
+            android:clickable="true"
+            android:drawableRight="@drawable/ic_date"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/linkiar_pressed"
+            android:focusable="false"
+            android:hint="Fecha del pedido"
+            android:inputType="date"
+            android:maxLines="1"
+            android:minHeight="48dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textColorHint="@color/black"
+            android:textSize="16sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+    </LinearLayout>
+
+</FrameLayout>

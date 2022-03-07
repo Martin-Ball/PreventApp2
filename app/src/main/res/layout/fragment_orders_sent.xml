@@ -1,54 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.orders_sent.OrdersSentFragment">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!--Company Selector-->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
 
-    <EditText
-        android:id="@+id/etPlannedDate"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/companyTextInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="360dp"
         android:layout_height="48dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/shape"
-        android:clickable="true"
-        android:drawableLeft="@drawable/ic_date"
-        android:drawablePadding="10dp"
-        android:focusable="false"
-        android:hint="Fecha"
-        android:inputType="date"
-        android:maxLines="1"
-        android:minHeight="48dp"
-        android:paddingStart="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        android:layout_gravity="center"
+        android:background="@drawable/shape_blue">
+
+
+        <AutoCompleteTextView
+            android:id="@+id/companyAutoCompleteTextView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#00FFFFFF"
+            android:backgroundTint="#00FFFFFF"
+            android:gravity="center_vertical"
+            android:inputType="none"
+            android:text="Seleccione el proveedor"
+            tools:ignore="TouchTargetSizeCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <FrameLayout
-        android:id="@+id/fragment_container"
-        android:name="SimpleFragment"
-        android:layout_width="386dp"
-        android:layout_height="524dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPlannedDate"
-        app:layout_constraintVertical_bias="0.652"
-        tools:layout="@layout/fragment_orders">
+        android:id="@+id/fragment_spinner_client_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     </FrameLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <FrameLayout
+        android:id="@+id/fragment_orders_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </FrameLayout>
+
+</LinearLayout>

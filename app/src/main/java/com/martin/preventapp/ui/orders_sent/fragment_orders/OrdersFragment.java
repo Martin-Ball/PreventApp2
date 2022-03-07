@@ -35,13 +35,24 @@ public class OrdersFragment extends Fragment {
     private ArrayList<String> ProductAndAmount = new ArrayList<>();
     private String Comment;
 
+    private String DateSelected = "";
+
+    private RecyclerView recyclerView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentOrdersBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        TextView tv = root.findViewById(R.id.debugtv);
+        Bundle bundle = this.getArguments();
+
+        if(bundle != null){
+            DateSelected = bundle.getString("DateSelected");
+        }
+
+        TextView TVDateOrders = root.findViewById(R.id.TVDateOrders);
+        TVDateOrders.setText("Pedidos de la fecha: " + DateSelected);
 
         //User:  [HASHMAP]
         //{"Orders"={"Ideas Gastronomicas"={"12"={"19-02-2022 20:26"={"1"={"Product6", "4"}}}}}}
@@ -81,13 +92,16 @@ public class OrdersFragment extends Fragment {
                 Comment = OrdersAndComment.get("comment").toString();
                 ProductAndAmount = (ArrayList<String>) OrdersAndComment.get("2");
 
-                tv.setText("Producto: " + ProductAndAmount.get(0) + "\nCantidad: " + ProductAndAmount.get(1));
+                //tv.setText("Producto: " + ProductAndAmount.get(0) + "\nCantidad: " + ProductAndAmount.get(1));
 
             }
         });
 
                 // data to populate the RecyclerView with
                 ArrayList<String> animalNames = new ArrayList<>();
+
+                animalNames.clear();
+
                 animalNames.add("Horse");
                 animalNames.add("Cow");
                 animalNames.add("Camel");
@@ -110,23 +124,23 @@ public class OrdersFragment extends Fragment {
                 animalNames.add("Goat");
 
                 // set up the RecyclerView
-                RecyclerView recyclerView = root.findViewById(R.id.rv2);
+
+                recyclerView = root.findViewById(R.id.rv2);
                 recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
                 adapter = new RecyclerViewAdapterOrders(root.getContext(), animalNames);
                 adapter.setClickListener(new RecyclerViewAdapterOrders.ItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        tv.setText("Tocaste el item: " + position);
+                        Toast.makeText(getContext(), "Tocaste el item: " + position, Toast.LENGTH_SHORT).show();
                     }
                 });
                 recyclerView.setAdapter(adapter);
 
         // Inflate the layout for this fragment
         return root;
-
     }
 
-    public void onItemClick(View view, int position) {
-
+    public void onDestroyView(){
+        super.onDestroyView();
     }
 }

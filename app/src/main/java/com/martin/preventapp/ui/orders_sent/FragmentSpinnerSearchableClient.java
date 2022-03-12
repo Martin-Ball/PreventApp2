@@ -91,6 +91,9 @@ public class FragmentSpinnerSearchableClient extends Fragment {
         //EditText for DatePicker
 
         EditText etPlannedDate = (EditText) root.findViewById(R.id.etPlannedDate);
+
+        OrdersSentFragment ordersSentFragment = new OrdersSentFragment();
+
         etPlannedDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -104,15 +107,16 @@ public class FragmentSpinnerSearchableClient extends Fragment {
                     @Override
                     public void onDateSet(android.widget.DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
                         DateSelected = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                        ordersSentFragment.DateSelected = DateSelected;
                         etPlannedDate.setText(DateSelected);
 
                         if(!ordersFragment.isAdded()) {
-                            addFragmentOrders(ordersFragment, fragmentManager, DateSelected);
+                            addFragmentOrders(ordersFragment, fragmentManager, ordersSentFragment.DateSelected);
                         }
 
-                        if (ordersFragment.isAdded()){
-                            removeFragmentOrders(fragmentManager, DateSelected);
-                        }
+                        /*if (ordersFragment.isAdded()){
+                            updateFragmentOrders(fragmentManager, DateSelected);
+                        }*/
                     }
                 }, year, month, day);
                 picker.show();
@@ -127,21 +131,15 @@ public class FragmentSpinnerSearchableClient extends Fragment {
     }
 
     private void addFragmentOrders(OrdersFragment ordersFragment, FragmentManager fragmentManager, String DateSelected){
-        Bundle bundle = new Bundle();
+        /*Bundle bundle = new Bundle();
         bundle.putString("DateSelected", DateSelected);
-        ordersFragment.setArguments(bundle);
+        ordersFragment.setArguments(bundle);*/
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_orders_container, ordersFragment);
         fragmentTransaction.commit();
     }
 
-    private void removeFragmentOrders(FragmentManager fragmentManager, String DateSelected){
-
-        OrdersFragment ordersFragment = new OrdersFragment();
-
-        ordersFragment.onDestroyView();
-
-        addFragmentOrders(ordersFragment, fragmentManager, DateSelected);
+    private void updateFragmentOrders(FragmentManager fragmentManager, String DateSelected){
     }
 }

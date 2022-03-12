@@ -31,9 +31,9 @@ public class OrdersSentFragment extends Fragment {
     private OrdersSentViewModel ordersSentViewModel;
     private FragmentOrdersSentBinding binding;
 
-    private String CompanySelected = "";
-    private String SelectedClient;
-    private String DateSelected = "";
+    public String CompanySelected = "";
+    public String SelectedClient;
+    public String DateSelected = "";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

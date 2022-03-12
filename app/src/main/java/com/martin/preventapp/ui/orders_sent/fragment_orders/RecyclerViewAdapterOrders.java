@@ -4,25 +4,39 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.martin.preventapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapterOrders extends RecyclerView.Adapter<RecyclerViewAdapterOrders.ViewHolder> {
 
-    private List<String> mData;
+    //private List<String> mData;
+    private ArrayList<InfoOrders> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    RecyclerViewAdapterOrders(Context context, List<String> data) {
+    RecyclerViewAdapterOrders(ArrayList<InfoOrders> courseModalArrayList, Context context) {
         this.mInflater = LayoutInflater.from(context);
-        this.mData = data;
+        this.mData = courseModalArrayList;
+    }
+
+    // method for filtering our recyclerview items.
+    public void filterList(ArrayList<InfoOrders> filterllist) {
+        // below line is to add our filtered
+        // list in our course array list.
+        mData = filterllist;
+        // below line is to notify our adapter
+        // as change in recycler view data.
+        notifyDataSetChanged();
     }
 
     // inflates the row layout from xml when needed
@@ -35,10 +49,12 @@ public class RecyclerViewAdapterOrders extends RecyclerView.Adapter<RecyclerView
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String Company = mData.get(position);
-        holder.company.append(Company);
-        holder.client.append(Company);
-        holder.dateAndHour.append(Company);
+        // setting data to our views of recycler view.
+        InfoOrders modal = mData.get(position);
+
+        holder.company.setText("Empresa: " + modal.getCourseName());
+        holder.client.setText("Cliente: " + modal.getCourseName());
+        holder.dateAndHour.setText("Fecha y Hora: " + modal.getCourseName());
     }
 
     // total number of rows
@@ -72,9 +88,9 @@ public class RecyclerViewAdapterOrders extends RecyclerView.Adapter<RecyclerView
     }
 
     // convenience method for getting data at click position
-    String getItem(int id) {
+    /*String getItem(int id) {
         return mData.get(id);
-    }
+    }*/
 
     // allows clicks events to be caught
     void setClickListener(ItemClickListener itemClickListener) {
@@ -86,7 +102,5 @@ public class RecyclerViewAdapterOrders extends RecyclerView.Adapter<RecyclerView
         void onItemClick(View view, int position);
     }
 
-    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView){
-        super.onDetachedFromRecyclerView(recyclerView);
-    }
+
 }

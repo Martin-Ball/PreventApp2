@@ -24,13 +24,14 @@ import com.martin.preventapp.ui.orders_sent.fragment_orders.OrdersFragment;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class FragmentSpinnerSearchableClient extends Fragment {
 
     private FragmentSpinnerSearchableClientBinding binding;
     private String CompanySelected = "";
     private String SelectedClient;
-    private String DateSelected = "";
+    public String DateSelected = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,16 +108,15 @@ public class FragmentSpinnerSearchableClient extends Fragment {
                     @Override
                     public void onDateSet(android.widget.DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
                         DateSelected = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
-                        ordersSentFragment.DateSelected = DateSelected;
+
                         etPlannedDate.setText(DateSelected);
-
                         if(!ordersFragment.isAdded()) {
-                            addFragmentOrders(ordersFragment, fragmentManager, ordersSentFragment.DateSelected);
+                            addFragmentOrders(fragmentManager, ordersFragment, DateSelected);
+                        }else {
+                            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().remove(ordersFragment).commit();
+                            OrdersFragment ordersFragment1 = new OrdersFragment();
+                            addFragmentOrders(fragmentManager, ordersFragment1, DateSelected);
                         }
-
-                        /*if (ordersFragment.isAdded()){
-                            updateFragmentOrders(fragmentManager, DateSelected);
-                        }*/
                     }
                 }, year, month, day);
                 picker.show();
@@ -130,16 +130,15 @@ public class FragmentSpinnerSearchableClient extends Fragment {
         super.onDestroyView();
     }
 
-    private void addFragmentOrders(OrdersFragment ordersFragment, FragmentManager fragmentManager, String DateSelected){
-        /*Bundle bundle = new Bundle();
+    private void addFragmentOrders(FragmentManager fragmentManager, Fragment ordersFragment, String DateSelected){
+
+        Bundle bundle = new Bundle();
         bundle.putString("DateSelected", DateSelected);
-        ordersFragment.setArguments(bundle);*/
+        ordersFragment.setArguments(bundle);
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_orders_container, ordersFragment);
+        fragmentTransaction.replace(R.id.fragment_orders_container, ordersFragment);
         fragmentTransaction.commit();
     }
 
-    private void updateFragmentOrders(FragmentManager fragmentManager, String DateSelected){
-    }
 }

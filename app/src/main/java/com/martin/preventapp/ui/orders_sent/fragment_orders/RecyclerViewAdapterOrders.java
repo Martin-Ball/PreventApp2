@@ -52,9 +52,9 @@ public class RecyclerViewAdapterOrders extends RecyclerView.Adapter<RecyclerView
         // setting data to our views of recycler view.
         InfoOrders modal = mData.get(position);
 
-        holder.company.setText("Empresa: " + modal.getCourseName());
-        holder.client.setText("Cliente: " + modal.getCourseName());
-        holder.dateAndHour.setText("Fecha y Hora: " + modal.getCourseName());
+        holder.company.setText("Empresa: " + modal.getCompany());
+        holder.client.setText("Cliente: " + modal.getClient());
+        holder.dateAndHour.setText("Fecha y Hora: " + modal.getDateAndHour());
     }
 
     // total number of rows

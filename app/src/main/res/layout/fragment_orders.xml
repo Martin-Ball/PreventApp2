@@ -18,7 +18,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:hint="Buscar"
             tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/TVDateOrders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" />
 
         <ScrollView
             android:layout_width="match_parent"

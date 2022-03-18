@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentOrdersBinding;
 import com.martin.preventapp.firebase.Order;
+import com.martin.preventapp.ui.orders_sent.FragmentSpinnerSearchableClient;
 import com.martin.preventapp.ui.orders_sent.OrdersSentFragment;
 
 import java.util.ArrayList;
@@ -43,7 +44,9 @@ public class OrdersFragment extends Fragment {
     private ArrayList<String> ProductAndAmount = new ArrayList<>();
     private String Comment;
 
-    private String DateSelected = "";
+    private String CompanySelected = "Ideas Gastronómicas";
+    private String ClientSelected = "14";
+    private String DateSelected = "22/10/22";
 
     private RecyclerView recyclerViewOrders;
 
@@ -61,11 +64,9 @@ public class OrdersFragment extends Fragment {
             DateSelected = bundle.getString("DateSelected");
         }
 
-        OrdersSentFragment ordersSentFragment = new OrdersSentFragment();
-
-        //TextView TVDateOrders = root.findViewById(R.id.TVDateOrders);
+        TextView TVDateOrders = root.findViewById(R.id.TVDateOrders);
         //Toast.makeText(root.getContext(), ordersSentFragment.DateSelected, Toast.LENGTH_SHORT).show();
-        //TVDateOrders.setText("Pedidos de la fecha: " + ordersSentFragment.DateSelected);
+        TVDateOrders.setText("Pedidos de la fecha: " + DateSelected);
 
         //User:  [HASHMAP]
         //{"Orders"={"Ideas Gastronomicas"={"12"={"19-02-2022 20:26"={"1"={"Product6", "4"}}}}}}
@@ -169,7 +170,7 @@ public class OrdersFragment extends Fragment {
         // running a for loop to compare elements.
         for (InfoOrders item : TextOrders) {
             // checking if the entered string matched with any item of our recycler view.
-            if (item.getCourseName().toLowerCase().contains(text.toLowerCase())) {
+            if (item.getCompany().toLowerCase().contains(text.toLowerCase())) {
                 // if the item is matched we are
                 // adding it to our filtered list.
                 filteredlist.add(item);
@@ -192,11 +193,15 @@ public class OrdersFragment extends Fragment {
         TextOrders = new ArrayList<>();
 
         // below line is to add data to our array list.
-        TextOrders.add(new InfoOrders("DSA", "DSA Self Paced Course"));
-        TextOrders.add(new InfoOrders("JAVA", "JAVA Self Paced Course"));
-        TextOrders.add(new InfoOrders("C++", "C++ Self Paced Course"));
-        TextOrders.add(new InfoOrders("Python", "Python Self Paced Course"));
-        TextOrders.add(new InfoOrders("Fork CPP", "Fork CPP Self Paced Course"));
+        TextOrders.add(new InfoOrders(CompanySelected, ClientSelected, DateSelected));
+        TextOrders.add(new InfoOrders(CompanySelected, ClientSelected, DateSelected));
+        TextOrders.add(new InfoOrders(CompanySelected, ClientSelected, DateSelected));
+        TextOrders.add(new InfoOrders(CompanySelected, ClientSelected, DateSelected));
+        TextOrders.add(new InfoOrders(CompanySelected, ClientSelected, DateSelected));
+        TextOrders.add(new InfoOrders("JAVA", "JAVA Self Paced Course", "dasd"));
+        TextOrders.add(new InfoOrders("C++", "C++ Self Paced Course", "dasd"));
+        TextOrders.add(new InfoOrders("Python", "Python Self Paced Course", "dasd"));
+        TextOrders.add(new InfoOrders("Fork CPP", "Fork CPP Self Paced Course", "dasd"));
     }
 
 }

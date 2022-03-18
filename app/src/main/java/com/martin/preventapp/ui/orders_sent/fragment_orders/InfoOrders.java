@@ -4,29 +4,39 @@ public class InfoOrders {
 
     // variables for our course
     // name and description.
-    private String courseName;
-    private String courseDescription;
+    private String company;
+    private String client;
+    private String dateAndHour;
 
     // creating constructor for our variables.
-    public InfoOrders(String courseName, String courseDescription) {
-        this.courseName = courseName;
-        this.courseDescription = courseDescription;
+    public InfoOrders(String company, String client, String dateAndHour) {
+        this.company = company;
+        this.client = client;
+        this.dateAndHour = dateAndHour;
     }
 
     // creating getter and setter methods.
-    public String getCourseName() {
-        return courseName;
+    public String getCompany() {
+        return company;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
-    public String getCourseDescription() {
-        return courseDescription;
+    public String getClient() {
+        return client;
     }
 
-    public void setCourseDescription(String courseDescription) {
-        this.courseDescription = courseDescription;
+    public void setClient(String client) {
+        this.client = client;
+    }
+
+    public String getDateAndHour(){
+        return dateAndHour;
+    }
+
+    public void setDateAndHour(String dateAndHour) {
+        this.dateAndHour = dateAndHour;
     }
 }

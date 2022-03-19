@@ -27,6 +27,7 @@ import com.martin.preventapp.databinding.FragmentOrdersBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 public class OrdersFragment extends Fragment {
@@ -71,58 +72,26 @@ public class OrdersFragment extends Fragment {
         if(bundle != null){
             DateSelected = bundle.getString("DateSelected");
             CompanySelected = bundle.getString("CompanySelected");
+            Date = (HashMap<String, Object>) bundle.getSerializable("DateHashMap");
         }
 
         TextView TVDateOrders = root.findViewById(R.id.TVDateOrders);
-        /*//Toast.makeText(root.getContext(), ordersSentFragment.DateSelected, Toast.LENGTH_SHORT).show();
-        //TVDateOrders.setText("Pedidos de la fecha: " + DateSelected + "\nEmpresa: " + CompanySelected);
 
-        // Orders --> Company --> Date --> Client --> Hour --> Product
-        //                                                 |--> Amount
-
-        //Orders:  [HASHMAP]
-        //{"Orders"={"Ideas Gastronomicas"={"19-02-2022"={"12"={"20:26"={{"Product6", "4"}, comment=""}}}}}
-
-        //Company:  [HASHMAP]
-        //{"Ideas Gastronomicas"={"19-02-2022"={"12"={"20:26"={{"Product6", "4"}, comment=""}}}}
-
-        //19-02-2022:  [HASHMAP]
-        //{"19-02-2022"={"12"={"20:26"={{"Product6", "4"}, comment=""}}}
-
-        //12  [HASHMAP]
-        //{"20:26"={{"Product6", "4"}, comment=""}}
-
-        //20:26:  [ArrayList]
-        //{{"Product6", "4"}, comment=""}
-
-        //When i use get(0).get(0) the result is Product6
-
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        List ClientKey = new ArrayList(Date.keySet());
+        for (int i = 0; i < ClientKey.size(); i++) {
+          TVDateOrders.append("\n" + ClientKey.get(i));
+        }
 
 
-        db.collection("users").document(currentFirebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
+        Client = (HashMap<String, Object>) Date.get("CLIENTE NUTRIFRESCA");
+        //Date selected on calendar fragment
+        Hour = (HashMap<String, Object>) Client.get("01:47");
+        ProductAndAmount = (ArrayList<String>) Hour.get("2");
+        Comment = Hour.get("comment").toString();
 
-                User = (HashMap<String, Object>) documentSnapshot.getData();
-                Orders = (HashMap<String, Object>) User.get("Orders");
-                Company = (HashMap<String, Object>) Orders.get(CompanySelected);
-                Date = (HashMap<String, Object>) Company.get(DateSelected);
-                if(Date == null){
-                    Toast.makeText(root.getContext(), "No hay pedidos enviados en la fecha " + DateSelected, Toast.LENGTH_SHORT).show();
-                }else {
-                    Client = (HashMap<String, Object>) Date.get("CLIENTE NUTRIFRESCA");
-                    //Date selected on calendar fragment
-                    Hour = (HashMap<String, Object>) Client.get("01:47");
-                    ProductAndAmount = (ArrayList<String>) Hour.get("2");
-                    Comment = Hour.get("comment").toString();
+        Toast.makeText(root.getContext(),"Producto: " + ProductAndAmount.get(0) + "\nCantidad: " + ProductAndAmount.get(1) + "\nComentario: " + Comment, Toast.LENGTH_SHORT).show();
 
-                    TVDateOrders.setText("Producto: " + ProductAndAmount.get(0) + "\nCantidad: " + ProductAndAmount.get(1) + "\nComentario: " + Comment);
-                }
-            }
-        });*/
+        //TVDateOrders.setText("Producto: " + ProductAndAmount.get(0) + "\nCantidad: " + ProductAndAmount.get(1) + "\nComentario: " + Comment);
 
         // initializing our variables.
         recyclerViewOrders = root.findViewById(R.id.rvOrders);
@@ -148,7 +117,7 @@ public class OrdersFragment extends Fragment {
 
         // calling method to
         // build recycler view.
-        buildRecyclerView();
+        buildRecyclerView(ClientKey);
 
         adapter = new RecyclerViewAdapterOrders(TextOrders, root.getContext());
 
@@ -200,21 +169,15 @@ public class OrdersFragment extends Fragment {
         }
     }
 
-    private void buildRecyclerView() {
+    private void buildRecyclerView(List ClientKey) {
 
         // below line we are creating a new array list
         TextOrders = new ArrayList<>();
 
         // below line is to add data to our array list.
-        TextOrders.add(new InfoOrders(CompanySelected, ClientSelected, DateSelected));
-        TextOrders.add(new InfoOrders(CompanySelected, ClientSelected, DateSelected));
-        TextOrders.add(new InfoOrders(CompanySelected, ClientSelected, DateSelected));
-        TextOrders.add(new InfoOrders(CompanySelected, ClientSelected, DateSelected));
-        TextOrders.add(new InfoOrders(CompanySelected, ClientSelected, DateSelected));
-        TextOrders.add(new InfoOrders("JAVA", "JAVA Self Paced Course", "dasd"));
-        TextOrders.add(new InfoOrders("C++", "C++ Self Paced Course", "dasd"));
-        TextOrders.add(new InfoOrders("Python", "Python Self Paced Course", "dasd"));
-        TextOrders.add(new InfoOrders("Fork CPP", "Fork CPP Self Paced Course", "dasd"));
+        for(int i=1; i<=ClientKey.size(); i++){
+            TextOrders.add(new InfoOrders(CompanySelected, ClientKey.get(i-1).toString(), DateSelected));
+        }
     }
 
 }

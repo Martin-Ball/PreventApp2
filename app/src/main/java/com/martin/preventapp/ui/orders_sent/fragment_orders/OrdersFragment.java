@@ -69,10 +69,6 @@ public class OrdersFragment extends Fragment {
         ProductAndAmount = (ArrayList<String>) Hour.get("2");
         Comment = Hour.get("comment").toString();
 
-        Toast.makeText(root.getContext(),"Producto: " + ProductAndAmount.get(0) + "\nCantidad: " + ProductAndAmount.get(1) + "\nComentario: " + Comment, Toast.LENGTH_SHORT).show();
-
-        //TVDateOrders.setText("Producto: " + ProductAndAmount.get(0) + "\nCantidad: " + ProductAndAmount.get(1) + "\nComentario: " + Comment);
-
         // initializing our variables.
         recyclerViewOrders = root.findViewById(R.id.rvOrders);
 
@@ -104,9 +100,18 @@ public class OrdersFragment extends Fragment {
         adapter.setClickListener(new RecyclerViewAdapterOrders.ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(root.getContext(), "Tocaste el item: " + position, Toast.LENGTH_SHORT).show();
-                DialogFragment dialogFragment=new DialogFragment();
-                dialogFragment.show(getActivity().getSupportFragmentManager(),"My  Fragment");
+                //Toast.makeText(root.getContext(), "Tocaste el item: " + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(root.getContext(), TextOrders.get(position).getClient(), Toast.LENGTH_SHORT).show();
+                String ClientSelected = TextOrders.get(position).getClient();
+
+                DialogFragment dialogFragment = new DialogFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("ClientSelected", ClientSelected);
+                bundle.putSerializable("DateHashMap", Date);
+                dialogFragment.setArguments(bundle);
+
+                dialogFragment.show(getActivity().getSupportFragmentManager(),"Detail Fragment");
             }
         });
 

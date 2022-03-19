@@ -50,11 +50,11 @@ public class RecyclerViewAdapterOrders extends RecyclerView.Adapter<RecyclerView
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // setting data to our views of recycler view.
-        InfoOrders modal = mData.get(position);
+        InfoOrders infoOrders = mData.get(position);
 
-        holder.company.setText("Empresa: " + modal.getCompany());
-        holder.client.setText("Cliente: " + modal.getClient());
-        holder.dateAndHour.setText("Fecha y Hora: " + modal.getDateAndHour());
+        holder.company.setText("Empresa: " + infoOrders.getCompany());
+        holder.client.setText("Cliente: " + infoOrders.getClient());
+        holder.dateAndHour.setText("Fecha y Hora: " + infoOrders.getDateAndHour());
     }
 
     // total number of rows

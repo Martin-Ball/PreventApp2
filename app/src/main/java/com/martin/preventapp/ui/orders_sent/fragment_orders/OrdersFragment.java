@@ -1,6 +1,5 @@
 package com.martin.preventapp.ui.orders_sent.fragment_orders;
 
-import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,26 +22,32 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentOrdersBinding;
-import com.martin.preventapp.firebase.Order;
-import com.martin.preventapp.ui.orders_sent.FragmentSpinnerSearchableClient;
-import com.martin.preventapp.ui.orders_sent.OrdersSentFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class OrdersFragment extends Fragment {
 
     private @NonNull FragmentOrdersBinding binding;
     private RecyclerViewAdapterOrders adapter;
 
-    private HashMap<String, Object> User = new HashMap<>();
-    private HashMap<String, Object> Company = new HashMap<>();
+    //private HashMap<String, Object> User = new HashMap<>();
+    /*private HashMap<String, Object> Company = new HashMap<>();
     private HashMap<String, Object> Client = new HashMap<>();
     private HashMap<String, Object> Date = new HashMap<>();
     private HashMap<String, Object> OrdersAndComment = new HashMap<>();
     private ArrayList<String> ProductAndAmount = new ArrayList<>();
-    private String Comment;
+    private String Comment;*/
+
+    private HashMap<String, Object> User = new HashMap<>();
+    private HashMap<String, Object> Orders = new HashMap<>();
+    private HashMap<String, Object> Company = new HashMap<>();
+    private HashMap<String, Object> Date = new HashMap<>();
+    private  HashMap<String, Object> Client = new HashMap<>();
+    private HashMap<String, Object> Hour = new HashMap<>();
+    private ArrayList<String> ProductAndAmount = new ArrayList<>();
+
+    String Comment = "";
 
     private String CompanySelected = "";
     private String ClientSelected = "";
@@ -67,24 +72,27 @@ public class OrdersFragment extends Fragment {
 
         TextView TVDateOrders = root.findViewById(R.id.TVDateOrders);
         //Toast.makeText(root.getContext(), ordersSentFragment.DateSelected, Toast.LENGTH_SHORT).show();
-        TVDateOrders.setText("Pedidos de la fecha: " + DateSelected + "\nEmpresa: " + CompanySelected);
+        //TVDateOrders.setText("Pedidos de la fecha: " + DateSelected + "\nEmpresa: " + CompanySelected);
 
-        //User:  [HASHMAP]
-        //{"Orders"={"Ideas Gastronomicas"={"12"={"19-02-2022 20:26"={"1"={"Product6", "4"}}}}}}
+        // Orders --> Company --> Date --> Client --> Hour --> Product
+        //                                                 |--> Amount
+
+        //Orders:  [HASHMAP]
+        //{"Orders"={"Ideas Gastronomicas"={"19-02-2022"={"12"={"20:26"={{"Product6", "4"}, comment=""}}}}}
 
         //Company:  [HASHMAP]
-        //{"Ideas Gastronomicas"={"12"={"19-02-2022 20:26"={"1"={"Product6", "4"}}}}}
+        //{"Ideas Gastronomicas"={"19-02-2022"={"12"={"20:26"={{"Product6", "4"}, comment=""}}}}
 
-        //12:  [HASHMAP]
-        //{"19-02-2022 20:26"={"1"={"Product6", "4"}, comment=""}}}
+        //19-02-2022:  [HASHMAP]
+        //{"19-02-2022"={"12"={"20:26"={{"Product6", "4"}, comment=""}}}
 
-        //19-02-2022 20:26:  [HASHMAP]
-        //{"1"={"Product6", "4"}}
+        //12  [HASHMAP]
+        //{"20:26"={{"Product6", "4"}, comment=""}}
 
-        //1:  [ArrayList]
-        //{"Product6", "4"}
+        //20:26:  [ArrayList]
+        //{{"Product6", "4"}, comment=""}
 
-        //When i use get(0) the result is Product6
+        //When i use get(0).get(0) the result is Product6
 
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -96,18 +104,21 @@ public class OrdersFragment extends Fragment {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
 
                 User = (HashMap<String, Object>) documentSnapshot.getData();
-                Company = (HashMap<String, Object>) User.get("Orders");
-                //Selected Company
-                Client = (HashMap<String, Object>) Company.get("Ideas Gastronómicas");
-                //Client Selected
-                Date = (HashMap<String, Object>) Client.get("12");
-                //Date selected on calendar fragment
-                OrdersAndComment = (HashMap<String, Object>) Date.get("19-02-202220:26");
-                Comment = OrdersAndComment.get("comment").toString();
-                ProductAndAmount = (ArrayList<String>) OrdersAndComment.get("2");
+                Orders = (HashMap<String, Object>) User.get("Orders");
+                Company = (HashMap<String, Object>) Orders.get(CompanySelected);
+                Date = (HashMap<String, Object>) Company.get(DateSelected);
+                if(Date == null){
+                    Toast.makeText(root.getContext(), "No hay pedidos enviados en la fecha seleccionada", Toast.LENGTH_SHORT).show();
+                }else {
+                    Client = (HashMap<String, Object>) Date.get("CLIENTE NUTRIFRESCA");
+                    //Date selected on calendar fragment
+                    Hour = (HashMap<String, Object>) Client.get("00:59");
+                    ProductAndAmount = (ArrayList<String>) Hour.get("2");
+                    Comment = Hour.get("comment").toString();
+                }
 
-                //tv.setText("Producto: " + ProductAndAmount.get(0) + "\nCantidad: " + ProductAndAmount.get(1));
-
+                //TVDateOrders.setText("Producto: " + ProductAndAmount.get(0) + "\nCantidad: " + ProductAndAmount.get(1) + "\nComentario: " + Comment);
+                //TVDateOrders.setText(ProductAndAmount.get(0) + "Comentario: " + Comment);
             }
         });
 
@@ -137,7 +148,6 @@ public class OrdersFragment extends Fragment {
         // build recycler view.
         buildRecyclerView();
 
-        // initializing our adapter class.
         adapter = new RecyclerViewAdapterOrders(TextOrders, root.getContext());
 
         adapter.setClickListener(new RecyclerViewAdapterOrders.ItemClickListener() {

@@ -3,11 +3,8 @@ package com.martin.preventapp.ui.orders_sent.fragment_orders;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -17,31 +14,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.martin.preventapp.DialogFragment;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentOrdersBinding;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class OrdersFragment extends Fragment {
 
     private @NonNull FragmentOrdersBinding binding;
     private RecyclerViewAdapterOrders adapter;
-
-    //private HashMap<String, Object> User = new HashMap<>();
-    /*private HashMap<String, Object> Company = new HashMap<>();
-    private HashMap<String, Object> Client = new HashMap<>();
-    private HashMap<String, Object> Date = new HashMap<>();
-    private HashMap<String, Object> OrdersAndComment = new HashMap<>();
-    private ArrayList<String> ProductAndAmount = new ArrayList<>();
-    private String Comment;*/
 
     private HashMap<String, Object> User = new HashMap<>();
     private HashMap<String, Object> Orders = new HashMap<>();
@@ -76,12 +59,9 @@ public class OrdersFragment extends Fragment {
         }
 
         TextView TVDateOrders = root.findViewById(R.id.TVDateOrders);
+        TVDateOrders.setText("Pedidos de la fecha: " + DateSelected);
 
         List ClientKey = new ArrayList(Date.keySet());
-        for (int i = 0; i < ClientKey.size(); i++) {
-          TVDateOrders.append("\n" + ClientKey.get(i));
-        }
-
 
         Client = (HashMap<String, Object>) Date.get("CLIENTE NUTRIFRESCA");
         //Date selected on calendar fragment
@@ -125,6 +105,8 @@ public class OrdersFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(root.getContext(), "Tocaste el item: " + position, Toast.LENGTH_SHORT).show();
+                DialogFragment dialogFragment=new DialogFragment();
+                dialogFragment.show(getActivity().getSupportFragmentManager(),"My  Fragment");
             }
         });
 

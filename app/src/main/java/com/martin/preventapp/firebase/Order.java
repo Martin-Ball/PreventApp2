@@ -51,7 +51,7 @@ public class Order {
                 .append("*Cliente:* " + selectedClient + "\n")
                 .append("*Fecha:* " + currentDate + "\n")
                 .append("*Lista:* " + CompanySelected + "\n")
-                .append("*Productos:* " + ProductsOrders.size() + "\n");
+                .append("*Productos:* " + arrayProducts.size() + "\n");
 
         message.append(limitText);
 
@@ -111,25 +111,32 @@ public class Order {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
 
-        // Orders --> Company --> Date --> Product
-        //                             |--> Amount
+        // Orders --> Company --> Date --> Client --> Hour --> Product
+        //                                                 |--> Amount
 
         HashMap<String, Object> Orders = new HashMap<>();
-        HashMap<String, Object> Client = new HashMap<>();
         HashMap<String, Object> Company = new HashMap<>();
-        HashMap<String, Object> User = new HashMap<>();
+        HashMap<String, Object> Date = new HashMap<>();
+        HashMap<String, Object> Client = new HashMap<>();
+        HashMap<String, Object> Hour = new HashMap<>();
 
         ProductAndAmount.put("comment", comment);
 
-        Orders.put(currentDate + " " + currentTime, ProductAndAmount);
+        Hour.put(currentTime, ProductAndAmount);
+        Client.put(selectedClient, Hour);
+        Date.put(currentDate, Client);
+        Company.put(CompanySelected, Date);
+        Orders.put("Orders", Company);
+
+        /*Orders.put(currentDate + " " + currentTime, ProductAndAmount);
         Client.put(selectedClient, Orders);
         Company.put(CompanySelected, Client);
-        User.put("Orders", Company);
+        User.put("Orders", Company);*/
 
         try {
             // Add a new document with ID for user
-            db.collection("users").document(currentFirebaseUser.getUid()).set(User, SetOptions.merge());
-            clearArray(arrayProducts, Orders, Client, Company, User);
+            db.collection("users").document(currentFirebaseUser.getUid()).set(Orders, SetOptions.merge());
+            clearArray(arrayProducts, Hour, Client, Date, Company, Orders);
         }catch(Exception e){
             Toast.makeText(root.getContext(), "Error: " + e, Toast.LENGTH_LONG).show();
         }
@@ -141,18 +148,16 @@ public class Order {
     }
 
     private void clearArray(ArrayList<ArrayList<String>> arrayProducts,
-                                HashMap<String, Object> Orders,
+                                HashMap<String, Object> Hour,
                                 HashMap<String, Object> Client,
+                                HashMap<String, Object> Date,
                                 HashMap<String, Object> Company,
-                                HashMap<String, Object> User) {
+                                HashMap<String, Object> Orders) {
         arrayProducts.clear();
-        Orders.clear();
+        Hour.clear();
         Client.clear();
+        Date.clear();
         Company.clear();
-        User.clear();
-    }
-
-    private void ordersList(){
-
+        Orders.clear();
     }
 }

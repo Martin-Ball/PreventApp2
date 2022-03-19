@@ -137,15 +137,15 @@ public class FragmentSpinnerSearchableClient extends Fragment {
                         Date = (HashMap<String, Object>) Company.get(DateSelected);
                         if(Date == null){
                             Toast.makeText(root.getContext(), "No hay pedidos enviados en la fecha " + DateSelected, Toast.LENGTH_SHORT).show();
+                            if(ordersFragment.isAdded()) {
+                                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().remove(ordersFragment).commit();
+                            }
                         }else {
                             Client = (HashMap<String, Object>) Date.get("CLIENTE NUTRIFRESCA");
                             //Date selected on calendar fragment
                             Hour = (HashMap<String, Object>) Client.get("01:47");
                             ProductAndAmount = (ArrayList<String>) Hour.get("2");
                             Comment = Hour.get("comment").toString();
-
-                            Toast.makeText(root.getContext(),"Producto: " + ProductAndAmount.get(0) + "\nCantidad: " + ProductAndAmount.get(1) + "\nComentario: " + Comment, Toast.LENGTH_SHORT).show();
-                            //TVDateOrders.setText("Producto: " + ProductAndAmount.get(0) + "\nCantidad: " + ProductAndAmount.get(1) + "\nComentario: " + Comment);
 
                             if(!ordersFragment.isAdded()) {
                                 addFragmentOrders(fragmentManager, ordersFragment, etPlannedDate.getText().toString(), SelectedClient);
@@ -155,7 +155,6 @@ public class FragmentSpinnerSearchableClient extends Fragment {
                                 addFragmentOrders(fragmentManager, ordersFragment1, etPlannedDate.getText().toString(), SelectedClient);
                             }
                         }
-
                         etPlannedDate.setText(DateSelected);
                     }
                 }, year, month, day);
@@ -174,6 +173,7 @@ public class FragmentSpinnerSearchableClient extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString("DateSelected", DateSelected);
         bundle.putString("CompanySelected", CompanySelected);
+        bundle.putSerializable("DateHashMap", Date);
         ordersFragment.setArguments(bundle);
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

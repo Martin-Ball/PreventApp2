@@ -38,7 +38,8 @@
                     android:paddingStart="5dp"
                     android:paddingTop="5dp"
                     android:paddingEnd="5dp"
-                    android:paddingBottom="5dp">
+                    android:paddingBottom="5dp"
+                    android:elevation="10dp">
 
                     <TextView
                         android:id="@+id/client_new_order"
@@ -70,7 +71,8 @@
                             android:background="@drawable/shape_blue"
                             android:gravity="center|center_vertical"
                             android:textColorHint="@color/linkiar_search_border"
-                            app:hintText="Seleccionar el cliente" />
+                            app:hintText="Seleccionar el cliente"
+                            android:elevation="10dp"/>
                     </LinearLayout>
 
                     <Space
@@ -98,7 +100,8 @@
                             android:background="@drawable/shape_blue"
                             android:gravity="center|center_vertical"
                             android:textColorHint="@color/linkiar_search_border"
-                            app:hintText="Agregar producto al pedido" />
+                            app:hintText="Agregar producto al pedido"
+                            android:elevation="10dp"/>
                     </LinearLayout>
 
                     <Space
@@ -138,7 +141,8 @@
                 <ScrollView
                     android:layout_width="382dp"
                     android:layout_height="354dp"
-                    android:background="@drawable/shape">
+                    android:background="@drawable/shape"
+                    android:elevation="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -174,6 +178,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:elevation="10dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

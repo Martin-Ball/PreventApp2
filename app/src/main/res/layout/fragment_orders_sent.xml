@@ -12,27 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="16dp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/companyTextInputLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+    <Spinner
+        android:id="@+id/spinnerCompany"
         android:layout_width="360dp"
         android:layout_height="48dp"
-        android:layout_gravity="center"
-        android:background="@drawable/shape_blue">
-
-
-        <AutoCompleteTextView
-            android:id="@+id/companyAutoCompleteTextView"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#00FFFFFF"
-            android:backgroundTint="#00FFFFFF"
-            android:gravity="center_vertical"
-            android:inputType="none"
-            android:text="Seleccione el proveedor"
-            tools:ignore="TouchTargetSizeCheck" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/shape_blue"
+        android:drawableEnd="@drawable/ic_dropdown"
+        android:minHeight="48dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:elevation="10dp"/>
 
     <FrameLayout
         android:id="@+id/fragment_spinner_client_container"

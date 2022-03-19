@@ -21,6 +21,8 @@ public class Company {
 
     public ArrayList<String> companyList (View view) {
 
+        CompanyList.add(0, "Seleccione un proveedor");
+
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();

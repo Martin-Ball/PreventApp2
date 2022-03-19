@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -27,7 +28,7 @@ import com.martin.preventapp.ui.new_order.NewOrderFragment;
 public class CompanyFragment extends Fragment {
 
     private FragmentCompanyBinding binding;
-    private String companySelected;
+    private String CompanySelected;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,13 +41,23 @@ public class CompanyFragment extends Fragment {
 
         Company CompanyList = new Company();
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(root.getContext(), android.R.layout.simple_list_item_1, CompanyList.companyList(root));
-        binding.companyAutoCompleteTextView.setAdapter(arrayAdapter);
+        //Spinner Company
 
-        binding.companyAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        Spinner spinnerCompany = root.findViewById(R.id.spinnerCompany);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, CompanyList.companyList(root));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCompany.setAdapter(adapter);
+
+        spinnerCompany.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                companySelected = adapterView.getItemAtPosition(i).toString();
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                CompanySelected = adapterView.getItemAtPosition(position).toString();
+                Toast.makeText(root.getContext(), CompanySelected, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
 
@@ -65,18 +76,17 @@ public class CompanyFragment extends Fragment {
                 Products prod = new Products();
                 prod.addNewProduct("Ideas Gastronómicas", root);
 
-                if(companySelected == null){
+                if(CompanySelected == "Seleccione un proveedor"){
                     Toast.makeText(root.getContext(), "Seleccione un proveedor", Toast.LENGTH_SHORT).show();
                 }else {
 
-                    bundle.putString("CompanySelected", companySelected); // Put anything what you want
+                    bundle.putString("CompanySelected", CompanySelected); // Put anything what you want
                     newOrderFragment.setArguments(bundle);
 
                     fragmentManager.beginTransaction()
-                            .replace(R.id.nav_host_fragment_content_main, newOrderFragment, null)
-                            //.setReorderingAllowed(true)
-                            .addToBackStack(null) // name can be null
-                            .commit();
+                    .replace(R.id.nav_host_fragment_content_main, newOrderFragment)
+                    .addToBackStack(null) // name can be null
+                    .commit();
                 }
             }
         });

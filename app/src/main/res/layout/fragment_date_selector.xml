@@ -11,21 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="16dp" />
-
         <!--Spinner Searchable Client-->
-
-        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-            android:id="@+id/spinner_searchable_new_client"
-            android:layout_width="360dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center|top"
-            android:background="@drawable/shape_blue"
-            android:gravity="center|center_vertical"
-            android:spinnerMode="dialog"
-            app:hintText="Seleccionar el cliente" />
 
         <Space
             android:layout_width="match_parent"
@@ -51,7 +37,8 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:textColorHint="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:elevation="10dp"/>
 
         <Space
             android:layout_width="match_parent"

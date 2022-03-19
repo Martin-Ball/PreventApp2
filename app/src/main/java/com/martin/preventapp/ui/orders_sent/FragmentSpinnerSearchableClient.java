@@ -10,25 +10,19 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.martin.preventapp.R;
-import com.martin.preventapp.databinding.FragmentSpinnerSearchableClientBinding;
-import com.martin.preventapp.firebase.Clients;
-import com.martin.preventapp.ui.new_order.AddNewClient;
+import com.martin.preventapp.databinding.FragmentDateSelectorBinding;
 import com.martin.preventapp.ui.orders_sent.fragment_orders.OrdersFragment;
-import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.Calendar;
 import java.util.Objects;
 
 public class FragmentSpinnerSearchableClient extends Fragment {
 
-    private FragmentSpinnerSearchableClientBinding binding;
+    private FragmentDateSelectorBinding binding;
     private String CompanySelected = "";
     private String SelectedClient;
     public String DateSelected = "";
@@ -43,7 +37,7 @@ public class FragmentSpinnerSearchableClient extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        binding = FragmentSpinnerSearchableClientBinding.inflate(inflater, container, false);
+        binding = FragmentDateSelectorBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         //bundle from Orders Sent Fragment
@@ -54,46 +48,13 @@ public class FragmentSpinnerSearchableClient extends Fragment {
             CompanySelected = bundle.getString("CompanySelected");
         }
 
-        Clients clients = new Clients();
-
         //Fragment layout Orders
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         OrdersFragment ordersFragment = new OrdersFragment();
 
-        //Spinner Searchable client
-
-        SearchableSpinner spinnerClient = root.findViewById(R.id.spinner_searchable_new_client);
-
-        //new client
-
-        ArrayAdapter<String> adapterNewClientSelector = new ArrayAdapter<>(root.getContext(),
-                android.R.layout.simple_list_item_1, clients.clientlist(root, CompanySelected));
-        spinnerClient.setAdapter(adapterNewClientSelector);
-        spinnerClient.setTitle("Seleccione un cliente");
-        spinnerClient.setPositiveButton("CANCELAR");
-
-        spinnerClient.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i == 0) {
-                    AddNewClient newClient = new AddNewClient();
-                    newClient.newClient(root, CompanySelected);
-                } else {
-                    String sNumber = adapterView.getItemAtPosition(i).toString();
-                    SelectedClient = sNumber;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
-
         //EditText for DatePicker
 
-        EditText etPlannedDate = (EditText) root.findViewById(R.id.etPlannedDate);
-
-        OrdersSentFragment ordersSentFragment = new OrdersSentFragment();
+        EditText etPlannedDate = root.findViewById(R.id.etPlannedDate);
 
         etPlannedDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,11 +72,11 @@ public class FragmentSpinnerSearchableClient extends Fragment {
 
                         etPlannedDate.setText(DateSelected);
                         if(!ordersFragment.isAdded()) {
-                            addFragmentOrders(fragmentManager, ordersFragment, DateSelected);
+                            addFragmentOrders(fragmentManager, ordersFragment, etPlannedDate.getText().toString(), SelectedClient);
                         }else {
                             Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().remove(ordersFragment).commit();
                             OrdersFragment ordersFragment1 = new OrdersFragment();
-                            addFragmentOrders(fragmentManager, ordersFragment1, DateSelected);
+                            addFragmentOrders(fragmentManager, ordersFragment1, etPlannedDate.getText().toString(), SelectedClient);
                         }
                     }
                 }, year, month, day);
@@ -130,10 +91,13 @@ public class FragmentSpinnerSearchableClient extends Fragment {
         super.onDestroyView();
     }
 
-    private void addFragmentOrders(FragmentManager fragmentManager, Fragment ordersFragment, String DateSelected){
+    private void addFragmentOrders(FragmentManager fragmentManager, Fragment ordersFragment, String DateSelected, String SelectedClient){
+
+        Toast.makeText(getContext(), SelectedClient, Toast.LENGTH_SHORT).show();
 
         Bundle bundle = new Bundle();
         bundle.putString("DateSelected", DateSelected);
+        bundle.putString("CompanySelected", CompanySelected);
         ordersFragment.setArguments(bundle);
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

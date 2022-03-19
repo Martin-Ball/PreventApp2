@@ -3,6 +3,8 @@ package com.martin.preventapp.ui.orders_sent.fragment_orders;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +27,7 @@ import com.martin.preventapp.databinding.FragmentOrdersBinding;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class OrdersFragment extends Fragment {
 
@@ -71,7 +74,7 @@ public class OrdersFragment extends Fragment {
         }
 
         TextView TVDateOrders = root.findViewById(R.id.TVDateOrders);
-        //Toast.makeText(root.getContext(), ordersSentFragment.DateSelected, Toast.LENGTH_SHORT).show();
+        /*//Toast.makeText(root.getContext(), ordersSentFragment.DateSelected, Toast.LENGTH_SHORT).show();
         //TVDateOrders.setText("Pedidos de la fecha: " + DateSelected + "\nEmpresa: " + CompanySelected);
 
         // Orders --> Company --> Date --> Client --> Hour --> Product
@@ -108,19 +111,18 @@ public class OrdersFragment extends Fragment {
                 Company = (HashMap<String, Object>) Orders.get(CompanySelected);
                 Date = (HashMap<String, Object>) Company.get(DateSelected);
                 if(Date == null){
-                    Toast.makeText(root.getContext(), "No hay pedidos enviados en la fecha seleccionada", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(root.getContext(), "No hay pedidos enviados en la fecha " + DateSelected, Toast.LENGTH_SHORT).show();
                 }else {
                     Client = (HashMap<String, Object>) Date.get("CLIENTE NUTRIFRESCA");
                     //Date selected on calendar fragment
-                    Hour = (HashMap<String, Object>) Client.get("00:59");
+                    Hour = (HashMap<String, Object>) Client.get("01:47");
                     ProductAndAmount = (ArrayList<String>) Hour.get("2");
                     Comment = Hour.get("comment").toString();
-                }
 
-                //TVDateOrders.setText("Producto: " + ProductAndAmount.get(0) + "\nCantidad: " + ProductAndAmount.get(1) + "\nComentario: " + Comment);
-                //TVDateOrders.setText(ProductAndAmount.get(0) + "Comentario: " + Comment);
+                    TVDateOrders.setText("Producto: " + ProductAndAmount.get(0) + "\nCantidad: " + ProductAndAmount.get(1) + "\nComentario: " + Comment);
+                }
             }
-        });
+        });*/
 
         // initializing our variables.
         recyclerViewOrders = root.findViewById(R.id.rvOrders);

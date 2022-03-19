@@ -13,11 +13,18 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentDateSelectorBinding;
 import com.martin.preventapp.ui.orders_sent.fragment_orders.OrdersFragment;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class FragmentSpinnerSearchableClient extends Fragment {
@@ -26,6 +33,18 @@ public class FragmentSpinnerSearchableClient extends Fragment {
     private String CompanySelected = "";
     private String SelectedClient;
     public String DateSelected = "";
+
+
+
+    private HashMap<String, Object> User = new HashMap<>();
+    private HashMap<String, Object> Orders = new HashMap<>();
+    private HashMap<String, Object> Company = new HashMap<>();
+    private HashMap<String, Object> Date = new HashMap<>();
+    private  HashMap<String, Object> Client = new HashMap<>();
+    private HashMap<String, Object> Hour = new HashMap<>();
+    private ArrayList<String> ProductAndAmount = new ArrayList<>();
+
+    String Comment = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +67,45 @@ public class FragmentSpinnerSearchableClient extends Fragment {
             CompanySelected = bundle.getString("CompanySelected");
         }
 
+
+        // Orders --> Company --> Date --> Client --> Hour --> Product
+        //                                                 |--> Amount
+
+        //Orders:  [HASHMAP]
+        //{"Orders"={"Ideas Gastronomicas"={"19-02-2022"={"12"={"20:26"={{"Product6", "4"}, comment=""}}}}}
+
+        //Company:  [HASHMAP]
+        //{"Ideas Gastronomicas"={"19-02-2022"={"12"={"20:26"={{"Product6", "4"}, comment=""}}}}
+
+        //19-02-2022:  [HASHMAP]
+        //{"19-02-2022"={"12"={"20:26"={{"Product6", "4"}, comment=""}}}
+
+        //12  [HASHMAP]
+        //{"20:26"={{"Product6", "4"}, comment=""}}
+
+        //20:26:  [ArrayList]
+        //{{"Product6", "4"}, comment=""}
+
+        //When i use get(0).get(0) the result is Product6
+
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+        db.collection("users").document(currentFirebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                User = (HashMap<String, Object>) documentSnapshot.getData();
+                Orders = (HashMap<String, Object>) User.get("Orders");
+                Company = (HashMap<String, Object>) Orders.get(CompanySelected);
+            }
+        });
+
+
+
+
         //Fragment layout Orders
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         OrdersFragment ordersFragment = new OrdersFragment();
@@ -68,16 +126,37 @@ public class FragmentSpinnerSearchableClient extends Fragment {
                 DatePickerDialog picker = new DatePickerDialog(root.getContext(), R.style.DatePicker, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(android.widget.DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-                        DateSelected = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+
+                        //add zero for month
+                        if(monthOfYear<10) {
+                            DateSelected = dayOfMonth + "/" + "0" + (monthOfYear + 1) + "/" + year;
+                        }else{
+                            DateSelected = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                        }
+
+                        Date = (HashMap<String, Object>) Company.get(DateSelected);
+                        if(Date == null){
+                            Toast.makeText(root.getContext(), "No hay pedidos enviados en la fecha " + DateSelected, Toast.LENGTH_SHORT).show();
+                        }else {
+                            Client = (HashMap<String, Object>) Date.get("CLIENTE NUTRIFRESCA");
+                            //Date selected on calendar fragment
+                            Hour = (HashMap<String, Object>) Client.get("01:47");
+                            ProductAndAmount = (ArrayList<String>) Hour.get("2");
+                            Comment = Hour.get("comment").toString();
+
+                            Toast.makeText(root.getContext(),"Producto: " + ProductAndAmount.get(0) + "\nCantidad: " + ProductAndAmount.get(1) + "\nComentario: " + Comment, Toast.LENGTH_SHORT).show();
+                            //TVDateOrders.setText("Producto: " + ProductAndAmount.get(0) + "\nCantidad: " + ProductAndAmount.get(1) + "\nComentario: " + Comment);
+
+                            if(!ordersFragment.isAdded()) {
+                                addFragmentOrders(fragmentManager, ordersFragment, etPlannedDate.getText().toString(), SelectedClient);
+                            }else {
+                                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().remove(ordersFragment).commit();
+                                OrdersFragment ordersFragment1 = new OrdersFragment();
+                                addFragmentOrders(fragmentManager, ordersFragment1, etPlannedDate.getText().toString(), SelectedClient);
+                            }
+                        }
 
                         etPlannedDate.setText(DateSelected);
-                        if(!ordersFragment.isAdded()) {
-                            addFragmentOrders(fragmentManager, ordersFragment, etPlannedDate.getText().toString(), SelectedClient);
-                        }else {
-                            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().remove(ordersFragment).commit();
-                            OrdersFragment ordersFragment1 = new OrdersFragment();
-                            addFragmentOrders(fragmentManager, ordersFragment1, etPlannedDate.getText().toString(), SelectedClient);
-                        }
                     }
                 }, year, month, day);
                 picker.show();
@@ -92,9 +171,6 @@ public class FragmentSpinnerSearchableClient extends Fragment {
     }
 
     private void addFragmentOrders(FragmentManager fragmentManager, Fragment ordersFragment, String DateSelected, String SelectedClient){
-
-        Toast.makeText(getContext(), SelectedClient, Toast.LENGTH_SHORT).show();
-
         Bundle bundle = new Bundle();
         bundle.putString("DateSelected", DateSelected);
         bundle.putString("CompanySelected", CompanySelected);

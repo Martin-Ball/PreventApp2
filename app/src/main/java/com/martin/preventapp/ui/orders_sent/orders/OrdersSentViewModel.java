@@ -1,4 +1,4 @@
-package com.martin.preventapp.ui.orders_sent;
+package com.martin.preventapp.ui.orders_sent.orders;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

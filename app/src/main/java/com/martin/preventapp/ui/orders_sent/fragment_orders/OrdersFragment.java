@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.martin.preventapp.DialogFragment;
+import com.martin.preventapp.ui.orders_sent.orders.DialogFragment;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentOrdersBinding;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class OrdersFragment extends Fragment {
     private HashMap<String, Object> Orders = new HashMap<>();
     private HashMap<String, Object> Company = new HashMap<>();
     private HashMap<String, Object> Date = new HashMap<>();
-    private  HashMap<String, Object> Client = new HashMap<>();
+    private HashMap<String, Object> Client = new HashMap<>();
     private HashMap<String, Object> Hour = new HashMap<>();
     private ArrayList<String> ProductAndAmount = new ArrayList<>();
 

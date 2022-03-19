@@ -1,4 +1,4 @@
-package com.martin.preventapp;
+package com.martin.preventapp.firebase;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.martin.preventapp.R;
 import com.martin.preventapp.firebase.login.LoginActivity;
 
 public class LogOut extends AppCompatActivity {

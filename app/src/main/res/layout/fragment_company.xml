@@ -7,36 +7,30 @@
     android:layout_height="match_parent"
     tools:context=".ui.new_order.Company.CompanyFragment">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/companyTextInputLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="0dp"
+    <Spinner
+        android:id="@+id/spinnerCompany"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="88dp"
-        android:layout_marginEnd="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="140dp"
+        android:background="@drawable/shape_blue"
+        android:drawableEnd="@drawable/ic_dropdown"
+        android:minHeight="48dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/go_order"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.686"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <AutoCompleteTextView
-            android:id="@+id/companyAutoCompleteTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_blue"
-            android:inputType="none"
-            android:popupBackground="@drawable/shape_blue"
-            android:text="Seleccione el proveedor" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.088"
+        android:elevation="10dp"/>
 
     <Button
         android:id="@+id/go_order"
         android:layout_width="267dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="152dp"
+        android:layout_marginBottom="144dp"
         android:backgroundTint="@color/linkiar_signin"
         android:drawableRight="@drawable/ic_arrow"
         android:text="IR AL PEDIDO"
@@ -44,7 +38,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/companyTextInputLayout"
-        app:layout_constraintVertical_bias="0.366" />
+        android:elevation="10dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:elevation="1dp"
     tools:context=".ui.orders_sent.fragment_orders.OrdersFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -13,19 +14,23 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/ETDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:hint="Buscar"
-            tools:ignore="SpeakableTextPresentCheck" />
-
         <TextView
             android:id="@+id/TVDateOrders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center" />
+
+        <EditText
+            android:id="@+id/ETDate"
+            android:layout_width="360dp"
+            android:layout_height="48dp"
+            android:drawableStart="@drawable/ic_search"
+            android:elevation="1dp"
+            android:hint="Buscar cliente"
+            android:includeFontPadding="true"
+            android:paddingHorizontal="10dp"
+            android:paddingStart="10dp"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -34,7 +39,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvOrders"

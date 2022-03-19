@@ -44,9 +44,9 @@ public class OrdersFragment extends Fragment {
     private ArrayList<String> ProductAndAmount = new ArrayList<>();
     private String Comment;
 
-    private String CompanySelected = "Ideas Gastronómicas";
-    private String ClientSelected = "14";
-    private String DateSelected = "22/10/22";
+    private String CompanySelected = "";
+    private String ClientSelected = "";
+    private String DateSelected = "";
 
     private RecyclerView recyclerViewOrders;
 
@@ -62,11 +62,12 @@ public class OrdersFragment extends Fragment {
 
         if(bundle != null){
             DateSelected = bundle.getString("DateSelected");
+            CompanySelected = bundle.getString("CompanySelected");
         }
 
         TextView TVDateOrders = root.findViewById(R.id.TVDateOrders);
         //Toast.makeText(root.getContext(), ordersSentFragment.DateSelected, Toast.LENGTH_SHORT).show();
-        TVDateOrders.setText("Pedidos de la fecha: " + DateSelected);
+        TVDateOrders.setText("Pedidos de la fecha: " + DateSelected + "\nEmpresa: " + CompanySelected);
 
         //User:  [HASHMAP]
         //{"Orders"={"Ideas Gastronomicas"={"12"={"19-02-2022 20:26"={"1"={"Product6", "4"}}}}}}
@@ -170,7 +171,7 @@ public class OrdersFragment extends Fragment {
         // running a for loop to compare elements.
         for (InfoOrders item : TextOrders) {
             // checking if the entered string matched with any item of our recycler view.
-            if (item.getCompany().toLowerCase().contains(text.toLowerCase())) {
+            if (item.getClient().toLowerCase().contains(text.toLowerCase())) {
                 // if the item is matched we are
                 // adding it to our filtered list.
                 filteredlist.add(item);

@@ -1,15 +1,12 @@
 package com.martin.preventapp.ui.orders_sent;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,11 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentOrdersSentBinding;
-import com.martin.preventapp.databinding.FragmentSpinnerSearchableClientBinding;
 import com.martin.preventapp.firebase.Company;
-import com.martin.preventapp.ui.orders_sent.fragment_orders.OrdersFragment;
-
-import java.util.Calendar;
 
 public class OrdersSentFragment extends Fragment {
 
@@ -50,29 +43,38 @@ public class OrdersSentFragment extends Fragment {
         //Spinner Company
 
         Company CompanyList = new Company();
-        ArrayAdapter arrayAdapter = new ArrayAdapter(root.getContext(), android.R.layout.simple_list_item_1, CompanyList.companyList(root));
-        binding.companyAutoCompleteTextView.setAdapter(arrayAdapter);
 
-        binding.companyAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                CompanySelected = adapterView.getItemAtPosition(i).toString();
-                //Toast.makeText(root.getContext(), CompanySelected, Toast.LENGTH_SHORT).show();
+        Spinner spinnerCompany = root.findViewById(R.id.spinnerCompany);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, CompanyList.companyList(root));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCompany.setAdapter(adapter);
 
-                if(CompanySelected == ""){
-                    Toast.makeText(root.getContext(), "Seleccione un proveedor", Toast.LENGTH_SHORT).show();
-                }else {
+        spinnerCompany.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+             @Override
+             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                 CompanySelected = adapterView.getItemAtPosition(position).toString();
+                 //Toast.makeText(root.getContext(), CompanySelected, Toast.LENGTH_SHORT).show();
 
-                    if (!spinnerFragment.isAdded()) {
-                        addFragmentClient(spinnerFragment, fragmentManager);
-                    }
+                 if(position == 0){
+                     Toast.makeText(root.getContext(), "Seleccione una empresa", Toast.LENGTH_SHORT).show();
+                 }else {
+                     Toast.makeText(root.getContext(), "Empresa seleccionada: " + adapterView.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
 
-                    if (spinnerFragment.isAdded()){
-                        removeFragmentClient(fragmentManager);
-                    }
-                }
-            }
-        });
+                     if (!spinnerFragment.isAdded()) {
+                         addFragmentClient(spinnerFragment, fragmentManager);
+                     }
+
+                     if (spinnerFragment.isAdded()){
+                         removeFragmentClient(fragmentManager);
+                     }
+                 }
+             }
+
+             @Override
+             public void onNothingSelected(AdapterView<?> adapterView) {
+
+             }
+         });
 
 
         return root;
@@ -104,4 +106,3 @@ public class OrdersSentFragment extends Fragment {
         addFragmentClient(spinnerFragment, fragmentManager);
     }
 }
-

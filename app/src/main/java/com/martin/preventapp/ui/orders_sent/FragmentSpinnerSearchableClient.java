@@ -103,9 +103,6 @@ public class FragmentSpinnerSearchableClient extends Fragment {
             }
         });
 
-
-
-
         //Fragment layout Orders
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         OrdersFragment ordersFragment = new OrdersFragment();

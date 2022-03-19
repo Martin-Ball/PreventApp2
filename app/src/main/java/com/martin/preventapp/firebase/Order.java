@@ -36,7 +36,7 @@ public class Order {
                            RecyclerView ordersRecycler,
                            String comment, View root) {
 
-        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        String currentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
         String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
 
         String limitText = "===========================\n";

@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +17,7 @@ import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentDialogBinding;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DialogFragment extends androidx.fragment.app.DialogFragment {
     private @NonNull FragmentDialogBinding binding;
@@ -24,22 +27,45 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
     private AdapterDialogFragment adapterDialogFragment;
     private RecyclerView mRecyclerView;
 
+    private String ClientSelected = "";
+
+    private HashMap<String, Object> Date = new HashMap<>();
+    private HashMap<String, Object> Client = new HashMap<>();
+    private HashMap<String, Object> Hour = new HashMap<>();
+    private ArrayList<String> ProductAndAmount = new ArrayList<>();
+
+    String Comment = "";
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentDialogBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         ImageView closeFragment = root.findViewById(R.id.closeFragment);
+        TextView commentTV = root.findViewById(R.id.commentTV);
 
         arrayCardViewDetailProducts = new ArrayList<>();
 
-        arrayCardViewDetailProducts.add(new CardViewDetailOrder("PAPITAS", "0"));
-        arrayCardViewDetailProducts.add(new CardViewDetailOrder("PAPITAS", "0"));
-        arrayCardViewDetailProducts.add(new CardViewDetailOrder("PAPITAS", "0"));
-        arrayCardViewDetailProducts.add(new CardViewDetailOrder("PAPITAS", "0"));
-        arrayCardViewDetailProducts.add(new CardViewDetailOrder("PAPITAS", "0"));
-        arrayCardViewDetailProducts.add(new CardViewDetailOrder("PAPITAS", "0"));
-        arrayCardViewDetailProducts.add(new CardViewDetailOrder("PAPITAS", "0"));
+        Bundle bundle = this.getArguments();
+
+        if(bundle != null){
+            ClientSelected = bundle.getString("ClientSelected");
+            Date = (HashMap<String, Object>) bundle.getSerializable("DateHashMap");
+        }
+
+        Client = (HashMap<String, Object>) Date.get(ClientSelected);
+        //Date selected on calendar fragment
+        Hour = (HashMap<String, Object>) Client.get("01:47");
+
+
+        Comment = Hour.get("comment").toString();
+
+        for (int i=1; i<= Hour.size()-1; i++){
+                ProductAndAmount = (ArrayList<String>) Hour.get(String.valueOf(i));
+                arrayCardViewDetailProducts.add(new CardViewDetailOrder(ProductAndAmount.get(0), ProductAndAmount.get(1)));
+        }
+
+        commentTV.setText("Comentario: " + Comment);
 
 
         //add product and amount into array

@@ -59,8 +59,6 @@ public class OrdersSentFragment extends Fragment {
                  if(position == 0){
                      Toast.makeText(root.getContext(), "Seleccione una empresa", Toast.LENGTH_SHORT).show();
                  }else {
-                     Toast.makeText(root.getContext(), "Empresa seleccionada: " + adapterView.getItemAtPosition(position), Toast.LENGTH_SHORT).show();
-
                      if (!spinnerFragment.isAdded()) {
                          addFragmentClient(spinnerFragment, fragmentManager);
                      }

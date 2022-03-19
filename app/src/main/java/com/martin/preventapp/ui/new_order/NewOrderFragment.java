@@ -146,14 +146,6 @@ public class NewOrderFragment extends Fragment {
                     //add product and amount into array
                     arrayProducts.add(productAndAmount);
 
-                    //add product and amount into hashmap
-                    //ProductAndAmount.put("Product", productAndAmount);
-                    //ProductAndAmount.put("Amount", "0");
-
-                    //add product and amount hashmap on Order Hashmap
-
-                    //ProductsOrders.put("Orders", ProductAndAmount);
-
                     //build Recycler View with CardViews
                     buildRecyclerView(root);
                 }

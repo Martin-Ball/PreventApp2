@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     card_view:cardBackgroundColor="@color/linkiar_search_background"
     card_view:cardCornerRadius="20dp"
-    card_view:cardElevation="5dp"
+    card_view:cardElevation="2dp"
     card_view:cardUseCompatPadding="true">
 
     <RelativeLayout
@@ -21,7 +21,8 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="10dp"
             android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/Amount"
@@ -30,7 +31,8 @@
             android:layout_below="@+id/Product"
             android:layout_alignLeft="@+id/Product"
             android:text="Small Text"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="12dp" />
 
 
     </RelativeLayout>

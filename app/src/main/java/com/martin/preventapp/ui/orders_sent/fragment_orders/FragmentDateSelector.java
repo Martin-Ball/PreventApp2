@@ -1,4 +1,4 @@
-package com.martin.preventapp.ui.orders_sent;
+package com.martin.preventapp.ui.orders_sent.fragment_orders;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -20,14 +20,13 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentDateSelectorBinding;
-import com.martin.preventapp.ui.orders_sent.fragment_orders.OrdersFragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class FragmentSpinnerSearchableClient extends Fragment {
+public class FragmentDateSelector extends Fragment {
 
     private FragmentDateSelectorBinding binding;
     private String CompanySelected = "";

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Preventapp">
         <activity
-            android:name=".LogOut"
+            android:name=".firebase.LogOut"
             android:exported="false" />
         <activity
             android:name=".firebase.login.LoginActivity"

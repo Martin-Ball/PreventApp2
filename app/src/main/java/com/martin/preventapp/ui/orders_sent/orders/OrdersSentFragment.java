@@ -1,4 +1,4 @@
-package com.martin.preventapp.ui.orders_sent;
+package com.martin.preventapp.ui.orders_sent.orders;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentOrdersSentBinding;
 import com.martin.preventapp.firebase.Company;
+import com.martin.preventapp.ui.orders_sent.fragment_orders.FragmentDateSelector;
 
 public class OrdersSentFragment extends Fragment {
 
@@ -37,7 +38,7 @@ public class OrdersSentFragment extends Fragment {
         View root = binding.getRoot();
 
         //Spinner Client Fragment
-        FragmentSpinnerSearchableClient spinnerFragment = new FragmentSpinnerSearchableClient();
+        FragmentDateSelector spinnerFragment = new FragmentDateSelector();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
         //Spinner Company
@@ -86,7 +87,7 @@ public class OrdersSentFragment extends Fragment {
         binding = null;
     }
 
-    private void addFragmentClient(FragmentSpinnerSearchableClient spinnerFragment, FragmentManager fragmentManager){
+    private void addFragmentClient(FragmentDateSelector spinnerFragment, FragmentManager fragmentManager){
 
         Bundle bundle = new Bundle();
         bundle.putString("CompanySelected", CompanySelected);
@@ -99,7 +100,7 @@ public class OrdersSentFragment extends Fragment {
 
     private void removeFragmentClient(FragmentManager fragmentManager){
 
-        FragmentSpinnerSearchableClient spinnerFragment = new FragmentSpinnerSearchableClient();
+        FragmentDateSelector spinnerFragment = new FragmentDateSelector();
 
         spinnerFragment.onDestroyView();
 

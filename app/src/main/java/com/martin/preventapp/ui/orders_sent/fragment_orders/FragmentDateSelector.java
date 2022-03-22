@@ -24,7 +24,6 @@ import com.martin.preventapp.databinding.FragmentDateSelectorBinding;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class FragmentDateSelector extends Fragment {
 
@@ -32,8 +31,6 @@ public class FragmentDateSelector extends Fragment {
     private String CompanySelected = "";
     private String SelectedClient;
     public String DateSelected = "";
-
-
 
     private HashMap<String, Object> User = new HashMap<>();
     private HashMap<String, Object> Orders = new HashMap<>();
@@ -134,19 +131,14 @@ public class FragmentDateSelector extends Fragment {
                         if(Date == null){
                             Toast.makeText(root.getContext(), "No hay pedidos enviados en la fecha " + DateSelected, Toast.LENGTH_SHORT).show();
                             if(ordersFragment.isAdded()) {
-                                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().remove(ordersFragment).commit();
+                                requireActivity().getSupportFragmentManager().beginTransaction().remove(ordersFragment).commit();
                             }
                         }else {
-                            Client = (HashMap<String, Object>) Date.get("CLIENTE NUTRIFRESCA");
-                            //Date selected on calendar fragment
-                            Hour = (HashMap<String, Object>) Client.get("01:47");
-                            ProductAndAmount = (ArrayList<String>) Hour.get("2");
-                            Comment = Hour.get("comment").toString();
 
                             if(!ordersFragment.isAdded()) {
                                 addFragmentOrders(fragmentManager, ordersFragment, etPlannedDate.getText().toString(), SelectedClient);
                             }else {
-                                Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().remove(ordersFragment).commit();
+                                requireActivity().getSupportFragmentManager().beginTransaction().remove(ordersFragment).commit();
                                 OrdersFragment ordersFragment1 = new OrdersFragment();
                                 addFragmentOrders(fragmentManager, ordersFragment1, etPlannedDate.getText().toString(), SelectedClient);
                             }

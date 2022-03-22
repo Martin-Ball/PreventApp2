@@ -61,13 +61,12 @@ public class OrdersFragment extends Fragment {
         TextView TVDateOrders = root.findViewById(R.id.TVDateOrders);
         TVDateOrders.setText("Pedidos de la fecha: " + DateSelected);
 
-        List ClientKey = new ArrayList(Date.keySet());
 
-        Client = (HashMap<String, Object>) Date.get("CLIENTE NUTRIFRESCA");
+        /*Client = (HashMap<String, Object>) Date.get("CLIENTE NUTRIFRESCA");
         //Date selected on calendar fragment
         Hour = (HashMap<String, Object>) Client.get("01:47");
         ProductAndAmount = (ArrayList<String>) Hour.get("2");
-        Comment = Hour.get("comment").toString();
+        Comment = Hour.get("comment").toString();*/
 
         // initializing our variables.
         recyclerViewOrders = root.findViewById(R.id.rvOrders);
@@ -93,7 +92,7 @@ public class OrdersFragment extends Fragment {
 
         // calling method to
         // build recycler view.
-        buildRecyclerView(ClientKey);
+        buildRecyclerView(Date);
 
         adapter = new RecyclerViewAdapterOrders(TextOrders, root.getContext());
 
@@ -103,11 +102,13 @@ public class OrdersFragment extends Fragment {
                 //Toast.makeText(root.getContext(), "Tocaste el item: " + position, Toast.LENGTH_SHORT).show();
                 //Toast.makeText(root.getContext(), TextOrders.get(position).getClient(), Toast.LENGTH_SHORT).show();
                 String ClientSelected = TextOrders.get(position).getClient();
+                String HourSelected = TextOrders.get(position).getHour();
 
                 DialogFragment dialogFragment = new DialogFragment();
 
                 Bundle bundle = new Bundle();
                 bundle.putString("ClientSelected", ClientSelected);
+                bundle.putString("HourSelected", HourSelected);
                 bundle.putSerializable("DateHashMap", Date);
                 dialogFragment.setArguments(bundle);
 
@@ -148,7 +149,7 @@ public class OrdersFragment extends Fragment {
         if (filteredlist.isEmpty()) {
             // if no item is added in filtered list we are
             // displaying a toast message as no data found.
-            Toast.makeText(getContext(), "No Data Found..", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "No hay datos en la busqueda", Toast.LENGTH_SHORT).show();
         } else {
             // at last we are passing that filtered
             // list to our adapter class.
@@ -156,14 +157,26 @@ public class OrdersFragment extends Fragment {
         }
     }
 
-    private void buildRecyclerView(List ClientKey) {
+    private void buildRecyclerView(HashMap<String, Object> Date) {
 
         // below line we are creating a new array list
         TextOrders = new ArrayList<>();
 
+        List ClientKey = new ArrayList(Date.keySet());
+
+        //Client = (HashMap<String, Object>) Date.get("CLIENTE NUTRIFRESCA");
+        //Date selected on calendar fragment
+        //Hour = (HashMap<String, Object>) Client.get("01:47");
+        //ProductAndAmount = (ArrayList<String>) Hour.get("2");
+        //Comment = Hour.get("comment").toString();
+
         // below line is to add data to our array list.
         for(int i=1; i<=ClientKey.size(); i++){
-            TextOrders.add(new InfoOrders(CompanySelected, ClientKey.get(i-1).toString(), DateSelected));
+                Client = (HashMap<String, Object>) Date.get(ClientKey.get(i - 1).toString());
+                List HourKey = new ArrayList(Client.keySet());
+            for (int j=1; j<=HourKey.size(); j++) {
+                TextOrders.add(new InfoOrders(CompanySelected, ClientKey.get(i - 1).toString(), HourKey.get(j - 1).toString()));
+        }
         }
     }
 

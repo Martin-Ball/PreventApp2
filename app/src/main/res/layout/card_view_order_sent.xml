@@ -45,10 +45,10 @@
                         android:text="Cliente: " />
 
                     <TextView
-                        android:id="@+id/dateAndHour"
+                        android:id="@+id/Hour"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fecha: " />
+                        android:text="Hora: " />
                 </LinearLayout>
 
                 <ImageView

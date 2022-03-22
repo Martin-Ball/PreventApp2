@@ -50,7 +50,7 @@ public class RecyclerViewAdapterOrders extends RecyclerView.Adapter<RecyclerView
 
         holder.company.setText("Empresa: " + infoOrders.getCompany());
         holder.client.setText("Cliente: " + infoOrders.getClient());
-        holder.dateAndHour.setText("Fecha y Hora: " + infoOrders.getDateAndHour());
+        holder.Hour.setText("Hora: " + infoOrders.getHour());
     }
 
     // total number of rows
@@ -64,13 +64,13 @@ public class RecyclerViewAdapterOrders extends RecyclerView.Adapter<RecyclerView
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView company;
         TextView client;
-        TextView dateAndHour;
+        TextView Hour;
 
         ViewHolder(View itemView) {
             super(itemView);
             company = itemView.findViewById(R.id.company);
             client = itemView.findViewById(R.id.client);
-            dateAndHour = itemView.findViewById(R.id.dateAndHour);
+            Hour = itemView.findViewById(R.id.Hour);
             itemView.setOnClickListener(this);
 
         }

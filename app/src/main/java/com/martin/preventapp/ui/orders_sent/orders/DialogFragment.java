@@ -28,6 +28,8 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
     private RecyclerView mRecyclerView;
 
     private String ClientSelected = "";
+    private String HourSelected = "";
+    private String CompanySelected = "";
 
     private HashMap<String, Object> Date = new HashMap<>();
     private HashMap<String, Object> Client = new HashMap<>();
@@ -50,12 +52,19 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
 
         if(bundle != null){
             ClientSelected = bundle.getString("ClientSelected");
+            HourSelected = bundle.getString("HourSelected");
             Date = (HashMap<String, Object>) bundle.getSerializable("DateHashMap");
         }
 
-        Client = (HashMap<String, Object>) Date.get(ClientSelected);
+        /*Client = (HashMap<String, Object>) Date.get("CLIENTE NUTRIFRESCA");
         //Date selected on calendar fragment
         Hour = (HashMap<String, Object>) Client.get("01:47");
+        ProductAndAmount = (ArrayList<String>) Hour.get("2");
+        Comment = Hour.get("comment").toString();*/
+
+        Client = (HashMap<String, Object>) Date.get(ClientSelected);
+        //Date selected on calendar fragment
+        Hour = (HashMap<String, Object>) Client.get(HourSelected);
 
 
         Comment = Hour.get("comment").toString();

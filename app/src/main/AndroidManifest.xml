@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Preventapp">
         <activity
+            android:name=".SplashScreen"
+            android:exported="false" />
+        <activity
             android:name=".firebase.LogOut"
             android:exported="false" />
         <activity

@@ -6,13 +6,13 @@ public class InfoOrders {
     // name and description.
     private String company;
     private String client;
-    private String dateAndHour;
+    private String Hour;
 
     // creating constructor for our variables.
     public InfoOrders(String company, String client, String dateAndHour) {
         this.company = company;
         this.client = client;
-        this.dateAndHour = dateAndHour;
+        this.Hour = dateAndHour;
     }
 
     // creating getter and setter methods.
@@ -32,11 +32,11 @@ public class InfoOrders {
         this.client = client;
     }
 
-    public String getDateAndHour(){
-        return dateAndHour;
+    public String getHour(){
+        return Hour;
     }
 
-    public void setDateAndHour(String dateAndHour) {
-        this.dateAndHour = dateAndHour;
+    public void setHour(String dateAndHour) {
+        this.Hour = dateAndHour;
     }
 }

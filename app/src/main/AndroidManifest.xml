@@ -11,25 +11,27 @@
         android:theme="@style/Theme.Preventapp">
         <activity
             android:name=".SplashScreen"
-            android:exported="false" />
-        <activity
-            android:name=".firebase.LogOut"
-            android:exported="false" />
-        <activity
-            android:name=".firebase.login.LoginActivity"
-            android:exported="true"
-            android:label="@string/app_name">
+            android:label="Splash Activity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Preventapp.NoActionBar" />
+
+        <activity
+            android:name=".firebase.login.LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".firebase.LogOut"
+            android:exported="false" />
     </application>
 
 </manifest>

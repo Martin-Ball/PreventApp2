@@ -6,16 +6,11 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.martin.preventapp.ui.new_order.NewOrderFragment;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -34,7 +29,8 @@ public class Products {
 
     public ArrayList<String> productlist (View root, String CompanySelected)
     {
-        Products.add("+ Seleccione un producto");
+        Products.add("Agregar producto al pedido");
+        Products.add("+ Agregar un nuevo producto a la lista");
 
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
 
@@ -65,30 +61,32 @@ public class Products {
         return Products;
     }
 
-    public void addNewProduct (String name, View view)
+    public void addNewProduct (String CompanySelected, String ProductName, View view, ArrayList<String> ProductList)
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
 
-        db.collection("users").document(currentFirebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                /*User2 = (HashMap<String, Object>) documentSnapshot.getData();
-                List2 = (HashMap<String, Object>) User2.get("List");
-                ProductsNew.addAll((Collection<? extends String>) List2.get("Ideas Gastronómicas"));*/
-                //Name of New Product
-                for(int i=0; i<=20; i++) {
-                    ProductsNew.add("Product" + i);
-                }
+        // Create a new product
+        HashMap<String, Object> User = new HashMap<>();
+        HashMap<String, Object> Company = new HashMap<>();
+        ArrayList<String> Product = new ArrayList<>(ProductList);
 
-                List2.put("Nutrifresca", ProductsNew);
+        Product.remove(0);
+        Product.remove(0);
 
-                User2.put("List", List2);
+        Product.add(ProductName);
 
-                // Add a new document with ID for user
-                db.collection("users").document(currentFirebaseUser.getUid()).set(User2, SetOptions.merge());
-            }
-        });
+        Company.put(CompanySelected, Product);
+
+        User.put("List", Company);
+
+        try {
+            // Add a new document with ID for user
+            db.collection("users").document(currentFirebaseUser.getUid()).set(User, SetOptions.merge());
+            Toast.makeText(view.getContext(), "Producto agregado", Toast.LENGTH_SHORT).show();
+        }catch(Exception e){
+            Toast.makeText(view.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
+        }
     }
 }

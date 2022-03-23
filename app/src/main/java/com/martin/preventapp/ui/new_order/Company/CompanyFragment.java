@@ -73,9 +73,6 @@ public class CompanyFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Products prod = new Products();
-                prod.addNewProduct("Ideas Gastronómicas", root);
-
                 if(CompanySelected == "Seleccione un proveedor"){
                     Toast.makeText(root.getContext(), "Seleccione un proveedor", Toast.LENGTH_SHORT).show();
                 }else {

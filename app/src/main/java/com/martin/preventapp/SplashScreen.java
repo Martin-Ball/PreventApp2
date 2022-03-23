@@ -14,7 +14,7 @@ import com.martin.preventapp.firebase.login.LoginActivity;
 
 public class SplashScreen extends Activity {
 
-    int SPLASH_TIME = 1000; //This is 3 seconds
+    int SPLASH_TIME = 1000;
     Animation topAnim;
     ImageView image;
 

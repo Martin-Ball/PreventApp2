@@ -47,8 +47,6 @@ public class Clients {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
-
         db.collection("users").document(currentFirebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -91,7 +89,7 @@ public class Clients {
             Toast.makeText(view.getContext(), "Cliente agregado", Toast.LENGTH_SHORT).show();
         }catch(Exception e){
             Toast.makeText(view.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
-    }
+        }
     }
 
     public void addListOfClients()

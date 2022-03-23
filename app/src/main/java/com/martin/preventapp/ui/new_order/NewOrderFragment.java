@@ -56,6 +56,9 @@ public class NewOrderFragment extends Fragment {
     private HashMap<String, Object> Client = new HashMap<>();
     private HashMap<String, String> ClientInfo = new HashMap<>();
 
+    //Products
+    private ArrayList<String> ProductList = new ArrayList<>();
+
     //
     private String CompanySelected = "";
 
@@ -120,9 +123,11 @@ public class NewOrderFragment extends Fragment {
         //products
         Products products = new Products();
 
+        ProductList = products.productlist(root, CompanySelected);
+
         ArrayAdapter<String> adapterNewProductSelector = new ArrayAdapter<>(root.getContext(),
                                                                             android.R.layout.simple_list_item_1,
-                                                                            products.productlist(root, CompanySelected));
+                                                                            ProductList);
         spinnerNewProduct.setAdapter(adapterNewProductSelector);
         spinnerNewProduct.setTitle("Seleccione un producto");
         spinnerNewProduct.setPositiveButton("CANCELAR");
@@ -131,8 +136,11 @@ public class NewOrderFragment extends Fragment {
         spinnerNewProduct.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i == 0) {
-                    //products.addNewProduct("Ideas Gastronómicas", root);
+                if(i == 0){
+
+                } else if (i == 1) {
+                    AddNewProduct addNewProduct = new AddNewProduct();
+                    addNewProduct.newProduct(root, CompanySelected, ProductList);
                 } else {
                     String productSelected = adapterView.getItemAtPosition(i).toString();
                     arrayCardViewProducts.add(new CardViewOrder(productSelected, "0"));

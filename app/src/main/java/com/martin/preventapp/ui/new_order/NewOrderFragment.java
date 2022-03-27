@@ -17,11 +17,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentNewOrderBinding;
 import com.martin.preventapp.firebase.Clients;
@@ -48,13 +43,7 @@ public class NewOrderFragment extends Fragment {
     private String comment;
 
     //Orders
-    private HashMap<String, Object> ProductAndAmount = new HashMap<>();
     private HashMap<String, HashMap <String, Object>> ProductsOrders = new HashMap<>();
-
-    //Clients
-    private HashMap<String, Object> User = new HashMap<>();
-    private HashMap<String, Object> Client = new HashMap<>();
-    private HashMap<String, String> ClientInfo = new HashMap<>();
 
     //Products
     private ArrayList<String> ProductList = new ArrayList<>();
@@ -74,7 +63,6 @@ public class NewOrderFragment extends Fragment {
 
         if(bundle != null){
             CompanySelected = bundle.get("CompanySelected").toString();
-            Toast.makeText(root.getContext(), bundle.get("CompanySelected").toString(), Toast.LENGTH_LONG).show();
         }
 
 
@@ -132,7 +120,6 @@ public class NewOrderFragment extends Fragment {
         spinnerNewProduct.setTitle("Seleccione un producto");
         spinnerNewProduct.setPositiveButton("CANCELAR");
 
-
         spinnerNewProduct.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -167,7 +154,7 @@ public class NewOrderFragment extends Fragment {
 
         //button finish
 
-        Button finishOrder = root.findViewById(R.id.order_done);
+        Button finishOrder = root.findViewById(R.id.client_file);
 
         finishOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -303,69 +290,6 @@ public class NewOrderFragment extends Fragment {
         alertDialog.show();
 
         return comment;
-    }
-
-
-    private void uploadClients(){
-
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-
-        //user:
-        //{"Clients"={"ALBRECHT CARINA 2"={"COD"=xx, "Street Address"=xx, "Fantasy Name"=xx, "CUIT"=xx}}}
-
-        //Clients:
-        //{"ALBRECHT CARINA 2"={"COD"=xx, "Street Address"=xx, "Fantasy Name"=xx, "CUIT"=xx}}
-
-        //ALBRECHT CARINA 2:
-        //{"COD"=690, "Street Address"=xx, "Fantasy Name"=xx, "CUIT"=xx}
-
-        //When i use get("COD") the result is 690
-
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("users").document(currentFirebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                User = (HashMap<String, Object>) documentSnapshot.getData();
-                Client = (HashMap<String, Object>) User.get("Clients");
-                ClientInfo = (HashMap<String, String>) Client.get("ALBRECHT CARINA 2");
-
-                //binding.clientNewOrder.setText(ClientInfo.get("CUIT"));
-            }
-            });
-
-    }
-
-    private void uploadList(){
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-
-        //user:
-        //{"Clients"={"ALBRECHT CARINA 2"={"COD"=xx, "Street Address"=xx, "Fantasy Name"=xx, "CUIT"=xx}}}
-
-        //Clients:
-        //{"ALBRECHT CARINA 2"={"COD"=xx, "Street Address"=xx, "Fantasy Name"=xx, "CUIT"=xx}}
-
-        //ALBRECHT CARINA 2:
-        //{"COD"=690, "Street Address"=xx, "Fantasy Name"=xx, "CUIT"=xx}
-
-        //When i use get("COD") the result is 690
-
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        db.collection("users").document(currentFirebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                User = (HashMap<String, Object>) documentSnapshot.getData();
-                Client = (HashMap<String, Object>) User.get("List");
-                ClientInfo = (HashMap<String, String>) Client.get("ALBRECHT CARINA 2");
-
-                //binding.clientNewOrder.setText(ClientInfo.get("CUIT"));
-            }
-        });
     }
 
 }

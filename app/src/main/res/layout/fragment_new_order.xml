@@ -10,7 +10,7 @@
         android:id="@+id/scrollView2"
         android:layout_width="412dp"
         android:layout_height="594dp"
-        app:layout_constraintBottom_toTopOf="@+id/order_done"
+        app:layout_constraintBottom_toTopOf="@+id/client_file"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -77,7 +77,7 @@
 
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="29dp" />
+                        android:layout_height="14dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -106,7 +106,7 @@
 
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="4dp" />
+                        android:layout_height="16dp" />
 
                 </LinearLayout>
 
@@ -167,7 +167,7 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/order_done"
+        android:id="@+id/client_file"
         android:layout_width="267dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"

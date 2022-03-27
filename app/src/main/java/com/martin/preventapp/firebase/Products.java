@@ -22,11 +22,6 @@ public class Products {
     private HashMap<String, Object> List = new HashMap<>();
     private ArrayList<String> Products = new ArrayList<>();
 
-    //NewProduct
-    private HashMap<String, Object> User2 = new HashMap<>();
-    private HashMap<String, Object> List2 = new HashMap<>();
-    private ArrayList<String> ProductsNew = new ArrayList<>();
-
     public ArrayList<String> productlist (View root, String CompanySelected)
     {
         Products.add("Agregar producto al pedido");

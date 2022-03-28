@@ -7,6 +7,7 @@ import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -68,19 +70,32 @@ public class ListFragment extends Fragment {
         Button listFile = root.findViewById(R.id.list_file);
         Button clientsFile = root.findViewById(R.id.client_file);
 
+        //TV test
+        TextView tvTest = root.findViewById(R.id.textView6);
+
         //file chooser
+
+        ActivityResultLauncher<Intent> sActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if(result.getResultCode() == Activity.RESULT_OK){
+                            Intent data = result.getData();
+                            Uri uri = data.getData();
+                            Toast.makeText(getContext(), uri.getPath().toString(), Toast.LENGTH_SHORT).show();
+                            readExcelData(uri.getPath(), root, tvTest);
+                        }
+                    }
+                });
 
         listFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openFileDialog(root);
+                openFileDialog(root, sActivityResultLauncher);
             }
         });
 
-
-
-        //TV test
-        TextView tvTest = root.findViewById(R.id.textView6);
 
         int EXTERNAL_STORAGE_PERMISSION_CODE = 23;
 
@@ -89,52 +104,6 @@ public class ListFragment extends Fragment {
                 EXTERNAL_STORAGE_PERMISSION_CODE);
 
         //"sdcard/Download/contacts.xlsx"
-
-        File file = new File(getActivity().getExternalFilesDir(null), "contacts.xls");
-        FileInputStream inputStream = null;
-
-
-        try {
-
-            //WORK WITH .XLS FILES
-
-            inputStream = new FileInputStream(file);
-
-            POIFSFileSystem fileSystem = new POIFSFileSystem(inputStream);
-
-            HSSFWorkbook workbook = new HSSFWorkbook(fileSystem);
-
-            // Get the first sheet from workbook
-            HSSFSheet mySheet = workbook.getSheetAt(0);
-            // We now need something to iterate through the cells.
-            Iterator<Row> rowIter = mySheet.rowIterator();
-            int rowno =0;
-            tvTest.setText("\n");
-            while (rowIter.hasNext()) {
-                HSSFRow myRow = (HSSFRow) rowIter.next();
-                if (rowno != 0) {
-                    Iterator<Cell> cellIter = myRow.cellIterator();
-                    int colno = 0;
-                    String sno = "", date = "", det = "";
-                    while (cellIter.hasNext()) {
-                        HSSFCell myCell = (HSSFCell) cellIter.next();
-                        if (colno == 0) {
-                            sno = myCell.toString();
-                        } else if (colno == 1) {
-                            date = myCell.toString();
-                        } else if (colno == 2) {
-                            det = myCell.toString();
-                        }
-                        colno++;
-                    }
-                    tvTest.append(sno + " -- " + date + "  -- " + det + "\n\n");
-                }
-                rowno++;
-            }
-
-            } catch (Exception e) {
-                Toast.makeText(root.getContext(), "error: " + e.toString(), Toast.LENGTH_SHORT).show();
-        }
 
         return root;
     }
@@ -145,26 +114,75 @@ public class ListFragment extends Fragment {
         binding = null;
     }
 
-    public void openFileDialog(View view){
+    public void openFileDialog(View view, ActivityResultLauncher<Intent> activityResultLauncher){
         Intent data = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         data.setType("application/vnd.ms-excel");
         data = Intent.createChooser(data, "Choose a file");
-        sActivityResultLauncher.launch(data);
+        activityResultLauncher.launch(data);
     }
 
-    ActivityResultLauncher<Intent> sActivityResultLauncher = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == Activity.RESULT_OK){
-                        Intent data = result.getData();
-                        Uri uri = data.getData();
-                        Toast.makeText(getContext(), uri.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+    private void readExcelData(String ExcelFilePath, View root, TextView tvTest) {
 
+        // HSSFWorkbook is for .xls
+        // XSSFWorkbook is for .xlsx
+        // Check the extension of the Excel file
+
+        String[] path = ExcelFilePath.split(":");
+
+        HSSFWorkbook workbook = null;
+
+        if (ExcelFilePath.endsWith(".xls")) {
+
+            try {
+                InputStream inputStream = new FileInputStream(new File(path[1]));
+                workbook = new HSSFWorkbook(inputStream);
+
+                // Get the first sheet from workbook
+                HSSFSheet mySheet = workbook.getSheetAt(0);
+                // We now need something to iterate through the cells.
+                Iterator<Row> rowIter = mySheet.rowIterator();
+                int rowno = 0;
+                tvTest.setText("\n");
+                while (rowIter.hasNext()) {
+                    HSSFRow myRow = (HSSFRow) rowIter.next();
+                    if (rowno != 0) {
+                        Iterator<Cell> cellIter = myRow.cellIterator();
+                        int colno = 0;
+                        String sno = "", date = "", det = "";
+                        while (cellIter.hasNext()) {
+                            HSSFCell myCell = (HSSFCell) cellIter.next();
+                            if (colno == 0) {
+                                sno = myCell.toString();
+                            } else if (colno == 1) {
+                                date = myCell.toString();
+                            } else if (colno == 2) {
+                                det = myCell.toString();
+                            }
+                            colno++;
+                        }
+                        tvTest.append(sno + " -- " + date + "  -- " + det + "\n\n");
+                    }
+                    rowno++;
+                }
+            } catch (FileNotFoundException e) {
+                Log.i("debinf cliinf", "readExcelData: FileNotFoundException " + e.getMessage());
+            } catch (IOException e) {
+                Log.i("debinf cliinf", "readExcelData: Error reading InputStream " + e.getMessage());
+            }
+        } else if (ExcelFilePath.endsWith(".xlsx")) {
+
+           /* try {
+                InputStream inputStream = new FileInputStream(new File(path[1]));
+                workbook = new XSSFWorkbook(inputStream);
+            } catch (FileNotFoundException e) {
+                Log.i("debinf cliinf", "readExcelData: FileNotFoundException " + e.getMessage());
+            } catch (IOException e) {
+                Log.i("debinf cliinf", "readExcelData: Error reading InputStream " + e.getMessage());
+            }*/
+        }
+
+
+    }
 
 
 }

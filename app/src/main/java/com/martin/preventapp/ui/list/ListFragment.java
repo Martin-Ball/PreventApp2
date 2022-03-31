@@ -3,10 +3,12 @@ package com.martin.preventapp.ui.list;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -73,9 +76,9 @@ public class ListFragment extends Fragment {
         //TV test
         TextView tvTest = root.findViewById(R.id.textView6);
 
-        //file chooser
+        //file chooser list
 
-        ActivityResultLauncher<Intent> sActivityResultLauncher = registerForActivityResult(
+        ActivityResultLauncher<Intent> sActivityResultLauncherList = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
@@ -83,27 +86,24 @@ public class ListFragment extends Fragment {
                         if(result.getResultCode() == Activity.RESULT_OK){
                             Intent data = result.getData();
                             Uri uri = data.getData();
-                            Toast.makeText(getContext(), uri.getPath().toString(), Toast.LENGTH_SHORT).show();
-                            readExcelData(uri.getPath(), root, tvTest);
+                            Toast.makeText(getContext(), uri.getPath(), Toast.LENGTH_SHORT).show();
+                            readExcelDataList(uri.getPath(), root, tvTest);
                         }
                     }
-                });
+        });
 
         listFile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openFileDialog(root, sActivityResultLauncher);
-            }
+                if (ContextCompat.checkSelfPermission(root.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    openFileDialogList(sActivityResultLauncherList);
+                }else{
+                    Toast.makeText(root.getContext(), "permission denied", Toast.LENGTH_SHORT).show();
+                }
+
+                }
         });
-
-
-        int EXTERNAL_STORAGE_PERMISSION_CODE = 23;
-
-        // Requesting Permission to access External Storage
-        ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                EXTERNAL_STORAGE_PERMISSION_CODE);
-
-        //"sdcard/Download/contacts.xlsx"
 
         return root;
     }
@@ -114,31 +114,37 @@ public class ListFragment extends Fragment {
         binding = null;
     }
 
-    public void openFileDialog(View view, ActivityResultLauncher<Intent> activityResultLauncher){
-        Intent data = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        data.setType("application/vnd.ms-excel");
-        data = Intent.createChooser(data, "Choose a file");
-        activityResultLauncher.launch(data);
+    public void openFileDialogList(ActivityResultLauncher<Intent> activityResultLauncher) {
+        String[] mimeTypes = {"application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"};
+        Intent searchExcel = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+
+        searchExcel.setType(mimeTypes.length == 1 ? mimeTypes[0] : "*/*");
+        if (mimeTypes.length > 0) {
+            searchExcel.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+        }
+
+        searchExcel = Intent.createChooser(searchExcel, "Choose a file");
+        activityResultLauncher.launch(searchExcel);
     }
 
-    private void readExcelData(String ExcelFilePath, View root, TextView tvTest) {
+    private void readExcelDataList(String ExcelFilePath, View root, TextView tvTest) {
 
         // HSSFWorkbook is for .xls
         // XSSFWorkbook is for .xlsx
         // Check the extension of the Excel file
 
-        String[] path = ExcelFilePath.split(":");
+        String[] path;
+        path = ExcelFilePath.split(":");
 
-        HSSFWorkbook workbook = null;
+        Workbook workbook = null;
 
         if (ExcelFilePath.endsWith(".xls")) {
 
             try {
-                InputStream inputStream = new FileInputStream(new File(path[1]));
+                InputStream inputStream = new FileInputStream(new File(Environment.getExternalStorageDirectory(), path[1]));
                 workbook = new HSSFWorkbook(inputStream);
-
-                // Get the first sheet from workbook
-                HSSFSheet mySheet = workbook.getSheetAt(0);
+               // Get the first sheet from workbook
+                Sheet mySheet = workbook.getSheetAt(0);
                 // We now need something to iterate through the cells.
                 Iterator<Row> rowIter = mySheet.rowIterator();
                 int rowno = 0;
@@ -164,25 +170,11 @@ public class ListFragment extends Fragment {
                     }
                     rowno++;
                 }
-            } catch (FileNotFoundException e) {
-                Log.i("debinf cliinf", "readExcelData: FileNotFoundException " + e.getMessage());
             } catch (IOException e) {
-                Log.i("debinf cliinf", "readExcelData: Error reading InputStream " + e.getMessage());
+                Toast.makeText(root.getContext(), "error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         } else if (ExcelFilePath.endsWith(".xlsx")) {
-
-           /* try {
-                InputStream inputStream = new FileInputStream(new File(path[1]));
-                workbook = new XSSFWorkbook(inputStream);
-            } catch (FileNotFoundException e) {
-                Log.i("debinf cliinf", "readExcelData: FileNotFoundException " + e.getMessage());
-            } catch (IOException e) {
-                Log.i("debinf cliinf", "readExcelData: Error reading InputStream " + e.getMessage());
-            }*/
+            Toast.makeText(root.getContext(), "Elija un archivo excel .xls", Toast.LENGTH_SHORT).show();
         }
-
-
     }
-
-
 }

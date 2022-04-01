@@ -8,6 +8,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -33,7 +35,7 @@ public class Company {
 
                 User = (HashMap<String, Object>) documentSnapshot.getData();
 
-                if(!User.isEmpty()) {
+                if(User.get("List") != "") {
                     List = (HashMap<String, Object>) User.get("List");
                     CompanyList.addAll(List.keySet());
                 }
@@ -41,5 +43,34 @@ public class Company {
         });
 
         return CompanyList;
+    }
+
+    public void addCompany (String CompanyName, View view){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
+        // Create a new product
+        HashMap<String, Object> User = new HashMap<>();
+        HashMap<String, Object> Product = new HashMap<>();
+        ArrayList<String> options = new ArrayList<>();
+
+        options.add("Clients");
+        options.add("List");
+        options.add("Orders");
+
+        Product.put(CompanyName, " ");
+
+        for(int i=0; i<=2; i++) {
+            User.put(options.get(i), Product);
+
+            try {
+                // Add a new document with ID for user
+                db.collection("users").document(currentFirebaseUser.getUid()).set(User, SetOptions.merge());
+                Toast.makeText(view.getContext(), "Producto agregado", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(view.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

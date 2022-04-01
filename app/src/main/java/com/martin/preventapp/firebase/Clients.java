@@ -1,4 +1,5 @@
 package com.martin.preventapp.firebase;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -116,5 +117,27 @@ public class Clients {
         User.put("Clients", Company);
             // Add a new document with ID for user
             db.collection("users").document(currentFirebaseUser.getUid()).set(User, SetOptions.merge());
+    }
+
+    public void setClientList (String CompanySelected, HashMap<String, Object> ClientList, View root){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        // Create a new product
+        HashMap<String, Object> User = new HashMap<>();
+        HashMap<String, Object> Company = new HashMap<>();
+
+        Company.put(CompanySelected, ClientList);
+
+        User.put("Clients", Company);
+
+        try {
+            // Add a new document with ID for user
+            db.collection("users").document(currentFirebaseUser.getUid()).set(User, SetOptions.merge());
+            Toast.makeText(root.getContext(), "Producto agregado", Toast.LENGTH_SHORT).show();
+        }catch(Exception e){
+            Toast.makeText(root.getContext(), "Error: " + e, Toast.LENGTH_LONG).show();
+            Log.i("Firebase: ", e.getMessage());
+        }
     }
 }

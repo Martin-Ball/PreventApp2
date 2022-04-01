@@ -11,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.martin.preventapp.ui.new_order.NewOrderFragment;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class Products {
     private HashMap<String, Object> List = new HashMap<>();
     private ArrayList<String> Products = new ArrayList<>();
 
-    public ArrayList<String> productlist (View root, String CompanySelected)
+    public ArrayList<String> getProductlist(View root, String CompanySelected)
     {
         Products.add("Agregar producto al pedido");
         Products.add("+ Agregar un nuevo producto a la lista");
@@ -56,10 +57,31 @@ public class Products {
         return Products;
     }
 
+    public void setProductList (String CompanySelected, ArrayList<String> ProductList, View root){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        // Create a new product
+        HashMap<String, Object> User = new HashMap<>();
+        HashMap<String, Object> Company = new HashMap<>();
+
+        Company.put(CompanySelected, ProductList);
+
+        User.put("List", Company);
+
+        try {
+            // Add a new document with ID for user
+            db.collection("users").document(currentFirebaseUser.getUid()).set(User, SetOptions.merge());
+            Toast.makeText(root.getContext(), "Producto agregado", Toast.LENGTH_SHORT).show();
+        }catch(Exception e){
+            Toast.makeText(root.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public void addNewProduct (String CompanySelected, String ProductName, View view, ArrayList<String> ProductList)
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
 
         // Create a new product

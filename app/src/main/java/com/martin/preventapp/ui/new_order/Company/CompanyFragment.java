@@ -52,7 +52,6 @@ public class CompanyFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 CompanySelected = adapterView.getItemAtPosition(position).toString();
-                Toast.makeText(root.getContext(), CompanySelected, Toast.LENGTH_SHORT).show();
             }
 
             @Override

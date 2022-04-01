@@ -111,7 +111,7 @@ public class NewOrderFragment extends Fragment {
         //products
         Products products = new Products();
 
-        ProductList = products.productlist(root, CompanySelected);
+        ProductList = products.getProductlist(root, CompanySelected);
 
         ArrayAdapter<String> adapterNewProductSelector = new ArrayAdapter<>(root.getContext(),
                                                                             android.R.layout.simple_list_item_1,

@@ -1,5 +1,6 @@
 package com.martin.preventapp.firebase;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class Company {
                 if(User.get("List") != "") {
                     List = (HashMap<String, Object>) User.get("List");
                     CompanyList.addAll(List.keySet());
+                    Log.i("Current User: ", CompanyList.toString());
                 }
             }
         });
@@ -67,7 +69,7 @@ public class Company {
             try {
                 // Add a new document with ID for user
                 db.collection("users").document(currentFirebaseUser.getUid()).set(User, SetOptions.merge());
-                Toast.makeText(view.getContext(), "Producto agregado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "Proveedor agregado", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(view.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
             }

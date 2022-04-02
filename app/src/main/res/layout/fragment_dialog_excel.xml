@@ -9,6 +9,7 @@
         android:layout_width="300dp"
         android:layout_height="440dp"
         android:background="@drawable/shape_fragment_dialog"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -17,7 +18,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="4dp"
             android:layout_weight="1"
             android:paddingStart="10dp"
             android:paddingTop="10dp">
@@ -35,7 +36,7 @@
                 android:layout_height="35dp"
                 android:layout_weight="1"
                 android:gravity="center_horizontal|center_vertical"
-                android:text="Detalle del pedido" />
+                android:text="Detalle del excel" />
 
             <ImageView
                 android:id="@+id/closeFragmentExcel"
@@ -46,31 +47,16 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/linkiar_search_border" />
-
         <TextView
             android:id="@+id/productsOnOrders"
             android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:layout_weight="1"
+            android:layout_height="30dp"
             android:gravity="center_horizontal"
-            android:paddingTop="10dp"
-            android:text="Productos en el pedido" />
-
-        <TextView
-            android:id="@+id/commentTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:paddingStart="10dp" />
+            android:text="Clientes" />
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="313dp"
+            android:layout_height="248dp"
             android:layout_weight="1">
 
             <LinearLayout
@@ -81,13 +67,24 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/detailOrdersRV"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:paddingStart="10dp"
                     android:paddingTop="10dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="10dp" />
             </LinearLayout>
         </ScrollView>
+
+        <Button
+            android:id="@+id/uploadClients"
+            android:layout_width="267dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/linkiar_signin"
+            android:drawableRight="@drawable/ic_upload_file"
+            android:drawableTint="@color/white"
+            android:elevation="10dp"
+            android:text="CARGAR CLIENTES"
+            app:cornerRadius="20dp" />
 
     </LinearLayout>
 

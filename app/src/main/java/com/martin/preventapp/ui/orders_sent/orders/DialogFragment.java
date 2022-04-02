@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,7 +42,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
         binding = FragmentDialogBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        ImageView closeFragment = root.findViewById(R.id.closeFragment);
+        ImageView closeFragment = root.findViewById(R.id.closeFragmentExcel);
         TextView commentTV = root.findViewById(R.id.commentTV);
 
         arrayCardViewDetailProducts = new ArrayList<>();
@@ -75,29 +74,6 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
         }
 
         commentTV.setText("Comentario: " + Comment);
-
-
-        //add product and amount into array
-        //arrayProducts.add(arrayCardViewDetailProducts);
-
-        //add product and amount into hashmap
-        //ProductAndAmount.put("Product", productAndAmount);
-        //ProductAndAmount.put("Amount", "0");
-
-        //add product and amount hashmap on Order Hashmap
-
-        //ProductsOrders.put("Orders", ProductAndAmount);
-
-        //build Recycler View with CardViews
-        buildRecyclerView(root);
-
-        //add product and amount into hashmap
-        //ProductAndAmount.put("Product", productAndAmount);
-        //ProductAndAmount.put("Amount", "0");
-
-        //add product and amount hashmap on Order Hashmap
-
-        //ProductsOrders.put("Orders", ProductAndAmount);
 
         //build Recycler View with CardViews
         buildRecyclerView(root);

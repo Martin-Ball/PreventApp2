@@ -18,6 +18,7 @@
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/drawable/shape.xml" value="0.3769230769230769" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/drawable/shape_background_off.xml" value="0.3769230769230769" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/drawable/shape_blue.xml" value="0.3769230769230769" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/drawable/shape_border_colour.xml" value="0.2365" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/drawable/shape_fragment_dialog.xml" value="0.3828125" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/drawable/spinner.xml" value="0.3828125" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/drawable/splashscreen.xml" value="0.1555" />
@@ -25,11 +26,12 @@
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.23560910307898258" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout-w936dp/activity_login.xml" value="0.2455601092896175" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/activity_log_out.xml" value="0.3134057971014493" />
-        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/activity_login.xml" value="0.32563405797101447" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/activity_main.xml" value="0.32563405797101447" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/activity_splash_screen.xml" value="0.25" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/app_bar_main.xml" value="0.32563405797101447" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/authentification.xml" value="0.32563405797101447" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/card_view_client_list.xml" value="0.31068840579710144" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/card_view_detail_order_sent.xml" value="0.3233695652173913" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/card_view_order.xml" value="0.33" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/card_view_order_sent.xml" value="0.3233695652173913" />
@@ -45,9 +47,12 @@
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/fragment_company.xml" value="0.25" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/fragment_date_selector.xml" value="0.33" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/fragment_dialog.xml" value="0.32653985507246375" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/fragment_dialog_excel.xml" value="0.31068840579710144" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/fragment_dialog_list.xml" value="0.2807971014492754" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/fragment_list.xml" value="0.33" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/fragment_list_add.xml" value="0.36666666666666664" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/fragment_logout.xml" value="0.3134057971014493" />
-        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/fragment_new_order.xml" value="0.33" />
+        <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/fragment_new_order.xml" value="0.2054380664652568" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/fragment_orders.xml" value="0.353713768115942" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/fragment_orders_sent.xml" value="0.5" />
         <entry key="..\:/Documentos/Martin/LinkiarApp/app/src/main/res/layout/fragment_spinner_product.xml" value="0.30978260869565216" />

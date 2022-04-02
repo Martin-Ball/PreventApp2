@@ -95,7 +95,9 @@ public class FragmentDateSelector extends Fragment {
 
                 User = (HashMap<String, Object>) documentSnapshot.getData();
                 Orders = (HashMap<String, Object>) User.get("Orders");
-                Company = (HashMap<String, Object>) Orders.get(CompanySelected);
+                if(Orders.get(CompanySelected).toString() != "") {
+                    Company = (HashMap<String, Object>) Orders.get(CompanySelected);
+                }
             }
         });
 
@@ -120,11 +122,18 @@ public class FragmentDateSelector extends Fragment {
                     @Override
                     public void onDateSet(android.widget.DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
 
-                        //add zero for month
-                        if(monthOfYear<10) {
-                            DateSelected = dayOfMonth + "/" + "0" + (monthOfYear + 1) + "/" + year;
+                        if(dayOfMonth<10) {//add zero for month
+                            if (monthOfYear < 10) {
+                                DateSelected = "0" + dayOfMonth + "/" + "0" + (monthOfYear + 1) + "/" + year;
+                            } else {
+                                DateSelected = "0" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                            }
                         }else{
-                            DateSelected = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                            if (monthOfYear < 10) {
+                                DateSelected = dayOfMonth + "/" + "0" + (monthOfYear + 1) + "/" + year;
+                            } else {
+                                DateSelected = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year;
+                            }
                         }
 
                         Date = (HashMap<String, Object>) Company.get(DateSelected);

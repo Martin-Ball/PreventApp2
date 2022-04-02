@@ -20,8 +20,8 @@ public class AdapterDialogFragment extends RecyclerView.Adapter<AdapterDialogFra
 
         public AdapterDialogFragmentViewHolder(View itemView) {
             super(itemView);
-            productText = itemView.findViewById(R.id.Product);
-            amountText = itemView.findViewById(R.id.Amount);
+            productText = itemView.findViewById(R.id.Client);
+            amountText = itemView.findViewById(R.id.CUIT);
         }
     }
 

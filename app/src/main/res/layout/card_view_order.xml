@@ -15,7 +15,7 @@
         android:layout_margin="4dp">
 
         <TextView
-            android:id="@+id/Product"
+            android:id="@+id/Client"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -24,11 +24,11 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
-            android:id="@+id/Amount"
+            android:id="@+id/CUIT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/Product"
-            android:layout_alignLeft="@+id/Product"
+            android:layout_below="@+id/Client"
+            android:layout_alignLeft="@+id/Client"
             android:text="Small Text"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 

@@ -11,69 +11,72 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".firebase.login.LoginActivity">
 
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="96dp"
-        android:autofillHints="@string/prompt_email"
+    <LinearLayout
+        android:layout_width="357dp"
+        android:layout_height="257dp"
         android:background="@drawable/shape"
-        android:hint="@string/prompt_email"
-        android:inputType="textEmailAddress"
-        android:paddingStart="10dp"
-        android:selectAllOnFocus="true"
-        android:drawableStart="@drawable/ic_email"
-        android:drawablePadding="10dp"
+        android:elevation="10dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="8dp"
-        android:autofillHints="@string/prompt_password"
-        android:background="@drawable/shape"
-        android:hint="@string/prompt_password"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
-        android:paddingStart="10dp"
-        android:drawablePadding="10dp"
-        android:selectAllOnFocus="true"
-        android:drawableStart="@drawable/ic_lock"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="320dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="20dp"
+            android:autofillHints="@string/prompt_email"
+            android:background="@drawable/shape"
+            android:drawableStart="@drawable/ic_email"
+            android:drawablePadding="10dp"
+            android:elevation="10dp"
+            android:hint="@string/prompt_email"
+            android:inputType="textEmailAddress"
+            android:paddingStart="10dp"
+            android:selectAllOnFocus="true" />
 
-    <Button
-        android:id="@+id/login"
-        android:layout_width="323dp"
-        android:layout_height="48dp"
-        android:layout_gravity="start"
-        android:layout_marginTop="80dp"
-        android:backgroundTint="@color/linkiar_signin"
-        android:enabled="true"
-        android:text="@string/action_sign_in"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="320dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:autofillHints="@string/prompt_password"
+            android:background="@drawable/shape"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawablePadding="10dp"
+            android:elevation="10dp"
+            android:hint="@string/prompt_password"
+            android:imeActionLabel="@string/action_sign_in_short"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:paddingStart="10dp"
+            android:selectAllOnFocus="true" />
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="267dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/linkiar_signin"
+            android:elevation="10dp"
+            android:text="@string/action_sign_in"
+            app:cornerRadius="20dp" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/register"
-        android:layout_width="323dp"
-        android:layout_height="48dp"
-        android:layout_gravity="start"
-        android:layout_marginBottom="248dp"
+        android:layout_width="267dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="268dp"
         android:backgroundTint="@color/linkiar_signin"
-        android:enabled="true"
+        android:elevation="10dp"
         android:text="@string/action_register"
-        android:textColor="@color/white"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

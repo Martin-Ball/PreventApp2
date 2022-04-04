@@ -1,7 +1,6 @@
-package com.martin.preventapp.ui.list.dialogFragment;
+package com.martin.preventapp.ui.list.dialogFragmentList;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,35 +15,37 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentDialogExcelBinding;
+import com.martin.preventapp.databinding.FragmentDialogListBinding;
 import com.martin.preventapp.firebase.Clients;
+import com.martin.preventapp.firebase.Products;
+import com.martin.preventapp.ui.list.dialogFragmentClient.AdapterClientDialogFragmentExcel;
+import com.martin.preventapp.ui.list.dialogFragmentClient.CardViewDetailExcel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DialogFragmentExcel extends androidx.fragment.app.DialogFragment {
-    private @NonNull
-    FragmentDialogExcelBinding binding;
+public class DialogFragmentList extends androidx.fragment.app.DialogFragment {
 
-    private ArrayList<CardViewDetailExcel> arrayCardViewExcelClient;
-    private AdapterClientDialogFragmentExcel adapterClientDialogFragmentExcel;
-    private HashMap<String, Object> nameClientList;
+    private FragmentDialogListBinding binding;
+    private String CompanySelected;
+    private ArrayList<CardViewDetailProduct> CardViewProductList;
+    private ArrayList<String> ProductList;
     private RecyclerView mRecyclerView;
-    private String CompanySelected = "";
+    private AdapterListDialogFragmentProduct adapterListDialogFragmentProduct;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentDialogExcelBinding.inflate(inflater, container, false);
+        binding = FragmentDialogListBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         ImageView closeFragment = root.findViewById(R.id.closeFragmentExcel);
-        TextView commentTV = root.findViewById(R.id.commentTV);
 
         Bundle bundle = this.getArguments();
 
         if (bundle != null) {
             CompanySelected = bundle.getString("CompanySelected");
-            arrayCardViewExcelClient = (ArrayList<CardViewDetailExcel>) bundle.getSerializable("ClientList");
-            nameClientList = (HashMap<String, Object>) bundle.getSerializable("nameClientList");
+            CardViewProductList = (ArrayList<CardViewDetailProduct>) bundle.getSerializable("CardViewProductList");
+            ProductList = (ArrayList<String>) bundle.getSerializable("ProductList");
         }
 
         //build Recycler View with CardViews
@@ -58,12 +59,12 @@ public class DialogFragmentExcel extends androidx.fragment.app.DialogFragment {
         });
 
         //Upload clients
-        Button UploadClients = root.findViewById(R.id.uploadClients);
-        UploadClients.setOnClickListener(new View.OnClickListener() {
+        Button UploadList = root.findViewById(R.id.uploadList);
+        UploadList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Clients clients = new Clients();
-                clients.setClientList(CompanySelected, nameClientList, root);
+                Products products = new Products();
+                products.setProductList(CompanySelected, ProductList, getView());
             }
         });
 
@@ -71,12 +72,12 @@ public class DialogFragmentExcel extends androidx.fragment.app.DialogFragment {
     }
 
     public void buildRecyclerView(View root) {
-        mRecyclerView = root.findViewById(R.id.detailOrdersRV);
+        mRecyclerView = root.findViewById(R.id.detailListRV);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(root.getContext());
-        adapterClientDialogFragmentExcel = new AdapterClientDialogFragmentExcel(arrayCardViewExcelClient);
+        adapterListDialogFragmentProduct = new AdapterListDialogFragmentProduct(CardViewProductList);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(adapterClientDialogFragmentExcel);
+        mRecyclerView.setAdapter(adapterListDialogFragmentProduct);
     }
 }

@@ -1,4 +1,4 @@
-package com.martin.preventapp.ui.list.dialogFragment;
+package com.martin.preventapp.ui.list.dialogFragmentClient;
 
 import android.view.LayoutInflater;
 import android.view.View;

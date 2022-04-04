@@ -72,7 +72,7 @@ public class Products {
         try {
             // Add a new document with ID for user
             db.collection("users").document(currentFirebaseUser.getUid()).set(User, SetOptions.merge());
-            Toast.makeText(root.getContext(), "Producto agregado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(root.getContext(), "Productos agregados", Toast.LENGTH_SHORT).show();
         }catch(Exception e){
             Toast.makeText(root.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
         }

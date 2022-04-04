@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="center_horizontal"
-            android:text="Clientes" />
+            android:text="Lista" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -65,7 +65,7 @@
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/detailClientsRV"
+                    android:id="@+id/detailListRV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingStart="10dp"
@@ -76,14 +76,14 @@
         </ScrollView>
 
         <Button
-            android:id="@+id/uploadClients"
+            android:id="@+id/uploadList"
             android:layout_width="267dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/linkiar_signin"
             android:drawableRight="@drawable/ic_upload_file"
             android:drawableTint="@color/white"
             android:elevation="10dp"
-            android:text="CARGAR CLIENTES"
+            android:text="CARGAR LISTA"
             app:cornerRadius="20dp" />
 
     </LinearLayout>

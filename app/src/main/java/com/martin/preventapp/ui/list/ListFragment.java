@@ -2,6 +2,7 @@ package com.martin.preventapp.ui.list;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,7 +32,7 @@ public class ListFragment extends Fragment {
         binding = FragmentListBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        TextView tvt = root.findViewById(R.id.textView7);
+        new Task().execute();
 
         Company company = new Company();
 
@@ -68,10 +69,6 @@ public class ListFragment extends Fragment {
             }
         });
 
-        //if(companyList.size() > 1){
-        //addFragmentListAdd();
-        //}
-
         return root;
     }
 
@@ -88,5 +85,47 @@ public class ListFragment extends Fragment {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragmentContainerAddFiles, fragmentListAdd);
         fragmentTransaction.commit();
+    }
+
+    private class Task extends AsyncTask<String, String, ArrayList<String>> {
+
+        // Runs in UI before background thread is called
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            // Do something like display a progress bar
+        }
+
+        // This is run in a background thread
+        @Override
+        protected ArrayList<String> doInBackground(String... params) {
+
+            Company company = new Company();
+
+                // Call this to update your progress
+                //publishProgress(companyList);
+
+            return company.companyList(getView());
+        }
+
+        // This is called from background thread but runs in UI
+        protected void onProgressUpdate(ArrayList<String> arr1) {
+
+        }
+
+        // This runs in UI when background thread finishes
+        @Override
+        protected void onPostExecute(ArrayList<String> result) {
+            super.onPostExecute(result);
+            ArrayList<String> companyList = new ArrayList<String>(result);
+            TextView tvt = getView().findViewById(R.id.textView7);
+
+            if(companyList.size() > 1){
+                addFragmentListAdd();
+                tvt.setText(companyList.toString());
+            }
+            Log.i("Current User TASK: ", companyList.toString());
+        }
     }
 }

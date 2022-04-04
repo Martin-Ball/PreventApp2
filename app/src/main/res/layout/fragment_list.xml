@@ -57,10 +57,14 @@
 
     </LinearLayout>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
     <FrameLayout
         android:id="@+id/fragmentContainerAddFiles"
         android:layout_width="match_parent"
-        android:layout_height="608dp">
+        android:layout_height="500dp">
 
     </FrameLayout>
 

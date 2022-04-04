@@ -31,12 +31,12 @@ import android.widget.Toast;
 
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentListAddBinding;
-import com.martin.preventapp.databinding.FragmentListBinding;
-import com.martin.preventapp.firebase.Clients;
 import com.martin.preventapp.firebase.Company;
 import com.martin.preventapp.firebase.Products;
-import com.martin.preventapp.ui.list.dialogFragment.CardViewDetailExcel;
-import com.martin.preventapp.ui.list.dialogFragment.DialogFragmentExcel;
+import com.martin.preventapp.ui.list.dialogFragmentClient.CardViewDetailExcel;
+import com.martin.preventapp.ui.list.dialogFragmentClient.DialogFragmentExcel;
+import com.martin.preventapp.ui.list.dialogFragmentList.CardViewDetailProduct;
+import com.martin.preventapp.ui.list.dialogFragmentList.DialogFragmentList;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -62,6 +62,7 @@ public class FragmentListAdd extends Fragment {
     private HashMap<String, Object> clientList;
     private String CompanySelected = null;
     private ArrayList<CardViewDetailExcel> arrayCardViewExcelClient;
+    private ArrayList<CardViewDetailProduct> cardViewExcelProduct;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -122,7 +123,25 @@ public class FragmentListAdd extends Fragment {
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(root.getContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                         == PackageManager.PERMISSION_GRANTED && CompanySelected != null) {
-                    openFileDialogList(sActivityResultLauncherList);
+
+                    AlertDialog.Builder alert = new AlertDialog.Builder(root.getContext());
+                    alert.setTitle("Añadir lista de productos");
+                    alert.setMessage("La primer columna del archivo excel sera la lista de productos.");
+
+                    alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            openFileDialogList(sActivityResultLauncherList);
+                        }
+                    });
+
+                    alert.setNegativeButton("CANCELAR", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            // what ever you want to do with No option.
+                        }
+                    });
+
+                    alert.show();
+
                 }else{
                     Toast.makeText(root.getContext(), "permission denied", Toast.LENGTH_SHORT).show();
                 }
@@ -153,7 +172,7 @@ public class FragmentListAdd extends Fragment {
 
                     AlertDialog.Builder alert = new AlertDialog.Builder(root.getContext());
                     alert.setTitle("Añadir clientes");
-                    alert.setMessage("El formato del archivo excel debe ser: \n\n- CUIT\n- Nombre de Fantasia \n- Dirección");
+                    alert.setMessage("El formato del archivo excel debe ser: \n\n- Nombre\n- CUIT\n- Nombre de Fantasia \n- Dirección");
 
                     alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
@@ -217,6 +236,7 @@ public class FragmentListAdd extends Fragment {
                 InputStream inputStream = new FileInputStream(new File(Environment.getExternalStorageDirectory(), path[1]));
                 workbook = new HSSFWorkbook(inputStream);
                 productList = new ArrayList<>();
+                cardViewExcelProduct = new ArrayList<>();
                 // Get the first sheet from workbook
                 Sheet mySheet = workbook.getSheetAt(0);
                 // We now need something to iterate through the cells.
@@ -234,16 +254,22 @@ public class FragmentListAdd extends Fragment {
                             if (colno == 0) {
                                 product = myCell.toString();
                                 productList.add(product);
+                                cardViewExcelProduct.add(new CardViewDetailProduct(product));
                             }
                             colno++;
                         }
                     }
                     rowno++;
                 }
-                if(CompanySelected != "Seleccione un proveedor") {
-                    Products products = new Products();
-                    products.setProductList(CompanySelected, productList, root);
-                    tvTest.append(productList.toString() + "\n\n");
+                if(!CompanySelected.equals("Seleccione un proveedor")) {
+                    DialogFragmentList dialogFragmentList = new DialogFragmentList();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("CompanySelected", CompanySelected);
+                    bundle.putSerializable("CardViewProductList", cardViewExcelProduct);
+                    bundle.putSerializable("ProductList", productList);
+                    dialogFragmentList.setArguments(bundle);
+                    dialogFragmentList.show(getActivity().getSupportFragmentManager(),"Detail Fragment");
                 }
             } catch (IOException e) {
                 Toast.makeText(root.getContext(), "error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -319,7 +345,7 @@ public class FragmentListAdd extends Fragment {
                     }
                     rowno++;
                 }
-                if(CompanySelected != "Seleccione un proveedor") {
+                if(!CompanySelected.equals("Seleccione un proveedor")) {
                     DialogFragmentExcel dialogFragmentExcel = new DialogFragmentExcel();
 
                     Bundle bundle = new Bundle();

@@ -1,4 +1,4 @@
-package com.martin.preventapp.ui.list.dialogFragment;
+package com.martin.preventapp.ui.list.dialogFragmentClient;
 
 public class CardViewDetailExcel {
 

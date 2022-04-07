@@ -2,12 +2,15 @@ package com.martin.preventapp.firebase;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.webkit.HttpAuthHandler;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,6 +30,8 @@ public class Order {
     private HashMap<String, Object> User = new HashMap<>();
     private HashMap<String, Object> Orders = new HashMap<>();
     private ArrayList<String> Products = new ArrayList<>();
+
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public void orderDone (ArrayList items,
                            ArrayList<ArrayList<String>> arrayProducts,
@@ -137,6 +142,12 @@ public class Order {
             // Add a new document with ID for user
             db.collection("users").document(currentFirebaseUser.getUid()).set(Orders, SetOptions.merge());
             clearArray(arrayProducts, Hour, Client, Date, Company, Orders);
+            // Obtain the FirebaseAnalytics instance.
+            mFirebaseAnalytics = FirebaseAnalytics.getInstance(root.getContext());
+
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "login");
+            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
         }catch(Exception e){
             Toast.makeText(root.getContext(), "Error: " + e, Toast.LENGTH_LONG).show();
         }

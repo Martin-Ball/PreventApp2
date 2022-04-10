@@ -11,71 +11,92 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="4dp">
 
-        <TextView
-            android:id="@+id/Client"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="10dp"
-            android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/CUIT"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/Client"
-            android:layout_alignLeft="@+id/Client"
-            android:text="Small Text"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            <TextView
+                android:id="@+id/Client"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Large Text"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="18sp" />
 
-        <ImageView
-            android:id="@+id/image_add_button"
-            android:layout_width="34dp"
-            android:layout_height="38dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="12dp"
-            android:layout_toStartOf="@+id/amountSelected"
-            android:src="@drawable/ic_add" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right">
 
-        <EditText
-            android:id="@+id/amountSelected"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginEnd="12dp"
-            android:layout_toStartOf="@+id/image_remove_button"
-            android:hint="0"
-            android:inputType="number"
-            android:minWidth="48dp"
-            android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <ImageView
-            android:id="@+id/image_delete_button"
-            android:layout_width="34dp"
-            android:layout_height="38dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="3dp"
-            android:src="@drawable/ic_baseline_delete" />
+                <TextView
+                    android:id="@+id/Amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="Small Text"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    card_view:layout_constraintEnd_toStartOf="@+id/linearLayout4"
+                    card_view:layout_constraintHorizontal_bias="0.0"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/image_remove_button"
-            android:layout_width="34dp"
-            android:layout_height="38dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="22dp"
-            android:layout_toStartOf="@+id/image_delete_button"
-            android:src="@drawable/ic_remove" />
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="175dp"
+                    android:layout_height="55dp"
+                    android:orientation="horizontal"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/image_add_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginRight="12dp"
+                        android:src="@drawable/ic_add" />
+
+                    <EditText
+                        android:id="@+id/amountSelected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="12dp"
+                        android:layout_marginRight="12dp"
+                        android:hint="0"
+                        android:inputType="number"
+                        android:minWidth="48dp"
+                        android:textAlignment="center"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                    <ImageView
+                        android:id="@+id/image_remove_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="22dp"
+                        android:layout_marginRight="22dp"
+                        android:src="@drawable/ic_remove" />
+
+                    <ImageView
+                        android:id="@+id/image_delete_button"
+                        android:layout_width="34dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_baseline_delete" />
+
+                </LinearLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
 
 
     </RelativeLayout>

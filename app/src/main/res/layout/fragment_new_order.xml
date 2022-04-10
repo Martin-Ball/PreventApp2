@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.new_order.NewOrderFragment">
 
-    <ScrollView
+    <LinearLayout
         android:id="@+id/scrollView2"
         android:layout_width="412dp"
         android:layout_height="594dp"
@@ -33,13 +33,13 @@
                     android:layout_width="382dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/shape"
+                    android:elevation="10dp"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:paddingStart="5dp"
                     android:paddingTop="5dp"
                     android:paddingEnd="5dp"
-                    android:paddingBottom="5dp"
-                    android:elevation="10dp">
+                    android:paddingBottom="5dp">
 
                     <TextView
                         android:id="@+id/client_new_order"
@@ -69,10 +69,10 @@
                             android:layout_height="48dp"
                             android:layout_gravity="center"
                             android:background="@drawable/shape_blue"
+                            android:elevation="10dp"
                             android:gravity="center|center_vertical"
                             android:textColorHint="@color/linkiar_search_border"
-                            app:hintText="Seleccionar el cliente"
-                            android:elevation="10dp"/>
+                            app:hintText="Seleccionar el cliente" />
                     </LinearLayout>
 
                     <Space
@@ -98,10 +98,10 @@
                             android:layout_height="48dp"
                             android:layout_gravity="center"
                             android:background="@drawable/shape_blue"
+                            android:elevation="10dp"
                             android:gravity="center|center_vertical"
                             android:textColorHint="@color/linkiar_search_border"
-                            app:hintText="Agregar producto al pedido"
-                            android:elevation="10dp"/>
+                            app:hintText="Agregar producto al pedido" />
                     </LinearLayout>
 
                     <Space
@@ -164,7 +164,7 @@
 
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
     <Button
         android:id="@+id/client_file"

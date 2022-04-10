@@ -90,14 +90,16 @@ public class Order {
             Intent intent = new Intent(Intent.ACTION_SEND);
 
             intent.setType("text/plain");
-            intent.setPackage("com.whatsapp");
-
             // Give your message here
             intent.putExtra(Intent.EXTRA_TEXT, message.toString());
 
+            root.getContext().startActivity(Intent.createChooser(intent, "Elegir App"));
+
+            //intent.setPackage("com.whatsapp");
+
             // Checking whether Whatsapp
             // is installed or not
-            root.getContext().startActivity(intent);
+            //root.getContext().startActivity(intent);
 
         }catch (ActivityNotFoundException ex){
             Toast.makeText(root.getContext(), "Whastapp No Instalado", Toast.LENGTH_SHORT).show();

@@ -329,7 +329,7 @@ public class FragmentListAdd extends Fragment {
                                 Client = myCell.toString();
                                 nameClientList.put("Client", Client);
                             }else if(colno == 1){
-                                CUIT = myCell.toString();
+                                CUIT = Long.toString((long) myCell.getNumericCellValue());
                                 clientList.put("CUIT", CUIT);
                             }else if(colno == 2){
                                 FantasyName = myCell.toString();

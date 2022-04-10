@@ -45,7 +45,7 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
         public CardViewOrderViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
             productText = itemView.findViewById(R.id.Client);
-            amountText = itemView.findViewById(R.id.CUIT);
+            amountText = itemView.findViewById(R.id.Amount);
             amountTextSelected = itemView.findViewById(R.id.amountSelected);
             deleteImage = itemView.findViewById(R.id.image_delete_button);
             addImage = itemView.findViewById(R.id.image_add_button);

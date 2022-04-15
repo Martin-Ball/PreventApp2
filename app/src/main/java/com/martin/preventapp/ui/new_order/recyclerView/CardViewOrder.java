@@ -12,11 +12,11 @@ public class CardViewOrder {
         amount = amount2;
     }
 
-    public void changeTextProduct(String product2) {
+    public void setTextProduct(String product2) {
         product = product2;
     }
 
-    public void changeTextAmount(String amount2) {
+    public void setTextAmount(String amount2) {
         amount = amount2;
     }
 

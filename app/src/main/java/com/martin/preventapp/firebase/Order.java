@@ -93,7 +93,7 @@ public class Order {
             // Give your message here
             intent.putExtra(Intent.EXTRA_TEXT, message.toString());
 
-            root.getContext().startActivity(Intent.createChooser(intent, "Elegir App"));
+            root.getContext().startActivity(Intent.createChooser(intent, "Compartir"));
 
             //intent.setPackage("com.whatsapp");
 

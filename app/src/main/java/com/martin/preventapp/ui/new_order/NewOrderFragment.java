@@ -186,13 +186,13 @@ public class NewOrderFragment extends Fragment {
     }
 
     public void changeItem(int position, String text) {
-        arrayCardViewProducts.get(position).changeTextProduct(text);
+        arrayCardViewProducts.get(position).setTextProduct(text);
         CardViewProductsAdapter.notifyItemChanged(position);
     }
 
     public void addAmountItem(int position) {
         int amountAdd = Integer.parseInt(arrayCardViewProducts.get(position).getAmount());
-        arrayCardViewProducts.get(position).changeTextAmount(Integer.toString(amountAdd + 1));
+        arrayCardViewProducts.get(position).setTextAmount(Integer.toString(amountAdd + 1));
         CardViewProductsAdapter.notifyItemChanged(position);
 
         ArrayList<String> productAndAmount = new ArrayList<>();
@@ -203,10 +203,21 @@ public class NewOrderFragment extends Fragment {
         arrayProducts.set(position, productAndAmount);
     }
 
+    public void editTextAmountItem(int position, String amount){
+        arrayCardViewProducts.get(position).setTextAmount(amount);
+
+        ArrayList<String> productAndAmount = new ArrayList<>();
+
+        productAndAmount.add(0, arrayCardViewProducts.get(position).getProduct());
+        productAndAmount.add(1, amount);
+
+        arrayProducts.set(position, productAndAmount);
+    }
+
     public void removeAmountItem(int position) {
         int amountRemove = Integer.parseInt(arrayCardViewProducts.get(position).getAmount());
         if (amountRemove > 0) {
-            arrayCardViewProducts.get(position).changeTextAmount(Integer.toString(amountRemove - 1));
+            arrayCardViewProducts.get(position).setTextAmount(Integer.toString(amountRemove - 1));
             CardViewProductsAdapter.notifyItemChanged(position);
 
             ArrayList<String> productAndAmount = new ArrayList<>();
@@ -236,8 +247,7 @@ public class NewOrderFragment extends Fragment {
             }
 
             @Override
-            public void addButtonClick(int position)
-            {
+            public void addButtonClick(int position) {
                 addAmountItem(position);
             }
 
@@ -245,6 +255,11 @@ public class NewOrderFragment extends Fragment {
             public void removeButtonClick(int position)
             {
                 removeAmountItem(position);
+            }
+
+            @Override
+            public void editTextAmountChange(int position, String amount) {
+                editTextAmountItem(position, amount);
             }
         });
     }
@@ -270,13 +285,13 @@ public class NewOrderFragment extends Fragment {
                         order.orderDone(arrayCardViewProducts, arrayProducts, CompanySelected, ProductsOrders, selectedClient, binding.ordersRecycler, comment, root);
                     }
                 })
-                .setNegativeButton("NO",
+                .setNegativeButton("CANCELAR",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 comment = " ";
                             }
                         })
-                .setNeutralButton("CANCELAR", new DialogInterface.OnClickListener() {
+                .setNeutralButton("NO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
                         dialog.cancel();

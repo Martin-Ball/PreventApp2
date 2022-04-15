@@ -1,6 +1,8 @@
 package com.martin.preventapp.ui.new_order.recyclerView;
 
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,8 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
         void addButtonClick(int position);
 
         void removeButtonClick(int position);
+
+        void editTextAmountChange(int position, String amount);
 
     }
 
@@ -72,6 +76,28 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
                             listener.addButtonClick(position);
                         }
                     }
+                }
+            });
+
+            amountTextSelected.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.editTextAmountChange(position, s.toString());
+                        }
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
                 }
             });
 

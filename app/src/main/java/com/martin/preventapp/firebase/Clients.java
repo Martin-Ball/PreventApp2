@@ -30,6 +30,7 @@ public class Clients {
 
     public ArrayList<String> clientlist (View view, String CompanySelected)
     {
+        List.add("Seleccionar el cliente");
         List.add("+ Agregar nuevo cliente");
 
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;

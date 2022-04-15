@@ -4,18 +4,21 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.martin.preventapp.R;
 import com.martin.preventapp.firebase.Clients;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class AddNewClient {
 
-    public void newClient (View view, String CompanySelected)
+    public void newClient (View view, String CompanySelected, ArrayList<String> ClientList, SearchableSpinner spinnerClient)
     {
         LayoutInflater inflater = LayoutInflater.from(view.getContext());
         View dialoglayout = inflater.inflate(R.layout.dialog_new_client, null);
@@ -42,6 +45,13 @@ public class AddNewClient {
                 String EditTextFantasyName = FantasyName.getText().toString().toUpperCase(Locale.ROOT);
 
                 newclient.addNewClient(CompanySelected, EditTextName, EditTextCUIT, EditTextStreetAddress, EditTextFantasyName, view);
+
+                ArrayList<String> ClientList2 = newclient.clientlist(view.getRootView(), CompanySelected);
+
+                ArrayAdapter<String> adapterNewClientSelector = new ArrayAdapter<>(view.getContext(),
+                        android.R.layout.simple_list_item_1,
+                        ClientList2);
+                spinnerClient.setAdapter(adapterNewClientSelector);
             }
         });
 

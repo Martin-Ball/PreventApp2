@@ -45,6 +45,9 @@ public class NewOrderFragment extends Fragment {
     //Orders
     private HashMap<String, HashMap <String, Object>> ProductsOrders = new HashMap<>();
 
+    //Clients
+    private ArrayList<String> ClientList = new ArrayList<>();
+
     //Products
     private ArrayList<String> ProductList = new ArrayList<>();
 
@@ -73,15 +76,11 @@ public class NewOrderFragment extends Fragment {
         //new client
         Clients clients = new Clients();
 
-        //initial ArrayList
-        arrayCardViewProducts = new ArrayList<>();
-
-        arrayProducts = new ArrayList<>();
+        ClientList = clients.clientlist(root, CompanySelected);
 
         ArrayAdapter<String> adapterNewClientSelector = new ArrayAdapter<>(root.getContext(),
                                                                             android.R.layout.simple_list_item_1,
-                                                                            clients.clientlist(root,
-                                                                            CompanySelected));
+                                                                            ClientList);
         spinnerClient.setAdapter(adapterNewClientSelector);
         spinnerClient.setTitle("Seleccione un cliente");
         spinnerClient.setPositiveButton("CANCELAR");
@@ -90,13 +89,16 @@ public class NewOrderFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i == 0) {
+                }
+                else if (i == 1){
                     AddNewClient newClient = new AddNewClient();
-                    newClient.newClient(root, CompanySelected);
+                    newClient.newClient(root, CompanySelected, ClientList, spinnerClient);
                 } else {
                     String sNumber = adapterView.getItemAtPosition(i).toString();
                     clientNewOrder.setText("Nuevo pedido para el cliente: " + sNumber);
                     selectedClient = sNumber;
                 }
+                spinnerClient.setSelection(0);
             }
 
             @Override
@@ -109,6 +111,10 @@ public class NewOrderFragment extends Fragment {
         SearchableSpinner spinnerNewProduct = root.findViewById(R.id.spinner_new_product_searchable);
 
         //products
+        arrayCardViewProducts = new ArrayList<>();
+
+        arrayProducts = new ArrayList<>();
+
         Products products = new Products();
 
         ProductList = products.getProductlist(root, CompanySelected);
@@ -127,7 +133,7 @@ public class NewOrderFragment extends Fragment {
 
                 } else if (i == 1) {
                     AddNewProduct addNewProduct = new AddNewProduct();
-                    addNewProduct.newProduct(root, CompanySelected, ProductList);
+                    addNewProduct.newProduct(root, CompanySelected, ProductList, spinnerNewProduct);
                 } else {
                     String productSelected = adapterView.getItemAtPosition(i).toString();
                     arrayCardViewProducts.add(new CardViewOrder(productSelected, "0"));

@@ -98,7 +98,6 @@ public class NewOrderFragment extends Fragment {
                     clientNewOrder.setText("Nuevo pedido para el cliente: " + sNumber);
                     selectedClient = sNumber;
                 }
-                spinnerClient.setSelection(0);
             }
 
             @Override
@@ -136,12 +135,12 @@ public class NewOrderFragment extends Fragment {
                     addNewProduct.newProduct(root, CompanySelected, ProductList, spinnerNewProduct);
                 } else {
                     String productSelected = adapterView.getItemAtPosition(i).toString();
-                    arrayCardViewProducts.add(new CardViewOrder(productSelected, "0"));
+                    arrayCardViewProducts.add(new CardViewOrder(productSelected, "0", "UNIDAD", "0"));
 
                     ArrayList<String> productAndAmount = new ArrayList<>();
 
                     //add product and amount into ArrayList
-                    productAndAmount.add(0,productSelected);
+                    productAndAmount.add(0, productSelected);
                     productAndAmount.add(1,"0");
 
                     //add product and amount into array
@@ -205,6 +204,8 @@ public class NewOrderFragment extends Fragment {
 
         productAndAmount.add(0, arrayCardViewProducts.get(position).getProduct());
         productAndAmount.add(1, Integer.toString(amountAdd + 1));
+        productAndAmount.add(2, arrayCardViewProducts.get(position).getUnit());
+        productAndAmount.add(3, arrayCardViewProducts.get(position).getPositionItem());
 
         arrayProducts.set(position, productAndAmount);
     }
@@ -216,6 +217,22 @@ public class NewOrderFragment extends Fragment {
 
         productAndAmount.add(0, arrayCardViewProducts.get(position).getProduct());
         productAndAmount.add(1, amount);
+        productAndAmount.add(2, arrayCardViewProducts.get(position).getUnit());
+        productAndAmount.add(3, arrayCardViewProducts.get(position).getPositionItem());
+
+        arrayProducts.set(position, productAndAmount);
+    }
+
+    public void selectUnitToOrder(int position, String unit, int positionItem){
+        arrayCardViewProducts.get(position).setUnit(unit);
+        arrayCardViewProducts.get(position).setPositionItem(Integer.toString(positionItem));
+
+        ArrayList<String> productAndAmount = new ArrayList<>();
+
+        productAndAmount.add(0, arrayCardViewProducts.get(position).getProduct());
+        productAndAmount.add(1, arrayCardViewProducts.get(position).getAmount());
+        productAndAmount.add(2, unit);
+        productAndAmount.add(3, Integer.toString(positionItem));
 
         arrayProducts.set(position, productAndAmount);
     }
@@ -230,6 +247,8 @@ public class NewOrderFragment extends Fragment {
 
             productAndAmount.add(0, arrayCardViewProducts.get(position).getProduct());
             productAndAmount.add(1, Integer.toString(amountRemove - 1));
+            productAndAmount.add(2, arrayCardViewProducts.get(position).getUnit());
+            productAndAmount.add(3, arrayCardViewProducts.get(position).getPositionItem());
 
             arrayProducts.set(position, productAndAmount);
         }
@@ -246,15 +265,14 @@ public class NewOrderFragment extends Fragment {
         mRecyclerView.setAdapter(CardViewProductsAdapter);
 
         CardViewProductsAdapter.setOnItemClickListener(new CardViewOrderAdapter.OnItemClickListener() {
-
-            @Override
-            public void onDeleteClick(int position) {
-                removeItem(position);
-            }
-
             @Override
             public void addButtonClick(int position) {
                 addAmountItem(position);
+            }
+
+            @Override
+            public void editTextAmountChange(int position, String amount) {
+                editTextAmountItem(position, amount);
             }
 
             @Override
@@ -264,8 +282,13 @@ public class NewOrderFragment extends Fragment {
             }
 
             @Override
-            public void editTextAmountChange(int position, String amount) {
-                editTextAmountItem(position, amount);
+            public void selectUnit(int position, String unit, int positionItem) {
+                selectUnitToOrder(position, unit, positionItem);
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+                removeItem(position);
             }
         });
     }
@@ -291,13 +314,16 @@ public class NewOrderFragment extends Fragment {
                         order.orderDone(arrayCardViewProducts, arrayProducts, CompanySelected, ProductsOrders, selectedClient, binding.ordersRecycler, comment, root);
                     }
                 })
-                .setNegativeButton("CANCELAR",
+                .setNegativeButton("NO",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 comment = " ";
+                                Toast.makeText(promptsView.getContext(), "Pedido sin comentario", Toast.LENGTH_SHORT).show();
+                                Order order = new Order();
+                                order.orderDone(arrayCardViewProducts, arrayProducts, CompanySelected, ProductsOrders, selectedClient, binding.ordersRecycler, comment, root);
                             }
                         })
-                .setNeutralButton("NO", new DialogInterface.OnClickListener() {
+                .setNeutralButton("CANCELAR", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
                         dialog.cancel();

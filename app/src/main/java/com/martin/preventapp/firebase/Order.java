@@ -44,34 +44,25 @@ public class Order {
         String currentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
         String currentTime = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
 
-        String limitText = "===========================\n";
-
-
-
         message = new StringBuilder();
 
         //Header Builder
 
-        message.append(limitText)
-                .append("*Cliente:* " + selectedClient + "\n")
+        message.append("*Cliente:* " + selectedClient + "\n")
                 .append("*Fecha:* " + currentDate + "\n")
                 .append("*Lista:* " + CompanySelected + "\n")
                 .append("*Productos:* " + arrayProducts.size() + "\n");
 
-        message.append(limitText);
-
 
         for (int i = 0; i <= arrayProducts.size() - 1; i++) {
-                message.append("\n[-] ").append(arrayProducts.get(i).get(0) + "  [CANTIDAD: " + arrayProducts.get(i).get(1) + "] ")
-                        .append("\n");
+            message.append("\n" + arrayProducts.get(i).get(1) + " " + arrayProducts.get(i).get(2) + " " + arrayProducts.get(i).get(0) + "\n");
 
         }
 
-        message.append("\n" + limitText);
+        message.append("\n");
 
             if(comment != " "){
                 message.append("Comentarios: \n" + comment);
-                message.append("\n" + limitText);
             }
 
 

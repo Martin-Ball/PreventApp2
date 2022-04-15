@@ -52,6 +52,7 @@ public class AddNewClient {
                         android.R.layout.simple_list_item_1,
                         ClientList2);
                 spinnerClient.setAdapter(adapterNewClientSelector);
+                spinnerClient.setSelection(0);
             }
         });
 

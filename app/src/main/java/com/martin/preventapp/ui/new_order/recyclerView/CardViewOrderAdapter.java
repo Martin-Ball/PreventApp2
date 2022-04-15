@@ -3,11 +3,15 @@ package com.martin.preventapp.ui.new_order.recyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,13 +28,15 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
 
     public interface OnItemClickListener {
 
-        void onDeleteClick(int position);
-
         void addButtonClick(int position);
+
+        void editTextAmountChange(int position, String amount);
 
         void removeButtonClick(int position);
 
-        void editTextAmountChange(int position, String amount);
+        void selectUnit(int position, String unit, int positionItem);
+
+        void onDeleteClick(int position);
 
     }
 
@@ -40,7 +46,7 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
 
     public static class CardViewOrderViewHolder extends RecyclerView.ViewHolder {
         public TextView productText;
-        public TextView amountText;
+        public Spinner unit;
         public EditText amountTextSelected;
         public ImageView deleteImage;
         public ImageView addImage;
@@ -49,23 +55,11 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
         public CardViewOrderViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
             productText = itemView.findViewById(R.id.Client);
-            amountText = itemView.findViewById(R.id.Amount);
+            unit = itemView.findViewById(R.id.Unit);
             amountTextSelected = itemView.findViewById(R.id.amountSelected);
             deleteImage = itemView.findViewById(R.id.image_delete_button);
             addImage = itemView.findViewById(R.id.image_add_button);
             removeImage = itemView.findViewById(R.id.image_remove_button);
-
-            deleteImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onDeleteClick(position);
-                        }
-                    }
-                }
-            });
 
             addImage.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -112,6 +106,37 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
                     }
                 }
             });
+
+            unit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            String unitSelected = adapterView.getItemAtPosition(i).toString();
+                            listener.selectUnit(position, unitSelected, i);
+                        }
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+
+
+            deleteImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onDeleteClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -123,6 +148,20 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
         public CardViewOrderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_order, parent, false);
             CardViewOrderViewHolder evh = new CardViewOrderViewHolder(v, mListener);
+
+            ArrayList<String> Units = new ArrayList<>();
+            Units.add("Unidad");
+            Units.add("Caja");
+            Units.add("Pouch");
+
+            Spinner UnitSelector = v.findViewById(R.id.Unit);
+
+            ArrayAdapter<String> adapterUnitsSpinner = new ArrayAdapter<>(v.getContext(),
+                    android.R.layout.simple_list_item_1,
+                    Units);
+
+            UnitSelector.setAdapter(adapterUnitsSpinner);
+
             return evh;
         }
 
@@ -130,8 +169,9 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
         public void onBindViewHolder(CardViewOrderViewHolder holder, int position) {
             CardViewOrder currentItem = arrayProducts.get(position);
 
+            holder.unit.setSelection(Integer.parseInt(currentItem.getPositionItem()));
+
             holder.productText.setText(currentItem.getProduct());
-            holder.amountText.setText("Cantidad: " + currentItem.getAmount());
             if (Integer.parseInt(currentItem.getAmount()) > 0) {
                 holder.amountTextSelected.setText(currentItem.getAmount());
             }

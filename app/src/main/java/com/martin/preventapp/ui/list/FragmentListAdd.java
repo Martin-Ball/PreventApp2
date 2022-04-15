@@ -53,6 +53,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 
 public class FragmentListAdd extends Fragment {
 
@@ -252,7 +253,7 @@ public class FragmentListAdd extends Fragment {
                         while (cellIter.hasNext()) {
                             HSSFCell myCell = (HSSFCell) cellIter.next();
                             if (colno == 0) {
-                                product = myCell.toString();
+                                product = myCell.toString().toUpperCase(Locale.ROOT);
                                 productList.add(product);
                                 cardViewExcelProduct.add(new CardViewDetailProduct(product));
                             }
@@ -326,16 +327,16 @@ public class FragmentListAdd extends Fragment {
                         while (cellIter.hasNext()) {
                             HSSFCell myCell = (HSSFCell) cellIter.next();
                             if (colno == 0) {
-                                Client = myCell.toString();
+                                Client = myCell.toString().toUpperCase(Locale.ROOT);
                                 nameClientList.put("Client", Client);
                             }else if(colno == 1){
                                 CUIT = Long.toString((long) myCell.getNumericCellValue());
                                 clientList.put("CUIT", CUIT);
                             }else if(colno == 2){
-                                FantasyName = myCell.toString();
+                                FantasyName = myCell.toString().toUpperCase(Locale.ROOT);
                                 clientList.put("FantasyName", FantasyName);
                             }else if(colno == 3){
-                                StreetAddress = myCell.toString();
+                                StreetAddress = myCell.toString().toUpperCase(Locale.ROOT);
                                 clientList.put("StreetAddress", StreetAddress);
                             }
                             colno++;

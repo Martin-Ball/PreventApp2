@@ -21,7 +21,7 @@ public class AdapterDialogFragment extends RecyclerView.Adapter<AdapterDialogFra
         public AdapterDialogFragmentViewHolder(View itemView) {
             super(itemView);
             productText = itemView.findViewById(R.id.Client);
-            amountText = itemView.findViewById(R.id.CUIT);
+            amountText = itemView.findViewById(R.id.Amount);
         }
     }
 
@@ -41,7 +41,7 @@ public class AdapterDialogFragment extends RecyclerView.Adapter<AdapterDialogFra
         CardViewDetailOrder currentItem = arrayProducts.get(position);
 
         holder.productText.setText(currentItem.getProduct());
-        holder.amountText.setText("Cantidad: " + currentItem.getAmount());
+        holder.amountText.setText("Cantidad: " + currentItem.getAmount() + " " + currentItem.getUnit());
     }
 
     @Override

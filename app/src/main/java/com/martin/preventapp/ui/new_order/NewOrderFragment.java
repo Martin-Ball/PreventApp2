@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentNewOrderBinding;
 import com.martin.preventapp.firebase.Clients;
@@ -51,6 +53,8 @@ public class NewOrderFragment extends Fragment {
     //Products
     private ArrayList<String> ProductList = new ArrayList<>();
 
+    ArrayList<String> Units = new ArrayList<>();
+
     //
     private String CompanySelected = "";
 
@@ -68,6 +72,8 @@ public class NewOrderFragment extends Fragment {
             CompanySelected = bundle.get("CompanySelected").toString();
         }
 
+        Products units = new Products();
+        Units = units.getUnits(root, CompanySelected);
 
         //spinner searchable
         SearchableSpinner spinnerClient = root.findViewById(R.id.spinner_searchable_new_client);
@@ -91,7 +97,7 @@ public class NewOrderFragment extends Fragment {
                 if (i == 0) {
                 }
                 else if (i == 1){
-                    AddNewClient newClient = new AddNewClient();
+                    AddInfo newClient = new AddInfo();
                     newClient.newClient(root, CompanySelected, ClientList, spinnerClient);
                 } else {
                     String sNumber = adapterView.getItemAtPosition(i).toString();
@@ -131,7 +137,7 @@ public class NewOrderFragment extends Fragment {
                 if(i == 0){
 
                 } else if (i == 1) {
-                    AddNewProduct addNewProduct = new AddNewProduct();
+                    AddInfo addNewProduct = new AddInfo();
                     addNewProduct.newProduct(root, CompanySelected, ProductList, spinnerNewProduct);
                 } else {
                     String productSelected = adapterView.getItemAtPosition(i).toString();
@@ -223,18 +229,24 @@ public class NewOrderFragment extends Fragment {
         arrayProducts.set(position, productAndAmount);
     }
 
-    public void selectUnitToOrder(int position, String unit, int positionItem){
-        arrayCardViewProducts.get(position).setUnit(unit);
-        arrayCardViewProducts.get(position).setPositionItem(Integer.toString(positionItem));
+    public void selectUnitToOrder(int position, String unit, int positionItem, int sizeSpinner, Spinner spinnerUnit){
 
-        ArrayList<String> productAndAmount = new ArrayList<>();
+        if(positionItem == sizeSpinner - 1){
+            AddInfo newUnit = new AddInfo();
+            newUnit.newUnit(getView(), CompanySelected, spinnerUnit);
+        }else {
+            arrayCardViewProducts.get(position).setUnit(unit);
+            arrayCardViewProducts.get(position).setPositionItem(Integer.toString(positionItem));
 
-        productAndAmount.add(0, arrayCardViewProducts.get(position).getProduct());
-        productAndAmount.add(1, arrayCardViewProducts.get(position).getAmount());
-        productAndAmount.add(2, unit);
-        productAndAmount.add(3, Integer.toString(positionItem));
+            ArrayList<String> productAndAmount = new ArrayList<>();
 
-        arrayProducts.set(position, productAndAmount);
+            productAndAmount.add(0, arrayCardViewProducts.get(position).getProduct());
+            productAndAmount.add(1, arrayCardViewProducts.get(position).getAmount());
+            productAndAmount.add(2, unit);
+            productAndAmount.add(3, Integer.toString(positionItem));
+
+            arrayProducts.set(position, productAndAmount);
+        }
     }
 
     public void removeAmountItem(int position) {
@@ -259,7 +271,7 @@ public class NewOrderFragment extends Fragment {
         mRecyclerView = root.findViewById(R.id.ordersRecycler);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(root.getContext());
-        CardViewProductsAdapter = new CardViewOrderAdapter(arrayCardViewProducts);
+        CardViewProductsAdapter = new CardViewOrderAdapter(arrayCardViewProducts, CompanySelected, Units);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(CardViewProductsAdapter);
@@ -282,8 +294,8 @@ public class NewOrderFragment extends Fragment {
             }
 
             @Override
-            public void selectUnit(int position, String unit, int positionItem) {
-                selectUnitToOrder(position, unit, positionItem);
+            public void selectUnit(int position, String unit, int positionItem, int sizeSpinner, Spinner spinnerUnit) {
+                selectUnitToOrder(position, unit, positionItem, sizeSpinner, spinnerUnit);
             }
 
             @Override

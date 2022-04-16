@@ -60,7 +60,7 @@
                     android:id="@+id/image_remove_button"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginEnd="22dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginRight="22dp"
                     android:src="@drawable/ic_remove" />
 
@@ -69,8 +69,7 @@
                     android:layout_width="145dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                     />
+                    android:layout_marginBottom="5dp" />
 
                 <ImageView
                     android:id="@+id/image_delete_button"

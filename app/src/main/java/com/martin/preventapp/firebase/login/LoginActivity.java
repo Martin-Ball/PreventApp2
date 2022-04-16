@@ -136,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
         InfoUser.put("List", "");
         InfoUser.put("Orders", "");
         InfoUser.put("Clients", "");
+        InfoUser.put("Units", "");
 
         // Add a new document with a generated ID
         db

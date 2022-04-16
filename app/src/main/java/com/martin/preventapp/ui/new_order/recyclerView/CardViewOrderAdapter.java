@@ -1,6 +1,8 @@
 package com.martin.preventapp.ui.new_order.recyclerView;
 
 
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -13,18 +15,26 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.martin.preventapp.R;
+import com.martin.preventapp.firebase.Products;
+import com.martin.preventapp.ui.new_order.AddInfo;
 
 import java.util.ArrayList;
 
 
-public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdapter.CardViewOrderViewHolder> {
+public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdapter.CardViewOrderViewHolder>{
     private ArrayList<CardViewOrder> arrayProducts;
+    private ArrayList<String> Units;
+    private String CompanySelected;
     private OnItemClickListener mListener;
-
 
     public interface OnItemClickListener {
 
@@ -34,7 +44,7 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
 
         void removeButtonClick(int position);
 
-        void selectUnit(int position, String unit, int positionItem);
+        void selectUnit(int position, String unit, int positionItem, int sizeSpinner, Spinner spinnerUnit);
 
         void onDeleteClick(int position);
 
@@ -113,9 +123,9 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
                     if (listener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            String unitSelected = adapterView.getItemAtPosition(i).toString();
-                            listener.selectUnit(position, unitSelected, i);
-                        }
+                                String unitSelected = adapterView.getItemAtPosition(i).toString();
+                                listener.selectUnit(position, unitSelected, i, adapterView.getAdapter().getCount(), unit);
+                            }
                     }
                 }
 
@@ -140,8 +150,10 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
         }
     }
 
-        public CardViewOrderAdapter(ArrayList<CardViewOrder> arrayProducts2) {
-            arrayProducts = arrayProducts2;
+        public CardViewOrderAdapter(ArrayList<CardViewOrder> arrayProducts2, String CompanySelected2, ArrayList<String> Units2) {
+            this.arrayProducts = arrayProducts2;
+            this.CompanySelected = CompanySelected2;
+            this.Units = Units2;
         }
 
         @Override
@@ -149,16 +161,10 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_order, parent, false);
             CardViewOrderViewHolder evh = new CardViewOrderViewHolder(v, mListener);
 
-            ArrayList<String> Units = new ArrayList<>();
-            Units.add("Unidad");
-            Units.add("Caja");
-            Units.add("Pouch");
-
             Spinner UnitSelector = v.findViewById(R.id.Unit);
 
-            ArrayAdapter<String> adapterUnitsSpinner = new ArrayAdapter<>(v.getContext(),
-                    android.R.layout.simple_list_item_1,
-                    Units);
+            ArrayAdapter<String> adapterUnitsSpinner = new ArrayAdapter<>(v.getRootView().getContext(),
+                    android.R.layout.simple_list_item_1, Units);
 
             UnitSelector.setAdapter(adapterUnitsSpinner);
 
@@ -170,8 +176,8 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
             CardViewOrder currentItem = arrayProducts.get(position);
 
             holder.unit.setSelection(Integer.parseInt(currentItem.getPositionItem()));
-
             holder.productText.setText(currentItem.getProduct());
+
             if (Integer.parseInt(currentItem.getAmount()) > 0) {
                 holder.amountTextSelected.setText(currentItem.getAmount());
             }
@@ -182,3 +188,6 @@ public class CardViewOrderAdapter extends RecyclerView.Adapter<CardViewOrderAdap
             return arrayProducts.size();
         }
     }
+
+
+

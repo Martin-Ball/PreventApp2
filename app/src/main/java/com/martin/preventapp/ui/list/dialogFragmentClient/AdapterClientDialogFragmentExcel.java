@@ -23,7 +23,7 @@ public class AdapterClientDialogFragmentExcel extends RecyclerView.Adapter<Adapt
         public AdapterDialogFragmentViewHolder(View itemView) {
             super(itemView);
             clientText = itemView.findViewById(R.id.Client);
-            CUITText = itemView.findViewById(R.id.CUIT);
+            CUITText = itemView.findViewById(R.id.Amount);
             FantasyNameText = itemView.findViewById(R.id.FantasyName);
             StreetAddressText = itemView.findViewById(R.id.StreetAddress);
         }

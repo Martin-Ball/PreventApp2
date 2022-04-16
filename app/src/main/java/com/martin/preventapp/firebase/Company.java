@@ -60,6 +60,7 @@ public class Company {
         options.add("Clients");
         options.add("List");
         options.add("Orders");
+        options.add("Units");
 
         Product.put(CompanyName, " ");
 

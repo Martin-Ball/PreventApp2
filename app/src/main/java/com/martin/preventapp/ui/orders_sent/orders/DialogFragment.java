@@ -70,7 +70,7 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
 
         for (int i=1; i<= Hour.size()-1; i++){
                 ProductAndAmount = (ArrayList<String>) Hour.get(String.valueOf(i));
-                arrayCardViewDetailProducts.add(new CardViewDetailOrder(ProductAndAmount.get(0), ProductAndAmount.get(1)));
+                arrayCardViewDetailProducts.add(new CardViewDetailOrder(ProductAndAmount.get(0), ProductAndAmount.get(1), ProductAndAmount.get(2)));
         }
 
         commentTV.setText("Comentario: " + Comment);

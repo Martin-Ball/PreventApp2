@@ -23,6 +23,9 @@ public class Products {
     private HashMap<String, Object> List = new HashMap<>();
     private ArrayList<String> Products = new ArrayList<>();
 
+    //UnitsList
+    private ArrayList<String> Units = new ArrayList<>();
+
     public ArrayList<String> getProductlist(View root, String CompanySelected)
     {
         Products.add("Agregar producto al pedido");
@@ -104,6 +107,66 @@ public class Products {
             Toast.makeText(view.getContext(), "Producto agregado", Toast.LENGTH_SHORT).show();
         }catch(Exception e){
             Toast.makeText(view.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public ArrayList<String> getUnits(View root, String CompanySelected){
+
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+
+        //user:
+        //{"List"={"Nutrifresca"={"COD", "Street Address", "Fantasy Name", "CUIT"}}}
+
+        //Nutrifresca:
+        //{"Nutrifresca"={"COD", "Street Address", "Fantasy Name", "CUIT"}}
+
+        //0:
+        //{"COD", "Street Address", "Fantasy Name", "CUIT"}
+
+        //The values its contained on ArrayList, get on 0,1,2...
+
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("users").document(currentFirebaseUser.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                User = (HashMap<String, Object>) documentSnapshot.getData();
+                List = (HashMap<String, Object>) User.get("Units");
+                Units.addAll((Collection<? extends String>) List.get(CompanySelected));
+                Units.add("OTRO");
+            }
+        });
+
+        return Units;
+    }
+
+    public void addNewUnit (String CompanySelected, String UnitName, View root)
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        // Create a new product
+        HashMap<String, Object> User = new HashMap<>();
+        HashMap<String, Object> Company = new HashMap<>();
+        ArrayList<String> Unit = new ArrayList<>();
+
+        Unit = getUnits(root, CompanySelected);
+        
+        Toast.makeText(root.getContext(), "SIZE: " + Unit.size(), Toast.LENGTH_SHORT).show();
+        Unit.add(UnitName);
+
+        Company.put(CompanySelected, Unit);
+
+        User.put("Units", Company);
+
+        try {
+            // Add a new document with ID for user
+            db.collection("users").document(currentFirebaseUser.getUid()).set(User, SetOptions.merge());
+            Toast.makeText(root.getContext(), "Unidad agregado", Toast.LENGTH_SHORT).show();
+        }catch(Exception e){
+            Toast.makeText(root.getContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
         }
     }
 }

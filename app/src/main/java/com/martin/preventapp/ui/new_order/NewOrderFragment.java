@@ -233,7 +233,7 @@ public class NewOrderFragment extends Fragment {
 
         if(positionItem == sizeSpinner - 1){
             AddInfo newUnit = new AddInfo();
-            newUnit.newUnit(getView(), CompanySelected, spinnerUnit);
+            newUnit.newUnit(getView(), CompanySelected, spinnerUnit, Units);
         }else {
             arrayCardViewProducts.get(position).setUnit(unit);
             arrayCardViewProducts.get(position).setPositionItem(Integer.toString(positionItem));

@@ -103,12 +103,12 @@ public class AddInfo {
 
     }
 
-    public void newUnit (View view, String CompanySelected, Spinner spinnerUnits) {
+    public void newUnit (View view, String CompanySelected, Spinner spinnerUnits, ArrayList<String> Units) {
         AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
 
         final EditText edittext = new EditText(view.getContext());
-        alert.setMessage("Agregar unidad");
-        alert.setTitle("Denominación:");
+        alert.setMessage("Denominación:");
+        alert.setTitle("Agregar unidad");
 
         alert.setView(edittext);
 
@@ -116,14 +116,12 @@ public class AddInfo {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String UnitName = edittext.getText().toString().toUpperCase(Locale.ROOT);
                 Products units = new Products();
-                units.addNewUnit(CompanySelected, UnitName, view);
 
                 //products
-                ArrayList<String> UnitList2 = units.getUnits(view, CompanySelected);
+                units.addNewUnit(CompanySelected, UnitName, view, Units);
 
                 ArrayAdapter<String> adapterNewProductSelector = new ArrayAdapter<>(view.getContext(),
-                        android.R.layout.simple_list_item_1,
-                        UnitList2);
+                        android.R.layout.simple_list_item_1, Units);
                 spinnerUnits.setAdapter(adapterNewProductSelector);
             }
         });

@@ -134,15 +134,21 @@ public class Products {
 
                 User = (HashMap<String, Object>) documentSnapshot.getData();
                 List = (HashMap<String, Object>) User.get("Units");
-                Units.addAll((Collection<? extends String>) List.get(CompanySelected));
-                Units.add("OTRO");
+                if(List.get(CompanySelected).equals(" ")) {
+                    addNewUnit(CompanySelected, "UNIDAD", root, Units);
+                }else{
+                    Units.addAll((Collection<? extends String>) List.get(CompanySelected));
+                    Toast.makeText(root.getContext(), List.get(CompanySelected).toString(), Toast.LENGTH_LONG).show();
+                    Units.add("OTRO");
+                }
+
             }
         });
 
         return Units;
     }
 
-    public void addNewUnit (String CompanySelected, String UnitName, View root)
+    public void addNewUnit (String CompanySelected, String UnitName, View root, ArrayList<String> Unit)
     {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -150,12 +156,14 @@ public class Products {
         // Create a new product
         HashMap<String, Object> User = new HashMap<>();
         HashMap<String, Object> Company = new HashMap<>();
-        ArrayList<String> Unit = new ArrayList<>();
-
-        Unit = getUnits(root, CompanySelected);
-        
-        Toast.makeText(root.getContext(), "SIZE: " + Unit.size(), Toast.LENGTH_SHORT).show();
-        Unit.add(UnitName);
+        if(Unit.size() > 0){
+            Unit.remove(Unit.size() - 1);
+            Unit.add(UnitName);
+            Unit.add("OTRO");
+        }else{
+            Unit.add(UnitName);
+            Unit.add("OTRO");
+        }
 
         Company.put(CompanySelected, Unit);
 

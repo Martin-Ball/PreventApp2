@@ -1,10 +1,7 @@
 # PreventApp
 
-App de gestión de pedidos, la herramienta de comunicación entre preventista y administración
+App de gestión de pedidos, la herramienta de comunicación entre preventista y administración.
 
-En esta app busque desarrollarme con las siguientes herramientas:
-- Git - Github
-- Fragments
-- Layouts
-- POO
-- LifeCycles
+La aplicación se encuentra actualmente en produccion con usuarios activos enviando pedidos de forma diaria. 
+Cada correccion o mejora de la app surge de los mismos usuarios.
+

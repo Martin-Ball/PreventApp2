@@ -171,6 +171,7 @@
         android:backgroundTint="@color/linkiar_signin"
         android:drawableLeft="@drawable/ic_whatsapp"
         android:elevation="10dp"
+        app:cornerRadius="20dp"
         android:text="ENVIAR PEDIDO" />
 
 </LinearLayout>

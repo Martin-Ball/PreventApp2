@@ -138,7 +138,6 @@ public class Products {
                     addNewUnit(CompanySelected, "UNIDAD", root, Units);
                 }else{
                     Units.addAll((Collection<? extends String>) List.get(CompanySelected));
-                    Toast.makeText(root.getContext(), List.get(CompanySelected).toString(), Toast.LENGTH_LONG).show();
                     Units.add("OTRO");
                 }
 

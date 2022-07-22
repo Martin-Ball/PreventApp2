@@ -168,7 +168,7 @@ class NewOrderFragment : Fragment() {
         cardViewProductsAdapter.notifyItemRemoved(position)
     }
 
-    fun changeItem(position: Int, text: String?) {
+    fun changeItem(position: Int, text: String) {
         arrayCardViewProducts[position].setTextProduct(text)
         cardViewProductsAdapter.notifyItemChanged(position)
     }

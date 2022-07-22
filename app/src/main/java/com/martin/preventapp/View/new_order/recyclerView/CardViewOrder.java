@@ -1,4 +1,4 @@
-package com.martin.preventapp.ui.new_order.recyclerView;
+package com.martin.preventapp.View.new_order.recyclerView;
 
 public class CardViewOrder {
 

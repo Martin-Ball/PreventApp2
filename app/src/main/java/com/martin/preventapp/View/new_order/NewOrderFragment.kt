@@ -1,13 +1,12 @@
-package com.martin.preventapp.ui.new_order
+package com.martin.preventapp.View.new_order
 
 import android.app.AlertDialog
-import com.martin.preventapp.ui.new_order.recyclerView.CardViewOrder
+import com.martin.preventapp.View.new_order.recyclerView.CardViewOrder
 import androidx.recyclerview.widget.RecyclerView
-import com.martin.preventapp.ui.new_order.recyclerView.CardViewOrderAdapter
+import com.martin.preventapp.View.new_order.recyclerView.CardViewOrderAdapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
 import com.martin.preventapp.firebase.Products
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner
 import com.martin.preventapp.R
@@ -22,15 +21,16 @@ import java.util.ArrayList
 import java.util.HashMap
 
 class NewOrderFragment : Fragment() {
-    private lateinit var newOrderViewModel: NewOrderViewModel
-    private var binding : FragmentNewOrderBinding? = null
-    private lateinit var selectedClient: String
+    private lateinit var binding : FragmentNewOrderBinding
+
     private lateinit var arrayCardViewProducts: ArrayList<CardViewOrder>
     private lateinit var arrayProducts: ArrayList<ArrayList<String>>
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var cardViewProductsAdapter: CardViewOrderAdapter
     private lateinit var mLayoutManager: RecyclerView.LayoutManager
-    private lateinit var comment: String
+
+    private var selectedClient: String = ""
+    private var comment: String = ""
 
     //Orders
     private val ProductsOrders = HashMap<String, HashMap<String, Any>>()
@@ -44,13 +44,15 @@ class NewOrderFragment : Fragment() {
 
     //
     private var CompanySelected = ""
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        newOrderViewModel = ViewModelProvider(this).get(NewOrderViewModel::class.java)
-        binding = FragmentNewOrderBinding.inflate(inflater, container, false)
-        val root: View = binding!!.root
+
+        binding = FragmentNewOrderBinding.inflate(layoutInflater)
+        val root = binding.root
+
         val bundle = this.arguments
         if (bundle != null) {
             CompanySelected = bundle["CompanySelected"].toString()
@@ -81,7 +83,7 @@ class NewOrderFragment : Fragment() {
                     }
                     1 -> {
                         val newClient = AddInfo()
-                        newClient.newClient(root, CompanySelected, ClientList, spinnerClient)
+                        newClient.newClient(view, CompanySelected, ClientList, spinnerClient)
                     }
                     else -> {
                         val sNumber = adapterView.getItemAtPosition(i).toString()
@@ -146,9 +148,9 @@ class NewOrderFragment : Fragment() {
         //button finish
         val finishOrder = root.findViewById<Button>(R.id.client_file)
         finishOrder.setOnClickListener {
-            if (selectedClient.isNullOrEmpty()) {
+            if (selectedClient.isEmpty()) {
                 Toast.makeText(root.context, "Seleccione un cliente", Toast.LENGTH_LONG).show()
-            } else if (arrayProducts!!.isEmpty()) {
+            } else if (arrayProducts.isEmpty()) {
                 Toast.makeText(root.context, "Seleccione productos", Toast.LENGTH_LONG).show()
             } else {
                 alertDialogComments(root)
@@ -159,7 +161,6 @@ class NewOrderFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
     }
 
     fun removeItem(position: Int) {
@@ -199,11 +200,11 @@ class NewOrderFragment : Fragment() {
         unit: String,
         positionItem: Int,
         sizeSpinner: Int,
-        spinnerUnit: Spinner?
+        spinnerUnit: Spinner
     ) {
         if (positionItem == sizeSpinner - 1) {
             val newUnit = AddInfo()
-            newUnit.newUnit(view, CompanySelected, spinnerUnit, Units)
+            newUnit.newUnit(binding.root.rootView, CompanySelected, spinnerUnit, Units)
         } else {
             arrayCardViewProducts[position].unit = unit
             arrayCardViewProducts[position].positionItem = Integer.toString(positionItem)
@@ -212,7 +213,7 @@ class NewOrderFragment : Fragment() {
             productAndAmount.add(1, arrayCardViewProducts[position].amount)
             productAndAmount.add(2, unit)
             productAndAmount.add(3, Integer.toString(positionItem))
-            arrayProducts!![position] = productAndAmount
+            arrayProducts[position] = productAndAmount
         }
     }
 
@@ -268,7 +269,7 @@ class NewOrderFragment : Fragment() {
         })
     }
 
-    private fun alertDialogComments(root: View): String? {
+    private fun alertDialogComments(root: View): String {
         val li = LayoutInflater.from(root.context)
         val promptsView = li.inflate(R.layout.dialog_comment_finish_button, null)
         val alertDialogBuilder = AlertDialog.Builder(root.context)
@@ -288,7 +289,7 @@ class NewOrderFragment : Fragment() {
                 CompanySelected,
                 ProductsOrders,
                 selectedClient,
-                binding!!.ordersRecycler,
+                binding.ordersRecycler,
                 comment,
                 root
             )
@@ -306,7 +307,7 @@ class NewOrderFragment : Fragment() {
                     CompanySelected,
                     ProductsOrders,
                     selectedClient,
-                    binding!!.ordersRecycler,
+                    binding.ordersRecycler,
                     comment,
                     root
                 )

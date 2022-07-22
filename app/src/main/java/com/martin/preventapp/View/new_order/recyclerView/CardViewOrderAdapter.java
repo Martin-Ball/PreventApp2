@@ -1,11 +1,8 @@
-package com.martin.preventapp.ui.new_order.recyclerView;
+package com.martin.preventapp.View.new_order.recyclerView;
 
 
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +12,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.martin.preventapp.R;
-import com.martin.preventapp.firebase.Products;
-import com.martin.preventapp.ui.new_order.AddInfo;
 
 import java.util.ArrayList;
 

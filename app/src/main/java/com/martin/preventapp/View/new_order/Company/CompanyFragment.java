@@ -1,4 +1,4 @@
-package com.martin.preventapp.ui.new_order.Company;
+package com.martin.preventapp.View.new_order.Company;
 
 
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import androidx.fragment.app.FragmentManager;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentCompanyBinding;
 import com.martin.preventapp.firebase.Company;
-import com.martin.preventapp.ui.new_order.NewOrderFragment;
+import com.martin.preventapp.View.new_order.NewOrderFragment;
 
 public class CompanyFragment extends Fragment {
 

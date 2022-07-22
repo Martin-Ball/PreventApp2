@@ -16,13 +16,9 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.martin.preventapp.MainActivity;
 import com.martin.preventapp.R;
 import com.martin.preventapp.databinding.FragmentCompanyBinding;
-import com.martin.preventapp.databinding.FragmentNewOrderBinding;
-import com.martin.preventapp.firebase.Clients;
 import com.martin.preventapp.firebase.Company;
-import com.martin.preventapp.firebase.Products;
 import com.martin.preventapp.ui.new_order.NewOrderFragment;
 
 public class CompanyFragment extends Fragment {

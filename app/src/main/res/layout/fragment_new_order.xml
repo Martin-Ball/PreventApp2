@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".ui.new_order.NewOrderFragment">
+    tools:context=".View.new_order.NewOrderFragment">
 
     <LinearLayout
         android:id="@+id/scrollView2"

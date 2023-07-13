@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.new_order.Company.CompanyFragment">
+    tools:context=".View.new_order.Company.CompanyFragment">
 
     <Spinner
         android:id="@+id/spinnerCompany"

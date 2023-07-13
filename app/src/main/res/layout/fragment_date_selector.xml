@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.orders_sent.fragment_orders.FragmentDateSelector">
+    tools:context=".View.ui.orders_sent.fragment_orders.FragmentDateSelector">
 
     <LinearLayout
         android:layout_width="match_parent"

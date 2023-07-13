@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import com.martin.preventapp.R
 import android.widget.EditText
 import android.view.View
-import com.martin.preventapp.firebase.Clients
+import com.martin.preventapp.Model.Clients
 import android.widget.ArrayAdapter
-import com.martin.preventapp.firebase.Products
+import com.martin.preventapp.Model.Products
 import android.widget.Spinner
 import java.util.ArrayList
 

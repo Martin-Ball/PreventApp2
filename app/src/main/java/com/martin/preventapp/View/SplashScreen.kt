@@ -8,7 +8,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.martin.preventapp.R
 import com.martin.preventapp.databinding.ActivitySplashScreenBinding
-import com.martin.preventapp.firebase.login.LoginActivity
+import com.martin.preventapp.Model.login.LoginActivity
 
 class SplashScreen : AppCompatActivity() {
 

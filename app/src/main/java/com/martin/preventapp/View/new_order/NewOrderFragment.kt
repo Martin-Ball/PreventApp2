@@ -7,16 +7,19 @@ import com.martin.preventapp.View.new_order.recyclerView.CardViewOrderAdapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.os.Bundle
-import com.martin.preventapp.firebase.Products
+
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner
 import com.martin.preventapp.R
-import com.martin.preventapp.firebase.Clients
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import android.widget.*
 import androidx.fragment.app.Fragment
+import com.martin.preventapp.Model.Clients
+import com.martin.preventapp.Model.Products
+import com.martin.preventapp.Model.Order
 import com.martin.preventapp.databinding.FragmentNewOrderBinding
-import com.martin.preventapp.firebase.Order
+
 import java.util.ArrayList
 import java.util.HashMap
 
@@ -245,8 +248,8 @@ class NewOrderFragment : Fragment() {
                 addAmountItem(position)
             }
 
-            override fun editTextAmountChange(position: Int, amount: String) {
-                editTextAmountItem(position, amount)
+            override fun editTextAmountChange(position: Int, amount: String?) {
+
             }
 
             override fun removeButtonClick(position: Int) {
@@ -255,12 +258,12 @@ class NewOrderFragment : Fragment() {
 
             override fun selectUnit(
                 position: Int,
-                unit: String,
+                unit: String?,
                 positionItem: Int,
                 sizeSpinner: Int,
-                spinnerUnit: Spinner
+                spinnerUnit: Spinner?
             ) {
-                selectUnitToOrder(position, unit, positionItem, sizeSpinner, spinnerUnit)
+                selectUnitToOrder(position, unit!!, positionItem, sizeSpinner, spinnerUnit!!)
             }
 
             override fun onDeleteClick(position: Int) {

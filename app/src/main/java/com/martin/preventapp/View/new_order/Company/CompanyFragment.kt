@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import com.martin.preventapp.firebase.Company
+import com.martin.preventapp.Model.Company
 import com.martin.preventapp.R
 import com.martin.preventapp.View.new_order.NewOrderFragment
 import androidx.fragment.app.Fragment

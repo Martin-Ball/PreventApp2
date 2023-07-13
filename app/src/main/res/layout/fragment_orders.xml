@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:elevation="1dp"
-    tools:context=".ui.orders_sent.fragment_orders.OrdersFragment">
+    tools:context=".View.ui.orders_sent.fragment_orders.OrdersFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
